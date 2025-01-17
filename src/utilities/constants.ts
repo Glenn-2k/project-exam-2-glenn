@@ -19,3 +19,5 @@ export const userUrl = baseUrl + userEndpoint;
 export const searchUrl = baseUrl + searchQuery;
 export const createVenueUrl = baseUrl + venuesEndpoint;
 export const createBookingUrl = baseUrl + bookingsEndpoint;
+
+export const API_KEY = import.meta.env.VITE_API_KEY;
