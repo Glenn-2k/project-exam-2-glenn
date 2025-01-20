@@ -66,7 +66,7 @@ const Nav = () => {
 
       {/* Mobile Navigation Menu */}
       {isOpen && (
-        <div className="absolute top-full left-0 w-full bg-gray-800 shadow-md py-4 md:hidden z-50">
+        <div className="absolute top-full left-0 w-full bg-teal-950 shadow-md py-4 md:hidden z-50">
           <div className="flex flex-col items-center">
             <NavLinks closeMenu={closeMenu} />
           </div>
