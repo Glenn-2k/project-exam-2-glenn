@@ -1,6 +1,6 @@
 import { QueryClient } from "@tanstack/react-query";
 
-import { baseUrl, API_KEY } from "./constants";
+import { API_KEY } from "./constants";
 
 // const baseUrl = `${baseUrl}`; // Removed due to circular reference
 
@@ -10,7 +10,7 @@ export async function fetchFn({ queryKey }: { queryKey: [string, string] }) {
   const [url] = queryKey;
 
   try {
-    const response = await fetch(`${baseUrl}${url}`, {
+    const response = await fetch(`${url}`, {
       headers: {
         "Content-Type": "application/json",
         "X-Noroff-API-Key": API_KEY,
@@ -42,7 +42,7 @@ export async function postFn({
   token: string;
 }) {
   try {
-    const response = await fetch(`${baseUrl}${url}`, {
+    const response = await fetch(`$${url}`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -77,7 +77,7 @@ export async function putFn({
   token: string;
 }) {
   try {
-    const response = await fetch(`${baseUrl}${url}`, {
+    const response = await fetch(`${url}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
@@ -105,7 +105,7 @@ export async function putFn({
 
 export async function deleteFn({ url, token }: { url: string; token: string }) {
   try {
-    const response = await fetch(`${baseUrl}${url}`, {
+    const response = await fetch(`${url}`, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
