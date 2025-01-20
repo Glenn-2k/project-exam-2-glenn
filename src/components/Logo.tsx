@@ -8,7 +8,7 @@ const Logo = () => {
       <img
         src={logoWhite}
         alt="Logo"
-        className="h-16 w-auto m-4 cursor-pointer"
+        className="h-16 w-auto ml-4 cursor-pointer"
         onClick={() => navigate("/")}
       />
     </div>
