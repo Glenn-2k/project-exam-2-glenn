@@ -1,4 +1,4 @@
-import logoWhite from "../assets/1.png";
+import logoWhite from "../assets/logoWhite.png";
 import { useNavigate } from "react-router-dom";
 
 const Logo = () => {
@@ -8,7 +8,7 @@ const Logo = () => {
       <img
         src={logoWhite}
         alt="Logo"
-        className="h-16 w-auto ml-4 cursor-pointer"
+        className="h-12 w-auto m-4 pl-6 cursor-pointer"
         onClick={() => navigate("/")}
       />
     </div>
