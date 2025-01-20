@@ -25,6 +25,12 @@ const NavLinks = ({ closeMenu }: { closeMenu: () => void }) => {
       >
         Contact
       </NavLink>
+      <NavLink
+        className={({ isActive }) => getNavLinkClass(isActive)}
+        to="/about"
+      >
+        Log in/Register
+      </NavLink>
     </>
   );
 };
