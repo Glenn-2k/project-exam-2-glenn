@@ -12,7 +12,7 @@ const VenueCard: React.FC<Venue> = ({
   const imageUrl =
     media && media.length > 0
       ? media[0].url
-      : "https://via.placeholder.com/300";
+      : "https://picsum.photos/id/1/200/300";
   const city = location?.city || "Unknown Location";
 
   return (
