@@ -14,6 +14,12 @@ const VenueCard: React.FC<Venue> = ({
       ? media[0].url
       : "https://picsum.photos/id/1/200/300";
   const city = location?.city || "Unknown Location";
+  const truncateText = (text: string, maxWords: number) => {
+    const words = text.split(" ");
+    return words.length > maxWords
+      ? `${words.slice(0, maxWords).join(" ")}...`
+      : text;
+  };
 
   return (
     <div className="max-w-sm bg-white shadow-md rounded-lg overflow-hidden">
@@ -42,7 +48,10 @@ const VenueCard: React.FC<Venue> = ({
         </div>
 
         {/* Description */}
-        <p className="text-gray-600 text-sm mb-4">{description}</p>
+        <p className="text-gray-600 text-sm mb-4">
+          {" "}
+          {truncateText(description, 10)}
+        </p>
 
         {/* Footer */}
         <div className="flex justify-between items-center">
