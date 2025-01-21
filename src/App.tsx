@@ -1,7 +1,7 @@
 import { Route, Routes } from "react-router-dom";
 import "./index.css";
 import Layout from "./components/Layout";
-import VenueList from "./components/Landingpage";
+import VenueList from "./components/Venuelist";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
 function RouteNotFound() {
@@ -15,9 +15,10 @@ function App() {
     <QueryClientProvider client={queryClient}>
       <div className="h-screen">
         <Routes>
-          <Route path="/" element={<Layout />} />
-          <Route index element={<VenueList />} />
-          <Route path="*" element={<RouteNotFound />} />
+          <Route path="/" element={<Layout />}>
+            <Route index element={<VenueList />} />
+            <Route path="*" element={<RouteNotFound />} />
+          </Route>
         </Routes>
       </div>
     </QueryClientProvider>
