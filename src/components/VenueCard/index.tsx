@@ -50,7 +50,7 @@ const VenueCard: React.FC<Venue> = ({
         {/* Description */}
         <p className="text-gray-600 text-sm mb-4">
           {" "}
-          {truncateText(description, 10)}
+          {truncateText(description, 15)}
         </p>
 
         {/* Footer */}
