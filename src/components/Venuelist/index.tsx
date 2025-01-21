@@ -4,6 +4,7 @@ import { useState } from "react";
 
 const VenueList = () => {
   const { data, isLoading, error } = useVenues();
+  console.log("Data:", data); // Debugging
 
   const [searchTerm, setSearchTerm] = useState<string>("");
 
@@ -15,13 +16,18 @@ const VenueList = () => {
     return <div>Error: {error.message}</div>;
   }
 
-  const filteredData = Array.isArray(data)
-    ? data.filter(
-        (venue) =>
-          venue.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-          venue.description.toLowerCase().includes(searchTerm.toLowerCase())
-      )
-    : [];
+  const venuesArray = data && Array.isArray(data.data) ? data.data : []; // Adjust based on structure
+  const filteredData = venuesArray.filter((venue) => {
+    const name = venue.name || "";
+    const description = venue.description || "";
+    return (
+      searchTerm === "" ||
+      name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      description.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+  });
+
+  console.log("Filtered data:", filteredData); // Debugging
 
   return (
     <div className="p-8 flex flex-col items-center">
