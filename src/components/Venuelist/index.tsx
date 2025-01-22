@@ -31,7 +31,7 @@ const VenueList = () => {
 
   return (
     <div className="p-8 flex flex-col items-center">
-      <h1 className="text-4xl text-center font-bold mb-4">Venues</h1>
+      <h1 className="text-4xl text-center font-bold mb-4 uppercase">Venues</h1>
       <label htmlFor="search" className="sr-only">
         Search Products
       </label>
