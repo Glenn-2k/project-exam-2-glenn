@@ -22,15 +22,19 @@ const VenueCard: React.FC<Venue> = ({
   };
 
   return (
-    <div className="max-w-sm bg-white shadow-md rounded-lg overflow-hidden">
+    <div className="max-w-sm bg-white shadow-md rounded-lg overflow-hidden flex flex-col hover:shadow-lg transition-shadow duration-300">
       {/* Image */}
-      <img src={imageUrl} alt={name} className="h-48 w-full object-cover" />
+      <img
+        src={imageUrl}
+        alt={`Image of ${name}`}
+        className="h-48 w-full object-cover"
+      />
 
       {/* Content */}
-      <div className="p-4">
+      <div className="p-4 flex flex-col flex-grow">
         {/* Name and Rating */}
         <div className="flex justify-between items-center mb-2">
-          <h2 className="text-lg font-semibold">
+          <h2 className="text-base sm:text-lg font-semibold">
             {name}, {city}
           </h2>
           <div className="flex items-center">
@@ -49,12 +53,11 @@ const VenueCard: React.FC<Venue> = ({
 
         {/* Description */}
         <p className="text-gray-600 text-sm mb-4">
-          {" "}
           {truncateText(description, 15)}
         </p>
 
         {/* Footer */}
-        <div className="flex justify-between items-center">
+        <div className="flex mt-auto justify-between items-center">
           <button className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600">
             Book Now
           </button>
