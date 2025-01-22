@@ -16,9 +16,8 @@ const SpecificVenue = () => {
 
   if (!venue) return <div>Venue not found</div>;
 
-  // Legg inn venue-dataene i en layout
   return (
-    <div className="p-4 max-w-md mx-auto bg-white shadow-md rounded-lg">
+    <div className="bg-gray-200 p-4 max-w-md sm:max-w-xl md:max-w-3xl mx-auto  rounded-lg">
       {/* Bilde */}
       <img
         src={venue.media?.[0]?.url || "https://via.placeholder.com/300"}
@@ -26,7 +25,6 @@ const SpecificVenue = () => {
         className="w-full h-48 object-cover rounded-md mb-4"
       />
 
-      {/* Venue Navn og Pris */}
       <h1 className="text-2xl font-bold mb-2 text-center">{venue.name}</h1>
       <div className="flex justify-between items-center mb-4">
         <div className="flex items-center">
@@ -45,14 +43,14 @@ const SpecificVenue = () => {
       </div>
 
       {/* Informasjon */}
-      <section className="mb-4">
+      <section className="pb-6 border-b-2 border-b-gray-300">
         <h2 className="text-lg font-semibold mb-2">Information</h2>
         <p>{venue.description || "No description available."}</p>
         <p className="mt-2">Max Guests: {venue.maxGuests || "N/A"}</p>
       </section>
 
       {/* Fasiliteter */}
-      <section className="mb-4">
+      <section className="mb-4 pt-6 pb-6 border-b-2 border-b-gray-300">
         <h2 className="text-lg font-semibold mb-2">Facilities</h2>
         <ul className="list-disc list-inside text-gray-700">
           <li>Breakfast: {venue.meta?.breakfast ? "Yes" : "No"}</li>
@@ -63,7 +61,7 @@ const SpecificVenue = () => {
       </section>
 
       {/* Lokasjon */}
-      <section className="mb-4">
+      <section className="mb-4 pb-6 border-b-2 border-b-gray-300">
         <h2 className="text-lg font-semibold mb-2">Location</h2>
         <p>{venue.location?.address || "Address not available"}</p>
         <p>{venue.location?.city || "City not available"}</p>
