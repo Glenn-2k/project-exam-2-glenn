@@ -1,6 +1,7 @@
 import React from "react";
 import { Venue } from "../../Types/venues.t";
 import { useNavigate } from "react-router-dom";
+import StarRating from "../../utilities/StarRating";
 
 const VenueCard: React.FC<Venue> = ({
   name = "Unknown Venue",
@@ -49,16 +50,7 @@ const VenueCard: React.FC<Venue> = ({
             {name}, {city}
           </h2>
           <div className="flex items-center">
-            {[...Array(5)].map((_, index) => (
-              <span
-                key={index}
-                className={`${
-                  index < rating ? "text-yellow-500" : "text-gray-300"
-                }`}
-              >
-                ★
-              </span>
-            ))}
+            <StarRating key={id} rating={rating} />
           </div>
         </div>
 

@@ -2,6 +2,7 @@ import { useParams } from "react-router-dom";
 import { useVenues } from "../../assets/hooks/useVenues";
 import { Venue } from "../../Types/venues.t";
 import VenueFeatures from "../../utilities/amenities";
+import StarRating from "../../utilities/StarRating";
 
 const SpecificVenue = () => {
   const { id } = useParams(); // Henter ID fra URL
@@ -29,16 +30,7 @@ const SpecificVenue = () => {
       <h1 className="text-2xl font-bold mb-2 text-center">{venue.name}</h1>
       <div className="flex justify-between items-center mb-4">
         <div className="flex items-center">
-          {[...Array(5)].map((_, index) => (
-            <span
-              key={index}
-              className={`${
-                index < venue.rating ? "text-yellow-500" : "text-gray-300"
-              }`}
-            >
-              ★
-            </span>
-          ))}
+          <StarRating key={venue.id} rating={venue.rating} />
         </div>
         <p className="text-lg font-bold">${venue.price}/night</p>
       </div>
