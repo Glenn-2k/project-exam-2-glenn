@@ -54,6 +54,7 @@ const SpecificVenue = () => {
 
       {/* Fasiliteter */}
       <section className="mb-4 pt-6 pb-6 border-b-2 border-b-gray-300">
+        <h2 className="text-lg font-semibold mb-2">Amenities</h2>
         <VenueFeatures venue={venue} />
       </section>
 
