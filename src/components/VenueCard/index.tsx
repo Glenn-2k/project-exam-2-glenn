@@ -69,7 +69,10 @@ const VenueCard: React.FC<Venue> = ({
 
         {/* Footer */}
         <div className="flex mt-auto justify-between items-center">
-          <button className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600">
+          <button
+            className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600"
+            onClick={handleCardClick}
+          >
             Book Now
           </button>
           <span className="text-lg font-semibold">${price}/night</span>
