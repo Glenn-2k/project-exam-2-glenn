@@ -22,7 +22,7 @@ const SpecificVenue = () => {
       <img
         src={venue.media?.[0]?.url || "https://via.placeholder.com/300"}
         alt={venue.name}
-        className="w-full h-48 object-cover rounded-md mb-4"
+        className="w-full h-64 object-cover rounded-md mb-4"
       />
 
       <h1 className="text-2xl font-bold mb-2 text-center">{venue.name}</h1>
