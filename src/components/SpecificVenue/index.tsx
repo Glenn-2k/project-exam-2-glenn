@@ -1,6 +1,7 @@
 import { useParams } from "react-router-dom";
 import { useVenues } from "../../assets/hooks/useVenues";
 import { Venue } from "../../Types/venues.t";
+import VenueFeatures from "../../utilities/amenities";
 
 const SpecificVenue = () => {
   const { id } = useParams(); // Henter ID fra URL
@@ -53,13 +54,7 @@ const SpecificVenue = () => {
 
       {/* Fasiliteter */}
       <section className="mb-4 pt-6 pb-6 border-b-2 border-b-gray-300">
-        <h2 className="text-lg font-semibold mb-2">Facilities</h2>
-        <ul className="list-disc list-inside text-gray-700">
-          <li>Breakfast: {venue.meta?.breakfast ? "Yes" : "No"}</li>
-          <li>Parking: {venue.meta?.parking ? "Yes" : "No"}</li>
-          <li>Pets: {venue.meta?.pets ? "Yes" : "No"}</li>
-          <li>WiFi: {venue.meta?.wifi ? "Yes" : "No"}</li>
-        </ul>
+        <VenueFeatures venue={venue} />
       </section>
 
       {/* Lokasjon */}
