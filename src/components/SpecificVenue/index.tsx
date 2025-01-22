@@ -46,7 +46,9 @@ const SpecificVenue = () => {
       <section className="pb-6 border-b-2 border-b-gray-300">
         <h2 className="text-lg font-semibold mb-2">Information</h2>
         <p>{venue.description || "No description available."}</p>
-        <p className="mt-2">Max Guests: {venue.maxGuests || "N/A"}</p>
+        <p className="mt-2 text-md font-semibold">
+          Max Guests: {venue.maxGuests || "N/A"}
+        </p>
       </section>
 
       {/* Fasiliteter */}
