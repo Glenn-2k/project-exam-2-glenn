@@ -16,22 +16,22 @@ const VenueList = () => {
     return <div>Error: {error.message}</div>;
   }
 
-  const venuesArray = data && Array.isArray(data.data) ? data.data : []; // Adjust based on structure
+  const venuesArray = data && Array.isArray(data.data) ? data.data : [];
   const filteredData = venuesArray.filter((venue) => {
     const name = venue.name || "";
     const description = venue.description || "";
+    const city = venue.location.city || "";
     return (
       searchTerm === "" ||
       name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      description.toLowerCase().includes(searchTerm.toLowerCase())
+      description.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      city.toLowerCase().includes(searchTerm.toLowerCase())
     );
   });
 
-  console.log("Filtered data:", filteredData); // Debugging
-
   return (
     <div className="p-8 flex flex-col items-center">
-      <h1 className="text-2xl text-center font-bold mb-4">Our Products</h1>
+      <h1 className="text-4xl text-center font-bold mb-4">Venues</h1>
       <label htmlFor="search" className="sr-only">
         Search Products
       </label>
@@ -40,8 +40,8 @@ const VenueList = () => {
         value={searchTerm}
         id="search"
         onChange={(e) => setSearchTerm(e.target.value)}
-        placeholder="Search products.."
-        className="border  p-2 rounded mb-4 md:w-1/3"
+        placeholder="Search venues.."
+        className="border  p-2 rounded mb-8 mt-2 md:w-1/3"
       />
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
         {filteredData.map((venue) => (
