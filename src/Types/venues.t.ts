@@ -43,4 +43,11 @@ interface VenueResponse {
   data: Venue[];
 }
 
+enum SortOrder {
+  Ascending = "asc",
+  Descending = "desc",
+}
+
 export type { Venue, Media, VenueMeta, Location, VenueResponse };
+
+export { SortOrder };
