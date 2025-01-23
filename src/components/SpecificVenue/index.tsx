@@ -3,6 +3,7 @@ import { useVenues } from "../../assets/hooks/useVenues";
 import { Venue } from "../../Types/venues.t";
 import VenueFeatures from "../../utilities/amenities";
 import StarRating from "../../utilities/StarRating";
+import Calendar from "../Calendar/calendar";
 
 const SpecificVenue = () => {
   const { id } = useParams(); // Henter ID fra URL
@@ -62,11 +63,7 @@ const SpecificVenue = () => {
       <section className="mt-6">
         <h2 className="text-lg font-semibold mb-2">Book Venue</h2>
         <div className="mb-4">
-          <label className="block text-gray-700 mb-1">Select Dates</label>
-          <input
-            type="date"
-            className="w-full border rounded p-2 text-gray-700"
-          />
+          <Calendar />
         </div>
         <div className="flex items-center mb-4">
           <label className="block text-gray-700 mr-2">Guests:</label>
