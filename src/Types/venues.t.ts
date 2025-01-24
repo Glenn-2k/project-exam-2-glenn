@@ -38,15 +38,9 @@ interface Venue {
   location: Location;
 }
 
-interface Meta {
-  total: number;
-  page: number;
-  limit: number;
-}
 // Response type for API endpoints returning multiple venues
 interface VenueResponse {
   data: Venue[];
-  meta: Meta;
 }
 
 enum SortOrder {
