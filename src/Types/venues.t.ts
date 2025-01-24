@@ -38,9 +38,21 @@ interface Venue {
   location: Location;
 }
 
+// Meta information for pagination
+interface PaginationMeta {
+  isFirstPage: boolean;
+  isLastPage: boolean;
+  currentPage: number;
+  previousPage: number | null;
+  nextPage: number | null;
+  pageCount: number;
+  totalCount: number;
+}
+
 // Response type for API endpoints returning multiple venues
 interface VenueResponse {
   data: Venue[];
+  meta: PaginationMeta;
 }
 
 enum SortOrder {
