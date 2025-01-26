@@ -27,7 +27,7 @@ const NavLinks = ({ closeMenu }: { closeMenu: () => void }) => {
       </NavLink>
       <NavLink
         className={({ isActive }) => getNavLinkClass(isActive)}
-        to="/about"
+        to="/login"
       >
         Log in/Register
       </NavLink>
