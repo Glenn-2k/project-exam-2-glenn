@@ -3,7 +3,7 @@ import VenueCard from "../VenueCard";
 import { useState } from "react";
 
 const VenueList = () => {
-  const { venues, loading, error, loadMore, hasMoreVenues } = useVenues(20);
+  const { venues, loading, error, loadMore, hasMoreVenues } = useVenues();
   const [searchTerm, setSearchTerm] = useState<string>("");
 
   const filteredVenues = venues.filter((venue) => {
