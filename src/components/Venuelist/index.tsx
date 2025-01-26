@@ -3,24 +3,13 @@ import VenueCard from "../VenueCard";
 import { useState } from "react";
 
 const VenueList = () => {
-  const { data, isLoading, error } = useVenues();
-  console.log("Data:", data); // Debugging
-
+  const { venues, loading, error, loadMore, hasMoreVenues } = useVenues(20);
   const [searchTerm, setSearchTerm] = useState<string>("");
 
-  if (isLoading) {
-    return <div>Loading...</div>;
-  }
-
-  if (error) {
-    return <div>Error: {error.message}</div>;
-  }
-
-  const venuesArray = data && Array.isArray(data.data) ? data.data : [];
-  const filteredData = venuesArray.filter((venue) => {
+  const filteredVenues = venues.filter((venue) => {
     const name = venue.name || "";
     const description = venue.description || "";
-    const city = venue.location.city || "";
+    const city = venue.location?.city || "";
     return (
       searchTerm === "" ||
       name.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -29,24 +18,37 @@ const VenueList = () => {
     );
   });
 
+  if (error) {
+    return <div>Error: {error.message}</div>;
+  }
+
   return (
     <div className="p-8 flex flex-col items-center">
       <h1 className="text-4xl text-center font-bold mb-4 uppercase">Venues</h1>
-      <label htmlFor="search" className="sr-only">
-        Search Products
-      </label>
-      <input
-        type="text"
-        value={searchTerm}
-        id="search"
-        onChange={(e) => setSearchTerm(e.target.value)}
-        placeholder="Search venues.."
-        className="border  p-2 rounded mb-8 mt-2 md:w-1/3"
-      />
+      <div className="flex items-center justify-between mb-8">
+        <input
+          type="text"
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+          placeholder="Search venues..."
+          className="border p-2 rounded mt-2"
+        />
+      </div>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-        {filteredData.map((venue) => (
-          <VenueCard key={venue.id} {...venue} />
+        {filteredVenues.map((venue, index) => (
+          <VenueCard key={`${venue.id}-${index}`} {...venue} />
         ))}
+      </div>
+      {loading && <div>Loading...</div>}
+      <div className="mt-8">
+        {hasMoreVenues && !loading && (
+          <button
+            onClick={loadMore}
+            className="bg-teal-800 hover:bg-teal-950 text-white font-bold py-2 px-4 rounded"
+          >
+            Load More
+          </button>
+        )}
       </div>
     </div>
   );

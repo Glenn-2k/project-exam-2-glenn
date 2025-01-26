@@ -7,13 +7,13 @@ import Calendar from "../Calendar/calendar";
 
 const SpecificVenue = () => {
   const { id } = useParams(); // Henter ID fra URL
-  const { data: venues, isLoading, error } = useVenues(); // Fetcher venues fra API
+  const { venues, loading, error } = useVenues(); // Fetcher venues fra API
 
-  if (isLoading) return <div>Loading...</div>;
+  if (loading) return <div>Loading...</div>;
   if (error) return <div>Error: {error.message}</div>;
 
   // Finn det spesifikke venue ved hjelp av id
-  const venue: Venue | undefined = venues?.data.find(
+  const venue: Venue | undefined = venues?.find(
     (venue: Venue) => venue.id === id
   );
 

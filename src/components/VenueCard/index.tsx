@@ -19,9 +19,7 @@ const VenueCard: React.FC<Venue> = ({
   };
 
   const imageUrl =
-    media && media.length > 0
-      ? media[0].url
-      : "https://picsum.photos/id/1/200/300";
+    media && media.length > 0 ? media[0].url : "https://placehold.co/400";
   const city = location?.city || "Unknown Location";
   const truncateText = (text: string, maxWords: number) => {
     const words = text.split(" ");
