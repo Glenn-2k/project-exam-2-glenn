@@ -1,5 +1,5 @@
 import Header from "../Header";
-// import Footer from "../Footer";
+import Footer from "../Footer";
 import { Outlet } from "react-router-dom";
 
 function Layout() {
@@ -9,7 +9,7 @@ function Layout() {
       <main className="bg-gray-200 flex-grow pt-16">
         <Outlet />
       </main>
-      {/* <Footer /> */}
+      <Footer />
     </div>
   );
 }

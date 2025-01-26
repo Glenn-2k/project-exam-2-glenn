@@ -44,7 +44,7 @@ const VenueList = () => {
         {hasMoreVenues && !loading && (
           <button
             onClick={loadMore}
-            className="bg-teal-800 hover:bg-teal-950 text-white font-bold py-2 px-4 rounded"
+            className="bg-sky-950 hover:bg-sky-800 text-white font-bold py-2 px-4 rounded"
           >
             Load More
           </button>
