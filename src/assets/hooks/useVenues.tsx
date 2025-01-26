@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import { fetchFn } from "../../utilities/http";
 import * as VenueTypes from "../../Types/venues.t";
 
-export const useVenues = (limit: number = 20) => {
+export const useVenues = () => {
   const [venues, setVenues] = useState<VenueTypes.Venue[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<Error | null>(null);
@@ -12,6 +12,7 @@ export const useVenues = (limit: number = 20) => {
 
   const sortOrder = "desc"; // Update according to your API docs
   const sort = "created";
+  const limit = 100;
 
   useEffect(() => {
     const fetchVenues = async () => {
