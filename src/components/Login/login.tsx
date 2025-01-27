@@ -1,53 +1,85 @@
-import { loginUrl } from "../../utilities/constants";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import * as Yup from "yup";
 import { postFn } from "../../utilities/http";
+import { loginUrl } from "../../utilities/constants";
+import { saveLocal } from "../../utilities/localStorage";
 
 const Login: React.FC = () => {
   const navigate = useNavigate();
-  const [email, setEmail] = useState<string>("");
-  const [password, setPassword] = useState<string>("");
-  const [error, setError] = useState<string | null>(null);
 
-  const handleLogin = async () => {
+  const [formData, setFormData] = useState({ email: "", password: "" });
+  const [errors, setErrors] = useState<Record<string, string>>({});
+  const [globalError, setGlobalError] = useState<string | null>(null);
+
+  const validationSchema = Yup.object({
+    email: Yup.string()
+      .email("Invalid email address")
+      .required("Email is required"),
+    password: Yup.string().required("Password is required"),
+  });
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({ ...prev, [name]: value }));
+  };
+
+  const handleSubmit = async () => {
     try {
-      const response = await postFn({
+      await validationSchema.validate(formData, { abortEarly: false });
+      setErrors({});
+
+      const data = await postFn({
         url: loginUrl,
-        body: { email, password },
+        body: formData,
         token: "",
       });
-      if (response.ok) {
-        const data = await response.json();
-        localStorage.setItem("token", data.token);
+
+      if (data.data?.accessToken) {
+        saveLocal("token", data.data.accessToken);
         navigate("/");
       } else {
-        setError("Invalid email or password");
+        setGlobalError("Invalid email or password.");
       }
-    } catch {
-      setError("An error occurred");
+    } catch (err: unknown) {
+      if (err instanceof Yup.ValidationError) {
+        const newErrors: Record<string, string> = {};
+        err.inner.forEach((validationError: Yup.ValidationError) => {
+          newErrors[validationError.path!] = validationError.message;
+        });
+        setErrors(newErrors);
+      } else {
+        setGlobalError("An error occurred. Please try again.");
+      }
     }
   };
 
   return (
     <div className="flex flex-col items-center justify-center h-screen">
       <h1 className="text-4xl font-bold mb-4">Login</h1>
-      {error && <div className="text-red-500 mb-4">{error}</div>}
+      {globalError && <div className="text-red-500 mb-4">{globalError}</div>}
       <input
         type="email"
-        value={email}
-        onChange={(e) => setEmail(e.target.value)}
+        name="email"
+        value={formData.email}
+        onChange={handleChange}
         placeholder="Email"
         className="border p-2 rounded mb-4"
       />
+      {errors.email && <div className="text-red-500">{errors.email}</div>}
+
       <input
         type="password"
-        value={password}
-        onChange={(e) => setPassword(e.target.value)}
+        name="password"
+        value={formData.password}
+        onChange={handleChange}
         placeholder="Password"
         className="border p-2 rounded mb-4"
       />
+      {errors.password && <div className="text-red-500">{errors.password}</div>}
+
       <button
-        onClick={handleLogin}
+        onClick={handleSubmit}
         className="bg-sky-950 hover:bg-sky-800 text-white font-bold py-2 px-4 rounded"
       >
         Login

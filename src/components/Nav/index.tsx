@@ -1,5 +1,5 @@
 import { NavLink } from "react-router-dom";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { FaBars, FaTimes } from "react-icons/fa";
 
 const activeClassName = "text-gray-400 mb-4 md:mb-0";
@@ -9,6 +9,20 @@ const getNavLinkClass = (isActive: boolean) =>
     : "mb-4 md:mb-0 font-montserrat";
 
 const NavLinks = ({ closeMenu }: { closeMenu: () => void }) => {
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  // Check if token exists in localStorage
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    setIsLoggedIn(!!token); // Set to true if token exists, false otherwise
+  }, []);
+
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    setIsLoggedIn(false);
+    closeMenu();
+  };
+
   return (
     <>
       <NavLink
@@ -25,12 +39,22 @@ const NavLinks = ({ closeMenu }: { closeMenu: () => void }) => {
       >
         Contact
       </NavLink>
-      <NavLink
-        className={({ isActive }) => getNavLinkClass(isActive)}
-        to="/login"
-      >
-        Log in/Register
-      </NavLink>
+      {isLoggedIn ? (
+        <button
+          className="text-white mb-4 md:mb-0 font-montserrat"
+          onClick={handleLogout}
+        >
+          Log out
+        </button>
+      ) : (
+        <NavLink
+          className={({ isActive }) => getNavLinkClass(isActive)}
+          to="/login"
+          onClick={closeMenu}
+        >
+          Log in/Register
+        </NavLink>
+      )}
     </>
   );
 };

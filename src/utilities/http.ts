@@ -52,18 +52,10 @@ export async function postFn({
       body: JSON.stringify(body),
     });
     const data = await response.json();
-
-    if (!response.ok) {
-      throw new Error(data.message || "An error occurred.");
-    }
-
     return data;
   } catch (error) {
-    if (error instanceof Error) {
-      throw new Error(error.message || "Failed to post data.");
-    } else {
-      throw new Error("Failed to post data.");
-    }
+    console.error("POST Error:", error);
+    throw error;
   }
 }
 
