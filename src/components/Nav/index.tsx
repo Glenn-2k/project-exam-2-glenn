@@ -29,10 +29,10 @@ const NavLinks = ({
       </NavLink>
       <NavLink
         className={({ isActive }) => getNavLinkClass(isActive)}
-        to="/contact"
+        to="/profile"
         onClick={closeMenu}
       >
-        Contact
+        Profile
       </NavLink>
       {isLoggedIn ? (
         <button
