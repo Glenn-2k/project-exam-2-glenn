@@ -2,7 +2,6 @@ import { useQuery } from "@tanstack/react-query";
 import { fetchFn } from "../../utilities/http";
 import { baseUrl } from "../../utilities/constants";
 
-// Update interface to match the API response structure
 interface ProfileResponse {
   data: {
     name: string;
@@ -25,16 +24,13 @@ interface ProfileResponse {
 }
 
 const UserProfile = () => {
-  // First, let's properly get the user data from localStorage
   const storedUserData = localStorage.getItem("user");
   const token = localStorage.getItem("token");
 
-  // Parse the stored user data
   let userName = "";
   try {
     if (storedUserData) {
       const parsedData = JSON.parse(storedUserData);
-      // Access the name from the correct path in the data structure
       userName = parsedData.data?.name;
       console.log("Found user name:", userName);
     }
@@ -42,7 +38,6 @@ const UserProfile = () => {
     console.error("Error parsing user data:", error);
   }
 
-  // Set up the query with proper error boundaries
   const {
     data: profile,
     isLoading,
@@ -58,7 +53,6 @@ const UserProfile = () => {
         throw new Error("No authentication token found");
       }
 
-      // Construct the URL following the API structure
       const profileUrl = `${baseUrl}holidaze/profiles/${userName}`;
       console.log("Fetching profile from:", profileUrl);
 
@@ -74,10 +68,9 @@ const UserProfile = () => {
         throw err;
       }
     },
-    enabled: Boolean(userName && token), // Only run query if we have both userName and token
+    enabled: Boolean(userName && token),
   });
 
-  // Handle loading state
   if (isLoading) {
     return (
       <div className="w-full max-w-2xl mx-auto mt-8 p-6 bg-white rounded-lg shadow-md">
