@@ -37,6 +37,7 @@ const Login: React.FC = () => {
 
       if (data.data?.accessToken) {
         saveLocal("token", data.data.accessToken);
+        saveLocal("user", data);
         window.dispatchEvent(new Event("authChange"));
         setTimeout(() => {
           navigate("/");
