@@ -1,6 +1,7 @@
 import { NavLink } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { FaBars, FaTimes } from "react-icons/fa";
+import { useNavigate } from "react-router-dom";
 
 const activeClassName = "text-gray-400 mb-4 md:mb-0";
 const getNavLinkClass = (isActive: boolean) =>
@@ -8,21 +9,15 @@ const getNavLinkClass = (isActive: boolean) =>
     ? `${activeClassName} mb-4 md:mb-0 font-montserrat`
     : "mb-4 md:mb-0 font-montserrat";
 
-const NavLinks = ({ closeMenu }: { closeMenu: () => void }) => {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-
-  // Check if token exists in localStorage
-  useEffect(() => {
-    const token = localStorage.getItem("token");
-    setIsLoggedIn(!!token); // Set to true if token exists, false otherwise
-  }, []);
-
-  const handleLogout = () => {
-    localStorage.removeItem("token");
-    setIsLoggedIn(false);
-    closeMenu();
-  };
-
+const NavLinks = ({
+  isLoggedIn,
+  handleLogout,
+  closeMenu,
+}: {
+  isLoggedIn: boolean;
+  handleLogout: () => void;
+  closeMenu: () => void;
+}) => {
   return (
     <>
       <NavLink
@@ -61,6 +56,30 @@ const NavLinks = ({ closeMenu }: { closeMenu: () => void }) => {
 
 const Nav = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState<boolean>(
+    !!localStorage.getItem("token")
+  );
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const updateAuthState = () => {
+      setIsLoggedIn(!!localStorage.getItem("token"));
+    };
+
+    window.addEventListener("authChange", updateAuthState);
+
+    return () => {
+      window.removeEventListener("authChange", updateAuthState);
+    };
+  }, []);
+
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    setIsLoggedIn(false);
+    window.dispatchEvent(new Event("authChange")); // Notify other components
+    navigate("/login");
+  };
+
   const toggleNavbar = () => setIsOpen(!isOpen);
   const closeMenu = () => setIsOpen(false);
 
@@ -70,7 +89,11 @@ const Nav = () => {
       <nav className="w-full flex justify-end px-4 mr-6">
         <div className="hidden w-full md:flex justify-between items-center">
           <div className="flex space-x-4">
-            <NavLinks closeMenu={() => {}} />
+            <NavLinks
+              isLoggedIn={isLoggedIn}
+              handleLogout={handleLogout}
+              closeMenu={() => {}}
+            />
           </div>
         </div>
 
@@ -98,7 +121,11 @@ const Nav = () => {
       {isOpen && (
         <div className="absolute top-full left-0 w-full bg-teal-950 shadow-md py-4 md:hidden z-50">
           <div className="flex flex-col items-center">
-            <NavLinks closeMenu={closeMenu} />
+            <NavLinks
+              isLoggedIn={isLoggedIn}
+              handleLogout={handleLogout}
+              closeMenu={closeMenu}
+            />
           </div>
         </div>
       )}

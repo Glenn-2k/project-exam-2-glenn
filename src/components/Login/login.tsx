@@ -37,7 +37,10 @@ const Login: React.FC = () => {
 
       if (data.data?.accessToken) {
         saveLocal("token", data.data.accessToken);
-        navigate("/");
+        window.dispatchEvent(new Event("authChange"));
+        setTimeout(() => {
+          navigate("/");
+        }, 500);
       } else {
         setGlobalError("Invalid email or password.");
       }
