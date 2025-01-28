@@ -87,6 +87,15 @@ const Login: React.FC = () => {
       >
         Login
       </button>
+      <p className="mt-4">
+        Don't have an account?{" "}
+        <span
+          onClick={() => navigate("/register")}
+          className="text-sky-950 cursor-pointer"
+        >
+          Register
+        </span>
+      </p>
     </div>
   );
 };
