@@ -48,7 +48,7 @@ const Register: React.FC = () => {
   const handleSubmit = async () => {
     try {
       await validationSchema.validate(formData, { abortEarly: false });
-      setErrors({}); // Clear previous errors
+      setErrors({});
 
       const avatar = {
         url: formData.profilePicture,
