@@ -8,12 +8,12 @@ const Register: React.FC = () => {
   const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
+    name: "",
     email: "",
     password: "",
-    name: "",
-    bio: "",
-    profilePicture: "",
-    bannerPicture: "",
+    // bio: "",
+    // profilePicture: "",
+    // bannerPicture: "",
     venueManager: false,
   });
 
@@ -21,6 +21,7 @@ const Register: React.FC = () => {
   const [globalError, setGlobalError] = useState<string | null>(null);
 
   const validationSchema = Yup.object({
+    name: Yup.string().required("Name is required"),
     email: Yup.string()
       .email("Invalid email address")
       .matches(
@@ -31,10 +32,9 @@ const Register: React.FC = () => {
     password: Yup.string()
       .min(8, "Password must be at least 8 characters")
       .required("Password is required"),
-    name: Yup.string().required("Name is required"),
-    bio: Yup.string(),
-    profilePicture: Yup.string().url("Must be a valid URL"),
-    bannerPicture: Yup.string().url("Must be a valid URL"),
+    // bio: Yup.string(),
+    // profilePicture: Yup.string().url("Must be a valid URL"),
+    // bannerPicture: Yup.string().url("Must be a valid URL"),
   });
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -50,21 +50,21 @@ const Register: React.FC = () => {
       await validationSchema.validate(formData, { abortEarly: false });
       setErrors({});
 
-      const avatar = {
-        url: formData.profilePicture,
-        alt: `${formData.name}'s profile picture`,
-      };
-      const banner = {
-        url: formData.bannerPicture,
-        alt: `${formData.name}'s banner`,
-      };
+      // const avatar = {
+      //   url: formData.profilePicture,
+      //   alt: `${formData.name}'s profile picture`,
+      // };
+      // const banner = {
+      //   url: formData.bannerPicture,
+      //   alt: `${formData.name}'s banner`,
+      // };
 
       await postFn({
         url: registerUrl,
         body: {
           ...formData,
-          avatar,
-          banner,
+          // avatar,
+          // banner,
         },
         token: "",
       });
@@ -117,16 +117,16 @@ const Register: React.FC = () => {
       />
       {errors.name && <div className="text-red-500">{errors.name}</div>}
 
-      <input
+      {/* <input
         type="text"
         name="bio"
         value={formData.bio}
         onChange={handleChange}
         placeholder="Bio"
         className="border p-2 rounded mb-4"
-      />
+      /> */}
 
-      <input
+      {/* <input
         type="url"
         name="profilePicture"
         value={formData.profilePicture}
@@ -148,7 +148,7 @@ const Register: React.FC = () => {
       />
       {errors.bannerPicture && (
         <div className="text-red-500">{errors.bannerPicture}</div>
-      )}
+      )} */}
 
       <label className="mb-4">
         <input
