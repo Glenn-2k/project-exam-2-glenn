@@ -1,4 +1,5 @@
 import { QueryClient } from "@tanstack/react-query";
+import { loadLocal } from "./localStorage";
 
 import { API_KEY } from "./constants";
 
@@ -8,12 +9,14 @@ export const queryClient = new QueryClient();
 
 export async function fetchFn({ queryKey }: { queryKey: [string, string] }) {
   const [url] = queryKey;
+  const token = loadLocal("token");
 
   try {
     const response = await fetch(`${url}`, {
       headers: {
         "Content-Type": "application/json",
         "X-Noroff-API-Key": API_KEY,
+        Authorization: token ? `Bearer ${token}` : "",
       },
     });
     const data = await response.json();

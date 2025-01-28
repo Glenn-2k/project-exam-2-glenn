@@ -6,6 +6,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import SpecificVenue from "./components/SpecificVenue";
 import Login from "./components/Login/login";
 import Register from "./components/Register";
+import UserProfile from "./components/Profile";
 
 function RouteNotFound() {
   return <div>Page not found</div>;
@@ -20,6 +21,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Layout />}>
             <Route index element={<VenueList />} />
+            <Route path="/profile" element={<UserProfile />} />
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
             <Route path="*" element={<RouteNotFound />} />
