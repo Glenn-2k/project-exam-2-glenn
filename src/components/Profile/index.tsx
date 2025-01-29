@@ -21,7 +21,15 @@ interface ProfileResponse {
       venues: number;
       bookings: number;
     };
+    _bookings: Booking[];
   };
+}
+
+interface Booking {
+  id: string;
+  venue: { name: string };
+  dateFrom: string;
+  dateTo: string;
 }
 
 const UserProfile = () => {
@@ -55,7 +63,7 @@ const UserProfile = () => {
         throw new Error("No authentication token found");
       }
 
-      const profileUrl = `${baseUrl}holidaze/profiles/${userName}`;
+      const profileUrl = `${baseUrl}holidaze/profiles/${userName}?_bookings=true`;
       console.log("Fetching profile from:", profileUrl);
 
       try {
@@ -190,11 +198,31 @@ const UserProfile = () => {
           </div>
         </div>
       </div>
-      <section className="flex flex-col items-center justify-center h-screen">
-        <div className="w-full max-w-2xl mx-auto mt-2 p-6 bg-white rounded-lg shadow-md">
-          <h2 className="text-2xl font-bold text-gray-900 text-center">
+      {/* My Bookings */}
+      <section className="flex flex-col items-center justify-center mt-8">
+        <div className="w-full max-w-2xl mx-auto p-6 bg-white rounded-lg shadow-md">
+          <h2 className="text-2xl font-bold text-gray-900 text-center border-b-2 border-gray-200 pb-2">
             My bookings
           </h2>
+          <div className="p-4">
+            {userData._bookings && userData._bookings.length > 0 ? (
+              <ul className="divide-y divide-gray-200">
+                {userData._bookings.map((booking) => (
+                  <li key={booking.id} className="py-4">
+                    <p className="font-semibold text-gray-900">
+                      {booking.venue.name}
+                    </p>
+                    <p className="text-gray-600">
+                      {new Date(booking.dateFrom).toLocaleDateString()} -{" "}
+                      {new Date(booking.dateTo).toLocaleDateString()}
+                    </p>
+                  </li>
+                ))}
+              </ul>
+            ) : (
+              <p className="text-gray-500 text-center">No bookings found.</p>
+            )}
+          </div>
         </div>
       </section>
     </>
