@@ -1,6 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { fetchFn } from "../../utilities/http";
 import { baseUrl } from "../../utilities/constants";
+import { useNavigate } from "react-router-dom";
 
 interface ProfileResponse {
   data: {
@@ -26,6 +27,7 @@ interface ProfileResponse {
 const UserProfile = () => {
   const storedUserData = localStorage.getItem("user");
   const token = localStorage.getItem("token");
+  const navigate = useNavigate();
 
   let userName = "";
   try {
@@ -141,7 +143,12 @@ const UserProfile = () => {
             )}
           </div>
           <div className="mb-4">
-            <button className="bg-sky-950 hover:bg-sky-800 text-white text-xs font-bold py-1.5 px-3  rounded m-4 mx-auto block">
+            <button
+              className="bg-sky-950 hover:bg-sky-800 text-white text-xs font-bold py-1.5 px-3  rounded m-4 mx-auto block"
+              onClick={() => {
+                navigate("/editavatar");
+              }}
+            >
               Edit avatar
             </button>
           </div>
