@@ -63,7 +63,7 @@ const UserProfile = () => {
         throw new Error("No authentication token found");
       }
 
-      const profileUrl = `${baseUrl}holidaze/profiles/${userName}?_bookings=true`;
+      const profileUrl = `${baseUrl}holidaze/profiles/${userName}/bookings`;
       console.log("Fetching profile from:", profileUrl);
 
       try {
