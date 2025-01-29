@@ -139,7 +139,6 @@ const UserProfile = () => {
             <h1 className="text-2xl font-bold text-gray-900">
               {userData.name}
             </h1>
-            <p className="text-gray-500">{userData.email}</p>
           </div>
 
           {/* Stats */}
