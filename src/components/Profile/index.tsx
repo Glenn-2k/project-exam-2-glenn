@@ -21,7 +21,7 @@ interface ProfileResponse {
       venues: number;
       bookings: number;
     };
-    _bookings: Booking[];
+    bookings: Booking[];
   };
 }
 
@@ -205,9 +205,9 @@ const UserProfile = () => {
             My bookings
           </h2>
           <div className="p-4">
-            {userData._bookings && userData._bookings.length > 0 ? (
+            {userData.bookings && userData.bookings.length > 0 ? (
               <ul className="divide-y divide-gray-200">
-                {userData._bookings.map((booking) => (
+                {userData.bookings.map((booking) => (
                   <li key={booking.id} className="py-4">
                     <p className="font-semibold text-gray-900">
                       {booking.venue.name}
