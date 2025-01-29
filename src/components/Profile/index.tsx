@@ -136,7 +136,7 @@ const UserProfile = () => {
               </div>
             )}
           </div>
-          <button className="bg-sky-950 hover:bg-sky-800 text-white text-xs font-bold py-1.5 px-3 uppercase rounded m-4 mx-auto block">
+          <button className="bg-sky-950 hover:bg-sky-800 text-white text-xs font-bold py-1.5 px-3  rounded m-4 mx-auto block">
             Edit avatar
           </button>
 
