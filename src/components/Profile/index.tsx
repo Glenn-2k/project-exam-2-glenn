@@ -115,6 +115,12 @@ const UserProfile = () => {
 
   return (
     <div className="w-full max-w-2xl mx-auto mt-8 bg-white rounded-lg shadow-md overflow-hidden">
+      <h1 className="text-2xl font-bold text-gray-900 p-6 text-center uppercase">
+        Edit Profile
+      </h1>
+      <button className="bg-sky-950 hover:bg-sky-800 text-white font-bold py-2 px-4 rounded m-4 mx-auto block">
+        Edit avatar
+      </button>
       <div className="p-6">
         <div className="flex flex-col items-center space-y-4">
           {/* The Avatar */}
