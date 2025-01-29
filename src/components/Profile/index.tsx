@@ -118,7 +118,11 @@ const UserProfile = () => {
       <h1 className="text-2xl font-bold text-gray-900 p-6 text-center uppercase">
         Edit Profile
       </h1>
-      <div className="p-6">
+      <div className="p-4">
+        {/* User Info */}
+        <div className="text-center pb-6">
+          <h1 className="text-2xl font-bold text-gray-900">{userData.name}</h1>
+        </div>
         <div className="flex flex-col items-center space-y-4">
           {/* The Avatar */}
           <div className="relative w-24 h-24">
@@ -136,15 +140,10 @@ const UserProfile = () => {
               </div>
             )}
           </div>
-          <button className="bg-sky-950 hover:bg-sky-800 text-white text-xs font-bold py-1.5 px-3  rounded m-4 mx-auto block">
-            Edit avatar
-          </button>
-
-          {/* User Info */}
-          <div className="text-center">
-            <h1 className="text-2xl font-bold text-gray-900">
-              {userData.name}
-            </h1>
+          <div className="mb-4">
+            <button className="bg-sky-950 hover:bg-sky-800 text-white text-xs font-bold py-1.5 px-3  rounded m-4 mx-auto block">
+              Edit avatar
+            </button>
           </div>
 
           {/* Stats */}
