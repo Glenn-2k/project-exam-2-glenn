@@ -81,7 +81,6 @@ const UserProfile = () => {
     );
   }
 
-  // Handle error state
   if (error) {
     return (
       <div className="w-full max-w-2xl mx-auto mt-8 p-4 bg-red-50 border border-red-200 rounded-lg">
@@ -102,7 +101,6 @@ const UserProfile = () => {
     );
   }
 
-  // If we don't have a profile yet and we're not loading/errored, we might have invalid data
   if (!profile) {
     return (
       <div className="w-full max-w-2xl mx-auto mt-8 p-4 bg-yellow-50 border border-yellow-200 rounded-lg">
@@ -117,19 +115,9 @@ const UserProfile = () => {
 
   return (
     <div className="w-full max-w-2xl mx-auto mt-8 bg-white rounded-lg shadow-md overflow-hidden">
-      {userData.banner?.url && (
-        <div className="w-full h-48 bg-gray-100">
-          <img
-            src={userData.banner.url}
-            alt="Profile banner"
-            className="w-full h-full object-cover"
-          />
-        </div>
-      )}
-
       <div className="p-6">
         <div className="flex flex-col items-center space-y-4">
-          {/* Avatar */}
+          {/* The Avatar */}
           <div className="relative w-24 h-24">
             {userData.avatar?.url ? (
               <img
