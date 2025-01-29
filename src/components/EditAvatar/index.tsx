@@ -3,10 +3,11 @@ import { baseUrl } from "../../utilities/constants";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import * as Yup from "yup";
+import { loadLocal } from "../../utilities/localStorage";
 
 const EditAvatar: React.FC = () => {
   const storedUserData = localStorage.getItem("user");
-  const token = localStorage.getItem("token");
+  const token = loadLocal("token") || "";
   const navigate = useNavigate();
 
   let userName = "";
@@ -22,14 +23,12 @@ const EditAvatar: React.FC = () => {
 
   const [formData, setFormData] = useState({
     profilePicture: "",
-    bannerPicture: "",
   });
 
   const [errors, setErrors] = useState<Record<string, string>>({});
 
   const validationSchema = Yup.object({
     profilePicture: Yup.string().url("Must be a valid URL"),
-    bannerPicture: Yup.string().url("Must be a valid URL"),
   });
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -46,14 +45,9 @@ const EditAvatar: React.FC = () => {
         url: formData.profilePicture,
         alt: `${userName}'s profile picture`,
       };
-      const banner = {
-        url: formData.bannerPicture,
-        alt: `${userName}'s banner`,
-      };
 
       const body = {
         avatar,
-        banner,
       };
 
       await putFn({
@@ -79,39 +73,47 @@ const EditAvatar: React.FC = () => {
   };
 
   return (
-    <div className="edit-avatar">
-      <h1>Edit Avatar</h1>
-      <form>
-        <div className="form-group">
-          <label htmlFor="profilePicture">Profile Picture</label>
-          <input
-            type="text"
-            name="profilePicture"
-            id="profilePicture"
-            value={formData.profilePicture}
-            onChange={handleChange}
-          />
-          {errors.profilePicture && (
-            <div className="error">{errors.profilePicture}</div>
-          )}
-        </div>
-        <div className="form-group">
-          <label htmlFor="bannerPicture">Banner Picture</label>
-          <input
-            type="text"
-            name="bannerPicture"
-            id="bannerPicture"
-            value={formData.bannerPicture}
-            onChange={handleChange}
-          />
-          {errors.bannerPicture && (
-            <div className="error">{errors.bannerPicture}</div>
-          )}
-        </div>
-        <button type="button" onClick={handleSubmit}>
-          Save
-        </button>
-      </form>
+    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 p-6">
+      <div className="bg-white shadow-lg rounded-lg p-8 max-w-md w-full">
+        <h1 className="text-2xl font-bold text-center text-gray-800 mb-6 uppercase">
+          Edit Avatar
+        </h1>
+
+        <form className="space-y-4">
+          {/* Profile Picture Input */}
+          <div className="flex flex-col">
+            <label
+              htmlFor="profilePicture"
+              className="text-sm font-semibold text-gray-600 mb-1"
+            >
+              Avatar URL
+            </label>
+            <input
+              type="text"
+              name="profilePicture"
+              id="profilePicture"
+              value={formData.profilePicture}
+              onChange={handleChange}
+              placeholder="Enter a valid image URL"
+              className="border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            />
+            {errors.profilePicture && (
+              <div className="text-red-500 text-xs mt-1">
+                {errors.profilePicture}
+              </div>
+            )}
+          </div>
+
+          {/* Save Button */}
+          <button
+            className="bg-sky-950 hover:bg-sky-800 text-white font-bold py-2 px-4 rounded-md transition-all duration-200 w-full mt-4"
+            type="button"
+            onClick={handleSubmit}
+          >
+            Save Changes
+          </button>
+        </form>
+      </div>
     </div>
   );
 };
