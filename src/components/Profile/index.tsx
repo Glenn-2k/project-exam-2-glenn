@@ -116,75 +116,88 @@ const UserProfile = () => {
   const userData = profile.data;
 
   return (
-    <div className="w-full max-w-2xl mx-auto mt-8 bg-white rounded-lg shadow-md overflow-hidden">
-      <h1 className="text-2xl font-bold text-gray-900 p-6 text-center uppercase">
-        Edit Profile
-      </h1>
-      <div className="p-4">
-        {/* User Info */}
-        <div className="text-center pb-6">
-          <h1 className="text-2xl font-bold text-gray-900">{userData.name}</h1>
-        </div>
-        <div className="flex flex-col items-center space-y-4">
-          {/* The Avatar */}
-          <div className="relative w-24 h-24">
-            {userData.avatar?.url ? (
-              <img
-                src={userData.avatar.url}
-                alt={userData.avatar.alt || `${userData.name}'s avatar`}
-                className="w-full h-full rounded-full object-cover border-4 border-white shadow-lg"
-              />
-            ) : (
-              <div className="w-full h-full rounded-full bg-gray-100 flex items-center justify-center border-4 border-white shadow-lg">
-                <span className="text-2xl text-gray-600">
-                  {userData.name?.charAt(0) || "?"}
-                </span>
+    <>
+      <div className="w-full max-w-2xl mx-auto mt-8 bg-white rounded-lg shadow-md overflow-hidden">
+        <h1 className="text-2xl font-bold text-gray-900 p-6 text-center uppercase">
+          Edit Profile
+        </h1>
+        <div className="p-4">
+          {/* User Info */}
+          <div className="text-center pb-6">
+            <h1 className="text-2xl font-bold text-gray-900">
+              {userData.name}
+            </h1>
+          </div>
+          <div className="flex flex-col items-center space-y-4">
+            {/* The Avatar */}
+            <div className="relative w-24 h-24">
+              {userData.avatar?.url ? (
+                <img
+                  src={userData.avatar.url}
+                  alt={userData.avatar.alt || `${userData.name}'s avatar`}
+                  className="w-full h-full rounded-full object-cover border-4 border-white shadow-lg"
+                />
+              ) : (
+                <div className="w-full h-full rounded-full bg-gray-100 flex items-center justify-center border-4 border-white shadow-lg">
+                  <span className="text-2xl text-gray-600">
+                    {userData.name?.charAt(0) || "?"}
+                  </span>
+                </div>
+              )}
+            </div>
+            <div className="mb-4">
+              <button
+                className="bg-sky-950 hover:bg-sky-800 text-white text-xs font-bold py-1.5 px-3  rounded m-4 mx-auto block"
+                onClick={() => {
+                  navigate("/editavatar");
+                }}
+              >
+                Edit avatar
+              </button>
+            </div>
+
+            {/* Stats */}
+            <div className="flex space-x-6 text-center">
+              <div>
+                <p className="text-2xl font-semibold">
+                  {userData._count.venues}
+                </p>
+                <p className="text-gray-500">Venues</p>
+              </div>
+              <div>
+                <p className="text-2xl font-semibold">
+                  {userData._count.bookings}
+                </p>
+                <p className="text-gray-500">Bookings</p>
+              </div>
+            </div>
+
+            {/* Bio */}
+            {userData.bio && (
+              <div className="w-full">
+                <p className="text-gray-600 whitespace-pre-wrap text-center">
+                  {userData.bio}
+                </p>
+              </div>
+            )}
+
+            {/* Venue Manager Badge */}
+            {userData.venueManager && (
+              <div className="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm">
+                Venue Manager
               </div>
             )}
           </div>
-          <div className="mb-4">
-            <button
-              className="bg-sky-950 hover:bg-sky-800 text-white text-xs font-bold py-1.5 px-3  rounded m-4 mx-auto block"
-              onClick={() => {
-                navigate("/editavatar");
-              }}
-            >
-              Edit avatar
-            </button>
-          </div>
-
-          {/* Stats */}
-          <div className="flex space-x-6 text-center">
-            <div>
-              <p className="text-2xl font-semibold">{userData._count.venues}</p>
-              <p className="text-gray-500">Venues</p>
-            </div>
-            <div>
-              <p className="text-2xl font-semibold">
-                {userData._count.bookings}
-              </p>
-              <p className="text-gray-500">Bookings</p>
-            </div>
-          </div>
-
-          {/* Bio */}
-          {userData.bio && (
-            <div className="w-full">
-              <p className="text-gray-600 whitespace-pre-wrap text-center">
-                {userData.bio}
-              </p>
-            </div>
-          )}
-
-          {/* Venue Manager Badge */}
-          {userData.venueManager && (
-            <div className="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm">
-              Venue Manager
-            </div>
-          )}
         </div>
       </div>
-    </div>
+      <section className="flex flex-col items-center justify-center h-screen">
+        <div className="w-full max-w-2xl mx-auto mt-2 p-6 bg-white rounded-lg shadow-md">
+          <h2 className="text-2xl font-bold text-gray-900 text-center">
+            My bookings
+          </h2>
+        </div>
+      </section>
+    </>
   );
 };
 
