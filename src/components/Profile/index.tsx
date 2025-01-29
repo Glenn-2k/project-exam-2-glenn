@@ -118,9 +118,6 @@ const UserProfile = () => {
       <h1 className="text-2xl font-bold text-gray-900 p-6 text-center uppercase">
         Edit Profile
       </h1>
-      <button className="bg-sky-950 hover:bg-sky-800 text-white font-bold py-2 px-4 rounded m-4 mx-auto block">
-        Edit avatar
-      </button>
       <div className="p-6">
         <div className="flex flex-col items-center space-y-4">
           {/* The Avatar */}
@@ -139,6 +136,9 @@ const UserProfile = () => {
               </div>
             )}
           </div>
+          <button className="bg-sky-950 hover:bg-sky-800 text-white text-xs font-bold py-1.5 px-3 uppercase rounded m-4 mx-auto block">
+            Edit avatar
+          </button>
 
           {/* User Info */}
           <div className="text-center">
