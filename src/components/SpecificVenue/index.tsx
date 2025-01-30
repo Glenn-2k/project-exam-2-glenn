@@ -3,7 +3,7 @@ import { useVenues } from "../../assets/hooks/useVenues";
 import { Venue } from "../../Types/venues.t";
 import VenueFeatures from "../../utilities/amenities";
 import StarRating from "../../utilities/StarRating";
-import Calendar from "../Calendar/calendar";
+import BookingForm from "../BookingForm";
 
 const SpecificVenue = () => {
   const { id } = useParams(); // Henter ID fra URL
@@ -62,22 +62,7 @@ const SpecificVenue = () => {
       {/* Bookingseksjon */}
       <section className="mt-6">
         <h2 className="text-lg font-semibold mb-2">Book Venue</h2>
-        <div className="mb-4">
-          <Calendar />
-        </div>
-        <div className="flex items-center mb-4">
-          <label className="block text-gray-700 mr-2">Guests:</label>
-          <input
-            type="number"
-            min="1"
-            max={venue.maxGuests || 1}
-            defaultValue="1"
-            className="w-16 border rounded p-2 text-gray-700"
-          />
-        </div>
-        <button className="w-full bg-blue-500 text-white py-2 rounded hover:bg-blue-600">
-          Book Now
-        </button>
+        <BookingForm venueId={venue.id} />
       </section>
     </div>
   );
