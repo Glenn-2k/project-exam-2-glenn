@@ -2,6 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import { fetchFn } from "../../utilities/http";
 import { baseUrl } from "../../utilities/constants";
 import { useNavigate } from "react-router-dom";
+import VenueManagerToggle from "../../utilities/venueManagerToggle";
 
 interface UserProfileResponse {
   data: {
@@ -148,9 +149,13 @@ const UserProfile = () => {
             >
               Edit Avatar
             </button>
+            <div className="mt-2 text-sm text-gray-600">
+              <VenueManagerToggle
+                userName={profile?.name}
+                venueManager={profile.venueManager || false}
+              />
+            </div>
           </div>
-
-          <p className="text-gray-600">{profile.bio}</p>
 
           {/* Added Venue Manager Status */}
           {profile.venueManager && (
