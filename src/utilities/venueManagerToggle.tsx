@@ -36,9 +36,12 @@ const VenueManagerToggle: React.FC<VenueManagerToggleProps> = ({
 
   return (
     <div>
-      <button onClick={toggleVenueManager}>
-        {isVenueManager ? "Disable" : "Enable"} venue manager
-      </button>
+      <input
+        type="checkbox"
+        checked={isVenueManager}
+        onChange={toggleVenueManager}
+      ></input>
+      <label className="ml-2 font-semibold">Become a venue manager</label>
     </div>
   );
 };
