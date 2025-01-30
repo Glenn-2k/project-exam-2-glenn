@@ -124,11 +124,11 @@ const UserProfile = () => {
     <>
       {/* Profile Section */}
       <div className="w-full max-w-2xl mx-auto mt-8 bg-white rounded-lg shadow-md overflow-hidden">
-        <h1 className="text-2xl font-bold text-gray-900 p-6 text-center uppercase">
+        <h1 className="text-2xl font-bold text-gray-900 p-6 tracking-wider text-center uppercase">
           Profile
         </h1>
         <div className="p-4 text-center">
-          <h1 className="text-2xl font-bold text-gray-900">{profile.name}</h1>
+          <h1 className="text-xl font-bold text-gray-900">{profile.name}</h1>
 
           {/* Avatar + Edit Button */}
           <div className="flex flex-col items-center">
