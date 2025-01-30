@@ -65,6 +65,7 @@ const BookingForm: React.FC<BookingFormProps> = ({ venueId }) => {
           selected={dateFrom}
           onChange={(date) => setDateFrom(date)}
           selectsStart
+          minDate={new Date()}
           startDate={dateFrom}
           endDate={dateTo}
           className="w-full border p-2 rounded"
