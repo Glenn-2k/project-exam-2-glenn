@@ -135,7 +135,7 @@ const UserProfile = () => {
               <img
                 src={profile.avatar.url}
                 alt={profile.avatar.alt || "Profile avatar"}
-                className="w-24 h-24 rounded-full mx-auto mt-4 "
+                className="w-24 h-24 rounded-full object-cover mx-auto mt-4 "
               />
             ) : (
               <div className="w-24 h-24 rounded-full mx-auto mt-4 bg-gray-200 flex items-center justify-center">
