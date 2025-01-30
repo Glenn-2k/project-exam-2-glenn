@@ -96,7 +96,7 @@ const UserProfile = () => {
       if (!userName) throw new Error("No username found in stored data");
       if (!token) throw new Error("No authentication token found");
 
-      const bookingsUrl = `${baseUrl}holidaze/profiles/${userName}/bookings`;
+      const bookingsUrl = `${baseUrl}holidaze/profiles/${userName}/bookings?_venue=true`;
       console.log("Fetching bookings from:", bookingsUrl);
       const response = await fetchFn({ queryKey: [bookingsUrl, token] });
       console.log("Bookings response:", response);
