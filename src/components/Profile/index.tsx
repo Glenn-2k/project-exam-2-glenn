@@ -175,7 +175,7 @@ const UserProfile = () => {
       </div>
 
       {/* My Bookings Section */}
-      <section className="w-full max-w-2xl mx-auto mt-8 bg-white rounded-lg shadow-md p-6">
+      <section className="w-full max-w-2xl mx-auto mt-8 bg-white rounded-lg shadow-md p-6 mb-6">
         <h2 className="text-2xl font-bold text-gray-900 text-center border-b-2 border-gray-200 pb-2">
           My bookings
         </h2>
