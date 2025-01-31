@@ -68,6 +68,7 @@ const BookingForm: React.FC<BookingFormProps> = ({ venueId }) => {
           minDate={new Date()}
           startDate={dateFrom}
           endDate={dateTo}
+          dateFormat={"dd/MM/yyyy"}
           className="w-full border p-2 rounded"
         />
       </div>
@@ -82,6 +83,7 @@ const BookingForm: React.FC<BookingFormProps> = ({ venueId }) => {
           startDate={dateFrom}
           endDate={dateTo}
           minDate={dateFrom || new Date()}
+          dateFormat={"dd/MM/yyyy"}
           className="w-full border p-2 rounded"
         />
       </div>
