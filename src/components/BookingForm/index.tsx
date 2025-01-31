@@ -1,12 +1,14 @@
 import { useState } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import { postFn } from "../../utilities/http"; // Importer funksjonen for API-kall
-import { loadLocal } from "../../utilities/localStorage"; // For token
-import { createBookingUrl } from "../../utilities/constants"; // URL til bookings-endepunkt
+import { postFn } from "../../utilities/http";
+import { loadLocal } from "../../utilities/localStorage";
+import { createBookingUrl } from "../../utilities/constants";
+import { fetchBookedDates } from "../../utilities/fetchBookedDates";
+import { useQuery } from "@tanstack/react-query";
 
 interface BookingFormProps {
-  venueId: string; // ID til stedet som skal bookes
+  venueId: string;
 }
 
 const BookingForm: React.FC<BookingFormProps> = ({ venueId }) => {
@@ -16,6 +18,13 @@ const BookingForm: React.FC<BookingFormProps> = ({ venueId }) => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState<boolean>(false);
+
+  const { data: bookedDates = [], isLoading: bookingsLoading } = useQuery({
+    queryKey: ["bookedDates", venueId],
+    queryFn: () => fetchBookedDates(venueId),
+  });
+
+  console.log("Booked Dates:", bookedDates);
 
   const handleBooking = async () => {
     if (!dateFrom || !dateTo) {
@@ -58,7 +67,11 @@ const BookingForm: React.FC<BookingFormProps> = ({ venueId }) => {
     <div className="p-6 bg-white rounded-lg shadow-md">
       <h2 className="text-xl font-bold mb-4">Book this Venue</h2>
 
-      {/* Startdato */}
+      {bookingsLoading && (
+        <p className="text-gray-500">Loading availability...</p>
+      )}
+
+      {/* Start Date */}
       <div className="mb-4">
         <label className="block text-gray-700">Start Date</label>
         <DatePicker
@@ -68,12 +81,13 @@ const BookingForm: React.FC<BookingFormProps> = ({ venueId }) => {
           minDate={new Date()}
           startDate={dateFrom}
           endDate={dateTo}
-          dateFormat={"dd/MM/yyyy"}
+          dateFormat="dd/MM/yyyy"
           className="w-full border p-2 rounded"
+          excludeDateIntervals={bookedDates}
         />
       </div>
 
-      {/* Sluttdato */}
+      {/* End Date */}
       <div className="mb-4">
         <label className="block text-gray-700">End Date</label>
         <DatePicker
@@ -83,12 +97,13 @@ const BookingForm: React.FC<BookingFormProps> = ({ venueId }) => {
           startDate={dateFrom}
           endDate={dateTo}
           minDate={dateFrom || new Date()}
-          dateFormat={"dd/MM/yyyy"}
+          dateFormat="dd/MM/yyyy"
           className="w-full border p-2 rounded"
+          excludeDateIntervals={bookedDates}
         />
       </div>
 
-      {/* Antall gjester */}
+      {/* Guests */}
       <div className="mb-4">
         <label className="block text-gray-700">Guests</label>
         <input
@@ -100,13 +115,13 @@ const BookingForm: React.FC<BookingFormProps> = ({ venueId }) => {
         />
       </div>
 
-      {/* Feilmelding */}
+      {/* Error Message */}
       {error && <p className="text-red-500">{error}</p>}
 
-      {/* Suksessmelding */}
+      {/* Success Message */}
       {success && <p className="text-green-500">Booking successful!</p>}
 
-      {/* Book Now-knapp */}
+      {/* Book Now Button */}
       <button
         onClick={handleBooking}
         className="bg-blue-600 text-white font-bold py-2 px-4 rounded w-full disabled:opacity-50"
