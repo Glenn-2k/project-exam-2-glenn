@@ -25,6 +25,9 @@ export const fetchBookedDates = async (venueId: string) => {
       const start = new Date(booking.dateFrom);
       const end = new Date(booking.dateTo);
 
+      start.setHours(0, 0, 0, 0);
+      end.setHours(23, 59, 59, 999);
+
       return { start, end };
     });
 

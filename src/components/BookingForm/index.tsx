@@ -83,7 +83,7 @@ const BookingForm: React.FC<BookingFormProps> = ({ venueId }) => {
           endDate={dateTo}
           dateFormat="dd/MM/yyyy"
           className="w-full border p-2 rounded"
-          excludeDateIntervals={bookedDates}
+          excludeDateIntervals={Array.isArray(bookedDates) ? bookedDates : []}
         />
       </div>
 
@@ -99,7 +99,7 @@ const BookingForm: React.FC<BookingFormProps> = ({ venueId }) => {
           minDate={dateFrom || new Date()}
           dateFormat="dd/MM/yyyy"
           className="w-full border p-2 rounded"
-          excludeDateIntervals={bookedDates}
+          excludeDateIntervals={Array.isArray(bookedDates) ? bookedDates : []}
         />
       </div>
 
