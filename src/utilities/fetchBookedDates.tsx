@@ -2,9 +2,9 @@ import { bookingsUrl } from "./constants";
 import { fetchFn } from "./http";
 
 interface Booking {
-  venueId: string;
   dateFrom: string;
   dateTo: string;
+  venueId: string;
 }
 
 interface DateInterval {
@@ -19,38 +19,39 @@ export const fetchBookedDates = async (
 
   try {
     console.log("Fetching bookings for venue:", venueId);
-    console.log("API Request URL:", venueBookingsUrl);
 
-    const response = await fetchFn({
-      queryKey: [venueBookingsUrl, "GET"],
-    });
+    const response = await fetchFn({ queryKey: [venueBookingsUrl, "GET"] });
 
     console.log("Raw API response:", response);
 
-    if (!response?.data || !Array.isArray(response.data)) {
-      console.warn("No valid booking data received");
+    if (!response?.data) {
+      console.warn("No booking data received");
       return [];
     }
 
-    // Convert API dates to local Date objects and format properly
+    // Filter bookings by venueId and process valid date intervals
     const dateIntervals: DateInterval[] = response.data
-      .map((booking: Booking) => {
-        const start = new Date(booking.dateFrom);
-        const end = new Date(booking.dateTo);
+      .filter(
+        (booking: Booking): booking is Booking => booking.venueId === venueId
+      ) // Filter out other venues
+      .map((booking: Booking): DateInterval | null => {
+        const start: Date = new Date(booking.dateFrom);
+        const end: Date = new Date(booking.dateTo);
 
-        // Validate date objects before setting time
         if (isNaN(start.getTime()) || isNaN(end.getTime())) {
-          console.warn("Invalid date detected:", { booking });
+          console.warn("Invalid date found:", booking);
           return null;
         }
 
-        // Set hours to full-day exclusion
         start.setHours(0, 0, 0, 0);
         end.setHours(23, 59, 59, 999);
 
         return { start, end };
       })
-      .filter(Boolean); // Remove null values
+      .filter(
+        (interval: DateInterval | null): interval is DateInterval =>
+          interval !== null
+      ); // Remove invalid intervals
 
     console.log("Processed booked date intervals:", dateIntervals);
     return dateIntervals;
