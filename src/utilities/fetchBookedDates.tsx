@@ -1,37 +1,58 @@
 import { bookingsUrl } from "./constants";
 import { fetchFn } from "./http";
 
-interface BookingResponse {
-  data: Array<{
-    dateFrom: string;
-    dateTo: string;
-  }>;
+interface Booking {
+  venueId: string;
+  dateFrom: string;
+  dateTo: string;
 }
 
-export const fetchBookedDates = async (venueId: string) => {
+interface DateInterval {
+  start: Date;
+  end: Date;
+}
+
+export const fetchBookedDates = async (
+  venueId: string
+): Promise<DateInterval[]> => {
   const venueBookingsUrl = `${bookingsUrl}?_venue=${venueId}`;
 
   try {
-    const response = (await fetchFn({
-      queryKey: [venueBookingsUrl, venueId],
-    })) as BookingResponse;
+    console.log("Fetching bookings for venue:", venueId);
+    console.log("API Request URL:", venueBookingsUrl);
 
-    if (!response || !response.data) {
-      console.warn("No booking data received");
+    const response = await fetchFn({
+      queryKey: [venueBookingsUrl, "GET"],
+    });
+
+    console.log("Raw API response:", response);
+
+    if (!response?.data || !Array.isArray(response.data)) {
+      console.warn("No valid booking data received");
       return [];
     }
 
-    const dateIntervals = response.data.map((booking) => {
-      const start = new Date(booking.dateFrom);
-      const end = new Date(booking.dateTo);
+    // Convert API dates to local Date objects and format properly
+    const dateIntervals: DateInterval[] = response.data
+      .map((booking: Booking) => {
+        const start = new Date(booking.dateFrom);
+        const end = new Date(booking.dateTo);
 
-      start.setHours(0, 0, 0, 0);
-      end.setHours(23, 59, 59, 999);
+        // Validate date objects before setting time
+        if (isNaN(start.getTime()) || isNaN(end.getTime())) {
+          console.warn("Invalid date detected:", { booking });
+          return null;
+        }
 
-      return { start, end };
-    });
+        // Set hours to full-day exclusion
+        start.setHours(0, 0, 0, 0);
+        end.setHours(23, 59, 59, 999);
 
-    console.log("Processed date intervals:", dateIntervals);
+        return { start, end };
+      })
+      .filter(Boolean); // Remove null values
+
+    console.log("Processed booked date intervals:", dateIntervals);
     return dateIntervals;
   } catch (error) {
     console.error("Error fetching booked dates:", error);

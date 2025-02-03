@@ -11,6 +11,11 @@ interface BookingFormProps {
   venueId: string;
 }
 
+interface DateInterval {
+  start: Date;
+  end: Date;
+}
+
 const BookingForm: React.FC<BookingFormProps> = ({ venueId }) => {
   const [dateFrom, setDateFrom] = useState<Date | null>(null);
   const [dateTo, setDateTo] = useState<Date | null>(null);
@@ -19,12 +24,24 @@ const BookingForm: React.FC<BookingFormProps> = ({ venueId }) => {
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState<boolean>(false);
 
-  const { data: bookedDates = [], isLoading: bookingsLoading } = useQuery({
+  const { data: bookedDates = [], isLoading: bookingsLoading } = useQuery<
+    DateInterval[]
+  >({
     queryKey: ["bookedDates", venueId],
     queryFn: () => fetchBookedDates(venueId),
   });
 
-  console.log("Booked Dates:", bookedDates);
+  console.log("📅 Raw booked dates:", bookedDates);
+  // Format the dates properly for the DatePicker
+  const excludedIntervals = bookedDates.map((interval) => ({
+    start: new Date(interval.start.getTime()), // Ensure valid date object
+    end: new Date(interval.end.getTime()), // Ensure valid date object
+  }));
+
+  console.log(
+    "🚨 Excluded intervals (final for DatePicker):",
+    excludedIntervals
+  );
 
   const handleBooking = async () => {
     if (!dateFrom || !dateTo) {
@@ -81,9 +98,15 @@ const BookingForm: React.FC<BookingFormProps> = ({ venueId }) => {
           minDate={new Date()}
           startDate={dateFrom}
           endDate={dateTo}
-          dateFormat="dd/MM/yyyy"
+          dateFormat={"dd/MM/yyyy"}
           className="w-full border p-2 rounded"
-          excludeDateIntervals={Array.isArray(bookedDates) ? bookedDates : []}
+          excludeDateIntervals={
+            (console.log(
+              "🔴 Final excluded dates in DatePicker: ",
+              excludedIntervals
+            ),
+            excludedIntervals)
+          }
         />
       </div>
 
@@ -99,7 +122,7 @@ const BookingForm: React.FC<BookingFormProps> = ({ venueId }) => {
           minDate={dateFrom || new Date()}
           dateFormat="dd/MM/yyyy"
           className="w-full border p-2 rounded"
-          excludeDateIntervals={Array.isArray(bookedDates) ? bookedDates : []}
+          excludeDateIntervals={excludedIntervals}
         />
       </div>
 
