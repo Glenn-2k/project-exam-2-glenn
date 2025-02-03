@@ -159,7 +159,7 @@ const UserProfile = () => {
 
           {/* Added Venue Manager Status */}
           {profile.venueManager && (
-            <p className="mt-2 text-sm text-red-500">Venue Manager</p>
+            <p className="mt-2 text-sm text-sky-600">Venue Manager</p>
           )}
 
           {/* Added Counts */}
