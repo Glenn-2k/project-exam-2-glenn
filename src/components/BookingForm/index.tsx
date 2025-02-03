@@ -24,24 +24,24 @@ const BookingForm: React.FC<BookingFormProps> = ({ venueId }) => {
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState<boolean>(false);
 
-  const { data: bookedDates = [], isLoading: bookingsLoading } = useQuery<
-    DateInterval[]
-  >({
+  const {
+    data: bookedDates = [],
+    isLoading: bookingsLoading,
+    refetch,
+  } = useQuery<DateInterval[]>({
     queryKey: ["bookedDates", venueId],
     queryFn: () => fetchBookedDates(venueId),
+    refetchOnWindowFocus: true, // Ensures fresh data when the page is revisited
   });
 
-  console.log("📅 Raw booked dates:", bookedDates);
   // Format the dates properly for the DatePicker
   const excludedIntervals = bookedDates.map((interval) => ({
-    start: new Date(interval.start.getTime()), // Ensure valid date object
-    end: new Date(interval.end.getTime()), // Ensure valid date object
+    start: new Date(interval.start.setHours(0, 0, 0, 0)),
+    end: new Date(interval.end.setHours(23, 59, 59, 999)),
   }));
 
-  console.log(
-    "🚨 Excluded intervals (final for DatePicker):",
-    excludedIntervals
-  );
+  console.log("📢 Received booked dates from API:", bookedDates);
+  console.log("🚫 Excluded intervals for DatePicker:", excludedIntervals);
 
   const handleBooking = async () => {
     if (!dateFrom || !dateTo) {
@@ -72,7 +72,9 @@ const BookingForm: React.FC<BookingFormProps> = ({ venueId }) => {
         body: bookingData,
         token,
       });
+
       setSuccess(true);
+      refetch(); // Fetch new bookings after successful booking
     } catch {
       setError("Failed to make booking. Please try again.");
     } finally {
@@ -98,15 +100,9 @@ const BookingForm: React.FC<BookingFormProps> = ({ venueId }) => {
           minDate={new Date()}
           startDate={dateFrom}
           endDate={dateTo}
-          dateFormat={"dd/MM/yyyy"}
+          dateFormat="dd/MM/yyyy"
           className="w-full border p-2 rounded"
-          excludeDateIntervals={
-            (console.log(
-              "🔴 Final excluded dates in DatePicker: ",
-              excludedIntervals
-            ),
-            excludedIntervals)
-          }
+          excludeDateIntervals={excludedIntervals}
         />
       </div>
 

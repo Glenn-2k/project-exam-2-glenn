@@ -2,9 +2,9 @@ import { bookingsUrl } from "./constants";
 import { fetchFn } from "./http";
 
 interface Booking {
+  venueId: string;
   dateFrom: string;
   dateTo: string;
-  venueId: string;
 }
 
 interface DateInterval {
@@ -15,48 +15,56 @@ interface DateInterval {
 export const fetchBookedDates = async (
   venueId: string
 ): Promise<DateInterval[]> => {
-  const venueBookingsUrl = `${bookingsUrl}?_venue=${venueId}`;
+  const venueBookingsUrl = `${bookingsUrl}`;
 
   try {
-    console.log("Fetching bookings for venue:", venueId);
+    console.log("🔍 Fetching bookings for venue:", venueId);
+    console.log("🌍 API Request URL:", venueBookingsUrl);
 
-    const response = await fetchFn({ queryKey: [venueBookingsUrl, "GET"] });
+    const response = await fetchFn({
+      queryKey: [venueBookingsUrl, "GET"],
+    });
 
-    console.log("Raw API response:", response);
+    console.log("📦 Raw API response:", response);
 
-    if (!response?.data) {
-      console.warn("No booking data received");
+    if (!response?.data || !Array.isArray(response.data)) {
+      console.warn("⚠️ No valid booking data received");
       return [];
     }
 
-    // Filter bookings by venueId and process valid date intervals
-    const dateIntervals: DateInterval[] = response.data
-      .filter(
-        (booking: Booking): booking is Booking => booking.venueId === venueId
-      ) // Filter out other venues
-      .map((booking: Booking): DateInterval | null => {
-        const start: Date = new Date(booking.dateFrom);
-        const end: Date = new Date(booking.dateTo);
+    // ✅ **Filter bookings only for this venue**
+    const venueBookings = response.data.filter(
+      (booking: Booking) => booking.venueId === venueId
+    );
 
+    console.log("🏨 Filtered bookings for venue:", venueId, venueBookings);
+
+    // Convert API dates to local Date objects and format properly
+    const dateIntervals: DateInterval[] = venueBookings
+      .map((booking: Booking) => {
+        const start = new Date(booking.dateFrom);
+        const end = new Date(booking.dateTo);
+
+        // Validate date objects before setting time
         if (isNaN(start.getTime()) || isNaN(end.getTime())) {
-          console.warn("Invalid date found:", booking);
+          console.warn("❌ Invalid date detected:", { booking });
           return null;
         }
 
+        console.log("✅ Valid Booking Found:", booking);
+
+        // Set hours to full-day exclusion
         start.setHours(0, 0, 0, 0);
         end.setHours(23, 59, 59, 999);
 
         return { start, end };
       })
-      .filter(
-        (interval: DateInterval | null): interval is DateInterval =>
-          interval !== null
-      ); // Remove invalid intervals
+      .filter(Boolean); // Remove null values
 
-    console.log("Processed booked date intervals:", dateIntervals);
+    console.log("✅ Final Processed Booked Date Intervals:", dateIntervals);
     return dateIntervals;
   } catch (error) {
-    console.error("Error fetching booked dates:", error);
+    console.error("❌ Error fetching booked dates:", error);
     return [];
   }
 };
