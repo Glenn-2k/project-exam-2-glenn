@@ -40,9 +40,6 @@ const BookingForm: React.FC<BookingFormProps> = ({ venueId }) => {
     end: new Date(interval.end.setHours(23, 59, 59, 999)),
   }));
 
-  console.log("📢 Received booked dates from API:", bookedDates);
-  console.log("🚫 Excluded intervals for DatePicker:", excludedIntervals);
-
   const handleBooking = async () => {
     if (!dateFrom || !dateTo) {
       setError("Please select both start and end date.");

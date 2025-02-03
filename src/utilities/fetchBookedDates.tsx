@@ -17,14 +17,9 @@ export const fetchBookedDates = async (
   const venueBookingsUrl = `${venuesUrl}/${venueId}?_bookings=true`;
 
   try {
-    console.log("Fetching bookings for venue:", venueId);
-    console.log("API Request URL:", venueBookingsUrl);
-
     const response = await fetchFn({
       queryKey: [venueBookingsUrl, "GET"],
     });
-
-    console.log("Raw API response:", response);
 
     if (!response?.data || !response.data.bookings) {
       console.warn("No valid booking data received");
@@ -53,7 +48,6 @@ export const fetchBookedDates = async (
       })
       .filter(Boolean); // Remove null values
 
-    console.log("Processed booked date intervals:", dateIntervals);
     return dateIntervals;
   } catch (error) {
     console.error("Error fetching booked dates:", error);
