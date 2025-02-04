@@ -1,25 +1,13 @@
+import { useState } from "react";
 import { postFn } from "../../utilities/http";
 import { createVenueUrl } from "../../utilities/constants";
 import { useNavigate } from "react-router-dom";
-import { useState } from "react";
 import * as Yup from "yup";
 import { loadLocal } from "../../utilities/localStorage";
 
 const CreateVenue: React.FC = () => {
-  const storedUserData = localStorage.getItem("user");
   const token = loadLocal("token") || "";
   const navigate = useNavigate();
-
-  let userName = "";
-  try {
-    if (storedUserData) {
-      const parsedData = JSON.parse(storedUserData);
-      userName = parsedData.data?.name;
-      console.log("Found user name:", userName);
-    }
-  } catch (error) {
-    console.error("Error parsing user data:", error);
-  }
 
   const [formData, setFormData] = useState({
     name: "",
@@ -27,6 +15,12 @@ const CreateVenue: React.FC = () => {
     price: "",
     maxGuests: "",
     image: "",
+    meta: {
+      wifi: false,
+      parking: false,
+      breakfast: false,
+      pets: false,
+    },
   });
 
   const [errors, setErrors] = useState<Record<string, string>>({});
@@ -42,8 +36,19 @@ const CreateVenue: React.FC = () => {
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
-    const { name, value } = e.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
+    const { name, value, type, checked } = e.target as HTMLInputElement;
+
+    if (type === "checkbox") {
+      setFormData((prev) => ({
+        ...prev,
+        meta: {
+          ...prev.meta,
+          [name]: checked,
+        },
+      }));
+    } else {
+      setFormData((prev) => ({ ...prev, [name]: value }));
+    }
   };
 
   const handleSubmit = async () => {
@@ -54,18 +59,21 @@ const CreateVenue: React.FC = () => {
       const body = {
         name: formData.name,
         description: formData.description,
-        price: formData.price,
-        maxGuests: formData.maxGuests,
-        image: {
-          url: formData.image,
-          alt: `${userName}'s venue image`,
-        },
+        price: Number(formData.price),
+        maxGuests: Number(formData.maxGuests),
+        media: [
+          {
+            url: formData.image,
+            alt: `${formData.name} venue image`,
+          },
+        ],
+        meta: formData.meta,
       };
 
       await postFn({
         url: createVenueUrl,
         body,
-        token: token || "",
+        token,
       });
 
       setTimeout(() => {
@@ -84,59 +92,147 @@ const CreateVenue: React.FC = () => {
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen p-6">
-      <div className="bg-white shadow-lg rounded-lg p-8 max-w-md w-full">
-        <h1>Create Venue</h1>
-        <form>
-          <label>
-            Name
+      <div className="bg-white shadow-lg rounded-lg p-8 max-w-lg w-full">
+        <h1 className="text-2xl font-bold text-center text-gray-800 mb-6 uppercase">
+          Create Venue
+        </h1>
+        <form className="space-y-4">
+          {/* Name */}
+          <div>
+            <label className="block text-sm font-semibold text-gray-600">
+              Name
+            </label>
             <input
               type="text"
               name="name"
               value={formData.name}
               onChange={handleChange}
+              className="w-full p-2 border rounded-md"
             />
-            {errors.name && <span>{errors.name}</span>}
-          </label>
-          <label>
-            Description
+            {errors.name && <span className="text-red-500">{errors.name}</span>}
+          </div>
+
+          {/* Description */}
+          <div>
+            <label className="block text-sm font-semibold text-gray-600">
+              Description
+            </label>
             <textarea
               name="description"
               value={formData.description}
               onChange={handleChange}
+              className="w-full p-2 border rounded-md h-24"
             />
-            {errors.description && <span>{errors.description}</span>}
-          </label>
-          <label>
-            Price
-            <input
-              type="number"
-              name="price"
-              value={formData.price}
-              onChange={handleChange}
-            />
-            {errors.price && <span>{errors.price}</span>}
-          </label>
-          <label>
-            Max Guests
-            <input
-              type="number"
-              name="maxGuests"
-              value={formData.maxGuests}
-              onChange={handleChange}
-            />
-            {errors.maxGuests && <span>{errors.maxGuests}</span>}
-          </label>
-          <label>
-            Image
+            {errors.description && (
+              <span className="text-red-500">{errors.description}</span>
+            )}
+          </div>
+
+          {/* Price & Max Guests */}
+          <div className="grid grid-cols-2 gap-4">
+            <div>
+              <label className="block text-sm font-semibold text-gray-600">
+                Price
+              </label>
+              <input
+                type="number"
+                name="price"
+                value={formData.price}
+                onChange={handleChange}
+                className="w-full p-2 border rounded-md"
+              />
+              {errors.price && (
+                <span className="text-red-500">{errors.price}</span>
+              )}
+            </div>
+
+            <div>
+              <label className="block text-sm font-semibold text-gray-600">
+                Max Guests
+              </label>
+              <input
+                type="number"
+                name="maxGuests"
+                value={formData.maxGuests}
+                onChange={handleChange}
+                className="w-full p-2 border rounded-md"
+              />
+              {errors.maxGuests && (
+                <span className="text-red-500">{errors.maxGuests}</span>
+              )}
+            </div>
+          </div>
+
+          {/* Image URL */}
+          <div>
+            <label className="block text-sm font-semibold text-gray-600">
+              Image URL
+            </label>
             <input
               type="text"
               name="image"
               value={formData.image}
               onChange={handleChange}
+              className="w-full p-2 border rounded-md"
             />
-            {errors.image && <span>{errors.image}</span>}
-          </label>
-          <button type="button" onClick={handleSubmit}>
+            {errors.image && (
+              <span className="text-red-500">{errors.image}</span>
+            )}
+          </div>
+
+          {/* Meta Checkboxes */}
+          <div className="grid grid-cols-2 gap-4">
+            <label className="flex items-center space-x-2">
+              <input
+                type="checkbox"
+                name="wifi"
+                checked={formData.meta.wifi}
+                onChange={handleChange}
+                className="w-4 h-4"
+              />
+              <span className="text-sm text-gray-600">Wifi</span>
+            </label>
+
+            <label className="flex items-center space-x-2">
+              <input
+                type="checkbox"
+                name="parking"
+                checked={formData.meta.parking}
+                onChange={handleChange}
+                className="w-4 h-4"
+              />
+              <span className="text-sm text-gray-600">Parking</span>
+            </label>
+
+            <label className="flex items-center space-x-2">
+              <input
+                type="checkbox"
+                name="breakfast"
+                checked={formData.meta.breakfast}
+                onChange={handleChange}
+                className="w-4 h-4"
+              />
+              <span className="text-sm text-gray-600">Breakfast</span>
+            </label>
+
+            <label className="flex items-center space-x-2">
+              <input
+                type="checkbox"
+                name="pets"
+                checked={formData.meta.pets}
+                onChange={handleChange}
+                className="w-4 h-4"
+              />
+              <span className="text-sm text-gray-600">Pets</span>
+            </label>
+          </div>
+
+          {/* Submit Button */}
+          <button
+            className="bg-sky-950 hover:bg-sky-800 text-white font-bold py-2 px-4 rounded-md transition-all duration-200 w-full mt-4"
+            type="button"
+            onClick={handleSubmit}
+          >
             Create Venue
           </button>
         </form>

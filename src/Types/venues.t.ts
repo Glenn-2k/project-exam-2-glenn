@@ -38,6 +38,28 @@ interface Venue {
   location: Location;
 }
 
+interface VenueLocation {
+  address?: string;
+  city?: string;
+  zip?: string;
+  country?: string;
+  continent?: string;
+  lat?: number;
+  lng?: number;
+}
+
+interface VenueFormData {
+  [key: string]: unknown;
+  name: string;
+  description: string;
+  media?: Media[];
+  price: number;
+  maxGuests: number;
+  rating?: number;
+  meta?: VenueMeta;
+  location?: VenueLocation;
+}
+
 // Meta information for pagination
 interface PaginationMeta {
   isFirstPage: boolean;
@@ -60,6 +82,6 @@ enum SortOrder {
   Descending = "desc",
 }
 
-export type { Venue, Media, VenueMeta, Location, VenueResponse };
+export type { Venue, Media, VenueMeta, Location, VenueResponse, VenueFormData };
 
 export { SortOrder };
