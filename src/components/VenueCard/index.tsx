@@ -44,9 +44,7 @@ const VenueCard: React.FC<Venue> = ({
       <div className="p-4 flex flex-col flex-grow">
         {/* Name and Rating */}
         <div className="flex justify-between items-center mb-2">
-          <h2 className="text-base sm:text-lg font-semibold">
-            {name}, {city}
-          </h2>
+          <h2 className="text-base sm:text-lg font-semibold">{name}</h2>
           <div className="flex items-center">
             <StarRating key={id} rating={rating} />
           </div>
