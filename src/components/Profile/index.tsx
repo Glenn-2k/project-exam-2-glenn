@@ -129,6 +129,9 @@ const UserProfile = () => {
         </h1>
         <div className="p-4 text-center">
           <h1 className="text-xl font-bold text-gray-900">{profile.name}</h1>
+          {profile.venueManager && (
+            <p className=" text-sm text-sky-600">Venue Manager</p>
+          )}
 
           {/* Avatar + Edit Button */}
           <div className="flex flex-col items-center">
@@ -155,12 +158,16 @@ const UserProfile = () => {
                 venueManager={profile.venueManager || false}
               />
             </div>
-          </div>
 
-          {/* Added Venue Manager Status */}
-          {profile.venueManager && (
-            <p className="mt-2 text-sm text-sky-600">Venue Manager</p>
-          )}
+            {profile.venueManager && (
+              <button
+                className="bg-sky-950 hover:bg-sky-800 text-white text-xs font-bold py-1.5 px-3 rounded m-4"
+                onClick={() => navigate("/createvenue")}
+              >
+                Create Venue
+              </button>
+            )}
+          </div>
 
           {/* Added Counts */}
           <div className="mt-4 flex justify-center gap-4 text-sm text-gray-900">
@@ -197,6 +204,19 @@ const UserProfile = () => {
                 </li>
               ))}
             </ul>
+          ) : (
+            <p className="text-gray-500 text-center">No bookings found.</p>
+          )}
+        </div>
+      </section>
+
+      <section className="w-full max-w-2xl mx-auto mt-8 bg-white rounded-lg shadow-md p-6 mb-6">
+        <h2 className="text-2xl font-bold text-gray-900 text-center border-b-2 border-gray-200 pb-2">
+          My Venues
+        </h2>
+        <div className="p-4">
+          {bookings.length > 0 ? (
+            <ul className="divide-y divide-gray-200"></ul>
           ) : (
             <p className="text-gray-500 text-center">No bookings found.</p>
           )}

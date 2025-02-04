@@ -8,6 +8,7 @@ import Login from "./components/Login/login";
 import Register from "./components/Register";
 import UserProfile from "./components/Profile";
 import EditAvatar from "./components/EditAvatar";
+import CreateVenue from "./components/CreateVenue";
 
 function RouteNotFound() {
   return <div>Page not found</div>;
@@ -26,6 +27,7 @@ function App() {
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
             <Route path="/editavatar" element={<EditAvatar />} />
+            <Route path="/createvenue" element={<CreateVenue />} />
             <Route path="*" element={<RouteNotFound />} />
             <Route path="/venues/:id" element={<SpecificVenue />} />
           </Route>
