@@ -5,7 +5,6 @@ import StarRating from "../../utilities/StarRating";
 
 const VenueCard: React.FC<Venue> = ({
   name = "Unknown Venue",
-  location,
   description = "No description available.",
   price = 0,
   media,
@@ -20,7 +19,6 @@ const VenueCard: React.FC<Venue> = ({
 
   const imageUrl =
     media && media.length > 0 ? media[0].url : "https://placehold.co/400";
-  const city = location?.city || "Unknown Location";
   const truncateText = (text: string, maxWords: number) => {
     const words = text.split(" ");
     return words.length > maxWords
