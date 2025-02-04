@@ -235,6 +235,13 @@ const CreateVenue: React.FC = () => {
           >
             Create Venue
           </button>
+          <button
+            className="bg-red-800 hover:bg-red-950 text-white font-bold py-2 px-4 rounded-md transition-all duration-200 w-full mt-4"
+            type="button"
+            onClick={() => navigate("/profile")}
+          >
+            Cancel
+          </button>
         </form>
       </div>
     </div>
