@@ -83,62 +83,64 @@ const CreateVenue: React.FC = () => {
   };
 
   return (
-    <div className="create-venue">
-      <h1>Create Venue</h1>
-      <form>
-        <label>
-          Name
-          <input
-            type="text"
-            name="name"
-            value={formData.name}
-            onChange={handleChange}
-          />
-          {errors.name && <span>{errors.name}</span>}
-        </label>
-        <label>
-          Description
-          <textarea
-            name="description"
-            value={formData.description}
-            onChange={handleChange}
-          />
-          {errors.description && <span>{errors.description}</span>}
-        </label>
-        <label>
-          Price
-          <input
-            type="number"
-            name="price"
-            value={formData.price}
-            onChange={handleChange}
-          />
-          {errors.price && <span>{errors.price}</span>}
-        </label>
-        <label>
-          Max Guests
-          <input
-            type="number"
-            name="maxGuests"
-            value={formData.maxGuests}
-            onChange={handleChange}
-          />
-          {errors.maxGuests && <span>{errors.maxGuests}</span>}
-        </label>
-        <label>
-          Image
-          <input
-            type="text"
-            name="image"
-            value={formData.image}
-            onChange={handleChange}
-          />
-          {errors.image && <span>{errors.image}</span>}
-        </label>
-        <button type="button" onClick={handleSubmit}>
-          Create Venue
-        </button>
-      </form>
+    <div className="flex flex-col items-center justify-center min-h-screen p-6">
+      <div className="bg-white shadow-lg rounded-lg p-8 max-w-md w-full">
+        <h1>Create Venue</h1>
+        <form>
+          <label>
+            Name
+            <input
+              type="text"
+              name="name"
+              value={formData.name}
+              onChange={handleChange}
+            />
+            {errors.name && <span>{errors.name}</span>}
+          </label>
+          <label>
+            Description
+            <textarea
+              name="description"
+              value={formData.description}
+              onChange={handleChange}
+            />
+            {errors.description && <span>{errors.description}</span>}
+          </label>
+          <label>
+            Price
+            <input
+              type="number"
+              name="price"
+              value={formData.price}
+              onChange={handleChange}
+            />
+            {errors.price && <span>{errors.price}</span>}
+          </label>
+          <label>
+            Max Guests
+            <input
+              type="number"
+              name="maxGuests"
+              value={formData.maxGuests}
+              onChange={handleChange}
+            />
+            {errors.maxGuests && <span>{errors.maxGuests}</span>}
+          </label>
+          <label>
+            Image
+            <input
+              type="text"
+              name="image"
+              value={formData.image}
+              onChange={handleChange}
+            />
+            {errors.image && <span>{errors.image}</span>}
+          </label>
+          <button type="button" onClick={handleSubmit}>
+            Create Venue
+          </button>
+        </form>
+      </div>
     </div>
   );
 };
