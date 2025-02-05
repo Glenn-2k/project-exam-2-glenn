@@ -70,7 +70,7 @@ interface VenueResponse {
 }
 
 const UserProfile = () => {
-  const deleteVenue = useDeleteVenue();
+  const deleteVenueMutation = useDeleteVenue();
   const storedUserData = localStorage.getItem("user");
   const token = localStorage.getItem("token");
   const navigate = useNavigate();
@@ -271,7 +271,7 @@ const UserProfile = () => {
                 <li key={venue.id} className="pb-4 flex items-center">
                   <FaRegTrashAlt
                     className="mr-4"
-                    onClick={() => deleteVenue(venue.id)}
+                    onClick={() => deleteVenueMutation.mutate(venue.id)}
                   />
 
                   <div className="flex flex-col">
