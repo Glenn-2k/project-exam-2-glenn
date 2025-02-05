@@ -54,7 +54,7 @@ interface VenueResponse {
     location: string;
     description: string;
     price: number;
-    images: Array<{ url: string; alt: string }>;
+    media: Array<{ url: string; alt: string }>;
   }>;
   meta: {
     isFirstPage: boolean;
@@ -265,12 +265,25 @@ const UserProfile = () => {
           {venues && venues.length > 0 ? (
             <ul className="divide-y divide-gray-200">
               {venues.map((venue) => (
-                <li key={venue.id} className="py-4">
-                  <p className="font-semibold text-gray-900">{venue.name}</p>
-                  <p className="text-gray-600">${venue.price}</p>
-                  <p className="text-sm text-gray-500">
-                    {venue.description.slice(0, 100)}...
-                  </p>
+                <li key={venue.id} className="pb-4 flex items-center">
+                  <div className="flex flex-col">
+                    <p className="font-semibold text-gray-900">{venue.name}</p>
+                    <p className="text-gray-600">${venue.price}</p>
+                  </div>
+                  <div className="flex justify-end flex-grow">
+                    {venue.media.map((mediaItem, index) => (
+                      <img
+                        className="h-16 object-cover rounded-md "
+                        key={index}
+                        src={
+                          mediaItem.url
+                            ? mediaItem.url
+                            : "https://commons.wikimedia.org/wiki/File:No-Image-Placeholder.svg"
+                        }
+                        alt={mediaItem.alt}
+                      />
+                    ))}
+                  </div>
                 </li>
               ))}
             </ul>
