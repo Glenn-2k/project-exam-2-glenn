@@ -57,6 +57,7 @@ interface VenueResponse {
     description: string;
     price: number;
     media: Array<{ url: string; alt: string }>;
+    _count: { bookings: number };
   }>;
   meta: {
     isFirstPage: boolean;
@@ -277,6 +278,9 @@ const UserProfile = () => {
                   <div className="flex flex-col">
                     <p className="font-semibold text-gray-900">{venue.name}</p>
                     <p className="text-gray-600">${venue.price}</p>
+                    <p className="text-sm text-gray-500">
+                      Bookings: {venue._count.bookings}
+                    </p>
                   </div>
                   <div className="flex justify-end flex-grow">
                     {venue.media.map((mediaItem, index) => (
