@@ -3,6 +3,8 @@ import { fetchFn } from "../../utilities/http";
 import { baseUrl, userUrl } from "../../utilities/constants";
 import { useNavigate } from "react-router-dom";
 import VenueManagerToggle from "../../utilities/venueManagerToggle";
+import { FaRegTrashAlt } from "react-icons/fa";
+import useDeleteVenue from "../../utilities/deleteVenue";
 
 interface UserProfileResponse {
   data: {
@@ -68,6 +70,7 @@ interface VenueResponse {
 }
 
 const UserProfile = () => {
+  const deleteVenue = useDeleteVenue();
   const storedUserData = localStorage.getItem("user");
   const token = localStorage.getItem("token");
   const navigate = useNavigate();
@@ -266,6 +269,11 @@ const UserProfile = () => {
             <ul className="divide-y divide-gray-200">
               {venues.map((venue) => (
                 <li key={venue.id} className="pb-4 flex items-center">
+                  <FaRegTrashAlt
+                    className="mr-4"
+                    onClick={() => deleteVenue(venue.id)}
+                  />
+
                   <div className="flex flex-col">
                     <p className="font-semibold text-gray-900">{venue.name}</p>
                     <p className="text-gray-600">${venue.price}</p>
