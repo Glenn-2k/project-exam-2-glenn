@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import { fetchFn } from "../../utilities/http";
-import { baseUrl } from "../../utilities/constants";
+import { baseUrl, userUrl } from "../../utilities/constants";
 import { useNavigate } from "react-router-dom";
 import VenueManagerToggle from "../../utilities/venueManagerToggle";
 
@@ -35,6 +35,26 @@ interface BookingResponse {
     created: string;
     updated: string;
     venue: { name: string };
+  }>;
+  meta: {
+    isFirstPage: boolean;
+    isLastPage: boolean;
+    currentPage: number;
+    previousPage: number | null;
+    nextPage: number | null;
+    pageCount: number;
+    totalCount: number;
+  };
+}
+
+interface VenueResponse {
+  data: Array<{
+    id: string;
+    name: string;
+    location: string;
+    description: string;
+    price: number;
+    images: Array<{ url: string; alt: string }>;
   }>;
   meta: {
     isFirstPage: boolean;
@@ -105,19 +125,46 @@ const UserProfile = () => {
     enabled: Boolean(userName && token),
   });
 
-  if (profileLoading || bookingsLoading) {
-    return <div>Loading...</div>;
-  }
-
-  if (profileError || bookingsError) {
-    return <div>Error loading data.</div>;
-  }
-
   const profile = profileResponse?.data;
   const bookings = bookingsResponse?.data;
 
+  const {
+    data: VenuesResponse,
+    isLoading: VenueLoading,
+    error: VenueError,
+  } = useQuery({
+    queryKey: ["venues"],
+    queryFn: async () => {
+      const venuesUrl = `${userUrl}${userName}/venues`;
+      console.log("Fetching venues from:", venuesUrl);
+      if (!token) throw new Error("No authentication token found");
+      const response = await fetchFn({ queryKey: [venuesUrl, token] });
+      console.log("Venues response:", response);
+      return response as VenueResponse;
+    },
+    enabled: Boolean(userName && token),
+  });
+
+  const venues = VenuesResponse?.data;
+
+  if (profileLoading || bookingsLoading || VenueLoading) {
+    return <div>Loading...</div>;
+  }
+
+  if (profileError || bookingsError || VenueError) {
+    return <div>Error loading data.</div>;
+  }
+
   if (!profile || !bookings) {
     return <div>No data available</div>;
+  }
+
+  if (VenueLoading) {
+    return <div>Loading...</div>;
+  }
+
+  if (VenueError) {
+    return <div>Error loading data.</div>;
   }
 
   return (
@@ -215,10 +262,20 @@ const UserProfile = () => {
           My Venues
         </h2>
         <div className="p-4">
-          {bookings.length > 0 ? (
-            <ul className="divide-y divide-gray-200"></ul>
+          {venues && venues.length > 0 ? (
+            <ul className="divide-y divide-gray-200">
+              {venues.map((venue) => (
+                <li key={venue.id} className="py-4">
+                  <p className="font-semibold text-gray-900">{venue.name}</p>
+                  <p className="text-gray-600">${venue.price}</p>
+                  <p className="text-sm text-gray-500">
+                    {venue.description.slice(0, 100)}...
+                  </p>
+                </li>
+              ))}
+            </ul>
           ) : (
-            <p className="text-gray-500 text-center">No bookings found.</p>
+            <p className="text-gray-500 text-center">No venues found.</p>
           )}
         </div>
       </section>
