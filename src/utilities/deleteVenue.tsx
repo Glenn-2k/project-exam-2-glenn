@@ -18,7 +18,7 @@ const useDeleteVenue = () => {
       }
     },
     [navigate]
-  ); // Dependency array ensures it's memoized properly
+  );
 };
 
 export default useDeleteVenue;
