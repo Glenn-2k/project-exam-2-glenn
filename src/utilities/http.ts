@@ -3,8 +3,6 @@ import { loadLocal } from "./localStorage";
 
 import { API_KEY } from "./constants";
 
-// const baseUrl = `${baseUrl}`; // Removed due to circular reference
-
 export const queryClient = new QueryClient();
 
 export async function fetchFn({ queryKey }: { queryKey: [string, string] }) {
@@ -108,13 +106,12 @@ export async function deleteFn({ url, token }: { url: string; token: string }) {
         Authorization: `Bearer ${token}`,
       },
     });
-    const data = await response.json();
 
-    if (!response.ok) {
-      throw new Error(data.message || "An error occurred while deleting.");
+    if (response.status === 204) {
+      return null;
     }
 
-    return data;
+    return response.json();
   } catch (error) {
     if (error instanceof Error) {
       throw new Error(error.message || "Failed to delete data.");
