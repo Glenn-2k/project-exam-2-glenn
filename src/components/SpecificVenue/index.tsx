@@ -58,7 +58,7 @@ const SpecificVenue = () => {
   });
 
   const profile = profileResponse?.data;
-  const nameCheck = profile?.name === localStorage.user.name;
+  const isOwner = venue?.owner?.name === profile?.name;
 
   if (profileLoading) return <div>Loading profile...</div>;
   if (profileError)
@@ -109,7 +109,7 @@ const SpecificVenue = () => {
 
       {/* Bookingseksjon */}
       <section className="mt-6">
-        {profile?.venueManager && !!nameCheck ? (
+        {profile?.venueManager && isOwner ? (
           <>
             <h2 className="text-lg text-center font-semibold mb-2">
               Manage Venue
