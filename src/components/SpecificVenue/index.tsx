@@ -1,4 +1,4 @@
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useVenues } from "../../assets/hooks/useVenues";
 import { Venue } from "../../Types/venues.t";
 import VenueFeatures from "../../utilities/amenities";
@@ -8,10 +8,13 @@ import { UserProfileResponse } from "../../Types/profiles.t";
 import { baseUrl } from "../../utilities/constants";
 import { fetchFn } from "../../utilities/http";
 import { useQuery } from "@tanstack/react-query";
+import useDeleteVenue from "../../utilities/deleteVenue";
 
 const SpecificVenue = () => {
   const { id } = useParams(); // Henter ID fra URL
+  const navigate = useNavigate(); // Hook for navigation
   const { venues, loading, error } = useVenues(); // Fetcher venues fra API
+  const deleteVenueMutation = useDeleteVenue();
 
   // Finn det spesifikke venue ved hjelp av id
   const venue: Venue | undefined = venues?.find(
@@ -55,6 +58,7 @@ const SpecificVenue = () => {
   });
 
   const profile = profileResponse?.data;
+  const nameCheck = profile?.name === localStorage.user.name;
 
   if (profileLoading) return <div>Loading profile...</div>;
   if (profileError)
@@ -105,14 +109,22 @@ const SpecificVenue = () => {
 
       {/* Bookingseksjon */}
       <section className="mt-6">
-        {profile?.venueManager ? (
+        {profile?.venueManager && !!nameCheck ? (
           <>
-            <h2 className="text-lg font-semibold mb-2">Manage Venue</h2>
-            <div className="flex justify-between items-center">
-              <button className="bg-red-500 text-white px-4 py-2 rounded-md">
+            <h2 className="text-lg text-center font-semibold mb-2">
+              Manage Venue
+            </h2>
+            <div className="flex justify-around items-center my-6">
+              <button
+                className="bg-red-500 text-white px-4 py-2 rounded-md"
+                onClick={() => deleteVenueMutation.mutate(venue.id)}
+              >
                 Delete Venue
               </button>
-              <button className="bg-blue-500 text-white px-4 py-2 rounded-md">
+              <button
+                className="bg-blue-500 text-white px-4 py-2 rounded-md"
+                onClick={() => navigate("/updatevenue")}
+              >
                 Update Venue
               </button>
             </div>

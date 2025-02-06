@@ -19,7 +19,7 @@ export const useVenues = () => {
       try {
         setLoading(true);
 
-        const url = `${venuesUrl}?limit=${limit}&sort=${sort}&sortOrder=${sortOrder}&page=${page}`;
+        const url = `${venuesUrl}?limit=${limit}&sort=${sort}&sortOrder=${sortOrder}&page=${page}&_owner=true`;
         console.log("Fetching URL:", url); // Debug the constructed URL
 
         const response = await fetchFn({ queryKey: [url, "venues"] });
