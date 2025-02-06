@@ -9,6 +9,7 @@ import Register from "./components/Register";
 import UserProfile from "./components/Profile";
 import EditAvatar from "./components/EditAvatar";
 import CreateVenue from "./components/CreateVenue";
+import UpdateVenue from "./components/UpdateVenue";
 
 function RouteNotFound() {
   return <div>Page not found</div>;
@@ -28,6 +29,7 @@ function App() {
             <Route path="/register" element={<Register />} />
             <Route path="/editavatar" element={<EditAvatar />} />
             <Route path="/createvenue" element={<CreateVenue />} />
+            <Route path="/updatevenue" element={<UpdateVenue />} />
             <Route path="*" element={<RouteNotFound />} />
             <Route path="/venues/:id" element={<SpecificVenue />} />
           </Route>

@@ -5,70 +5,73 @@ import { useNavigate } from "react-router-dom";
 import VenueManagerToggle from "../../utilities/venueManagerToggle";
 import { FaRegTrashAlt } from "react-icons/fa";
 import useDeleteVenue from "../../utilities/deleteVenue";
+import { VenueResponse } from "../../Types/venues.t";
+import { BookingResponse } from "../../Types/bookings.t";
+import { UserProfileResponse } from "../../Types/profiles.t";
 
-interface UserProfileResponse {
-  data: {
-    name: string;
-    email: string;
-    bio: string;
-    avatar: {
-      url: string;
-      alt: string;
-    } | null;
-    banner: {
-      url: string;
-      alt: string;
-    } | null;
-    venueManager: boolean;
-    _count: {
-      venues: number;
-      bookings: number;
-    };
-  };
-  meta: Record<string, unknown>;
-}
+// interface UserProfileResponse {
+//   data: {
+//     name: string;
+//     email: string;
+//     bio: string;
+//     avatar: {
+//       url: string;
+//       alt: string;
+//     } | null;
+//     banner: {
+//       url: string;
+//       alt: string;
+//     } | null;
+//     venueManager: boolean;
+//     _count: {
+//       venues: number;
+//       bookings: number;
+//     };
+//   };
+//   meta: Record<string, unknown>;
+// }
 
-interface BookingResponse {
-  data: Array<{
-    id: string;
-    dateFrom: string;
-    dateTo: string;
-    guests: number;
-    created: string;
-    updated: string;
-    venue: { name: string };
-  }>;
-  meta: {
-    isFirstPage: boolean;
-    isLastPage: boolean;
-    currentPage: number;
-    previousPage: number | null;
-    nextPage: number | null;
-    pageCount: number;
-    totalCount: number;
-  };
-}
+// interface BookingResponse {
+//   data: Array<{
+//     id: string;
+//     dateFrom: string;
+//     dateTo: string;
+//     guests: number;
+//     created: string;
+//     updated: string;
+//     venue: { name: string };
+//   }>;
+//   meta: {
+//     isFirstPage: boolean;
+//     isLastPage: boolean;
+//     currentPage: number;
+//     previousPage: number | null;
+//     nextPage: number | null;
+//     pageCount: number;
+//     totalCount: number;
+//   };
+// }
 
-interface VenueResponse {
-  data: Array<{
-    id: string;
-    name: string;
-    location: string;
-    description: string;
-    price: number;
-    media: Array<{ url: string; alt: string }>;
-    _count: { bookings: number };
-  }>;
-  meta: {
-    isFirstPage: boolean;
-    isLastPage: boolean;
-    currentPage: number;
-    previousPage: number | null;
-    nextPage: number | null;
-    pageCount: number;
-    totalCount: number;
-  };
-}
+// interface VenueResponse {
+//   data: Array<{
+//     id: string;
+//     name: string;
+//     location: string;
+//     description: string;
+//     price: number;
+//     media: Array<{ url: string; alt: string }>;
+//     _count: { bookings: number };
+//   }>;
+//   meta: {
+//     isFirstPage: boolean;
+//     isLastPage: boolean;
+//     currentPage: number;
+//     previousPage: number | null;
+//     nextPage: number | null;
+//     pageCount: number;
+//     totalCount: number;
+//   };
+// }
 
 const UserProfile = () => {
   const deleteVenueMutation = useDeleteVenue();
@@ -92,7 +95,7 @@ const UserProfile = () => {
     data: profileResponse,
     isLoading: profileLoading,
     error: profileError,
-  } = useQuery({
+  } = useQuery<UserProfileResponse>({
     queryKey: ["profile", userName],
     queryFn: async () => {
       if (!userName) throw new Error("No username found in stored data");
@@ -114,7 +117,7 @@ const UserProfile = () => {
     data: bookingsResponse,
     isLoading: bookingsLoading,
     error: bookingsError,
-  } = useQuery({
+  } = useQuery<BookingResponse>({
     queryKey: ["userBookings", userName],
     queryFn: async () => {
       if (!userName) throw new Error("No username found in stored data");
@@ -136,7 +139,7 @@ const UserProfile = () => {
     data: VenuesResponse,
     isLoading: VenueLoading,
     error: VenueError,
-  } = useQuery({
+  } = useQuery<VenueResponse>({
     queryKey: ["venues"],
     queryFn: async () => {
       const venuesUrl = `${userUrl}${userName}/venues`;

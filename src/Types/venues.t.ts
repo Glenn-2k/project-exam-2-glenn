@@ -29,6 +29,7 @@ interface Venue {
   name: string;
   description: string;
   media: Media[];
+  _count: { bookings: number };
   price: number;
   maxGuests: number;
   rating: number;
