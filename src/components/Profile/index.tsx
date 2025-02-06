@@ -271,7 +271,7 @@ const UserProfile = () => {
               {venues.map((venue) => (
                 <li key={venue.id} className="pb-4 flex items-center">
                   <FaRegTrashAlt
-                    className="mr-4"
+                    className="mr-4 cursor-pointer"
                     onClick={() => deleteVenueMutation.mutate(venue.id)}
                   />
 
