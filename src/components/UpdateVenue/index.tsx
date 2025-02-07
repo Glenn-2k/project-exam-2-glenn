@@ -103,7 +103,7 @@ const UpdateVenue: React.FC = () => {
     <div className="flex flex-col items-center justify-center min-h-screen p-6">
       <div className="bg-white shadow-lg rounded-lg p-8 max-w-lg w-full">
         <h1 className="text-2xl font-bold text-center text-gray-800 mb-6 uppercase">
-          Create Venue
+          Update Venue
         </h1>
         <form className="space-y-4">
           {/* Name */}
@@ -295,7 +295,7 @@ const UpdateVenue: React.FC = () => {
             type="button"
             onClick={handleSubmit}
           >
-            Create Venue
+            Update Venue
           </button>
           <button
             className="bg-red-800 hover:bg-red-950 text-white font-bold py-2 px-4 rounded-md transition-all duration-200 w-full mt-4"
