@@ -9,6 +9,7 @@ import { baseUrl } from "../../utilities/constants";
 import { fetchFn } from "../../utilities/http";
 import { useQuery } from "@tanstack/react-query";
 import useDeleteVenue from "../../utilities/deleteVenue";
+import VenueCarousel from "../../utilities/imageCarousel";
 
 const SpecificVenue = () => {
   const { id } = useParams(); // Henter ID fra URL
@@ -70,11 +71,7 @@ const SpecificVenue = () => {
   return (
     <div className="bg-gray-200 p-4 max-w-md sm:max-w-xl md:max-w-3xl mx-auto  rounded-lg">
       {/* Bilde */}
-      <img
-        src={venue.media?.[0]?.url || "https://via.placeholder.com/300"}
-        alt={venue.name}
-        className="w-full h-64 object-cover rounded-md mb-4"
-      />
+      <VenueCarousel images={venue.media} />
 
       <h1 className="text-2xl font-bold mb-2 text-center">{venue.name}</h1>
       <div className="flex justify-between items-center mb-4">

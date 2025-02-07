@@ -11,6 +11,15 @@ export default defineConfig({
     },
   },
   optimizeDeps: {
-    include: ["react-datepicker"],
+    include: [
+      "react-datepicker",
+      "swiper/react",
+      "swiper/css",
+      "swiper/css/navigation",
+      "swiper/css/pagination",
+    ],
+  },
+  resolve: {
+    dedupe: ["swiper"],
   },
 });
