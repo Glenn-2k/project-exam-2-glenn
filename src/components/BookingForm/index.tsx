@@ -31,10 +31,9 @@ const BookingForm: React.FC<BookingFormProps> = ({ venueId }) => {
   } = useQuery<DateInterval[]>({
     queryKey: ["bookedDates", venueId],
     queryFn: () => fetchBookedDates(venueId),
-    refetchOnWindowFocus: true, // Ensures fresh data when the page is revisited
+    refetchOnWindowFocus: true,
   });
 
-  // Format the dates properly for the DatePicker
   const excludedIntervals = bookedDates.map((interval) => ({
     start: new Date(interval.start.setHours(0, 0, 0, 0)),
     end: new Date(interval.end.setHours(23, 59, 59, 999)),
@@ -87,7 +86,6 @@ const BookingForm: React.FC<BookingFormProps> = ({ venueId }) => {
         <p className="text-gray-500">Loading availability...</p>
       )}
 
-      {/* Start Date */}
       <div className="mb-4 ">
         <label className="block text-gray-700">Start Date</label>
         <DatePicker
@@ -103,7 +101,6 @@ const BookingForm: React.FC<BookingFormProps> = ({ venueId }) => {
         />
       </div>
 
-      {/* End Date */}
       <div className="mb-4">
         <label className="block text-gray-700">End Date</label>
         <DatePicker
@@ -131,13 +128,10 @@ const BookingForm: React.FC<BookingFormProps> = ({ venueId }) => {
         />
       </div>
 
-      {/* Error Message */}
       {error && <p className="text-red-500">{error}</p>}
 
-      {/* Success Message */}
       {success && <p className="text-green-500">Booking successful!</p>}
 
-      {/* Book Now Button */}
       <button
         onClick={handleBooking}
         className="bg-blue-600 text-white font-bold  py-2 px-4 rounded w-1/2 disabled:opacity-50"
