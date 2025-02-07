@@ -71,7 +71,7 @@ const BookingForm: React.FC<BookingFormProps> = ({ venueId }) => {
       });
 
       setSuccess(true);
-      refetch(); // Fetch new bookings after successful booking
+      refetch();
     } catch {
       setError("Failed to make booking. Please try again.");
     } finally {
@@ -80,15 +80,15 @@ const BookingForm: React.FC<BookingFormProps> = ({ venueId }) => {
   };
 
   return (
-    <div className="p-6 bg-white rounded-lg shadow-md">
-      <h2 className="text-xl font-bold mb-4">Book this Venue</h2>
+    <div className="p-6 bg-white rounded-lg shadow-md flex flex-col items-center w-full">
+      <h2 className="text-xl text-center font-bold mb-4">Book this Venue</h2>
 
       {bookingsLoading && (
         <p className="text-gray-500">Loading availability...</p>
       )}
 
       {/* Start Date */}
-      <div className="mb-4">
+      <div className="mb-4 ">
         <label className="block text-gray-700">Start Date</label>
         <DatePicker
           selected={dateFrom}
@@ -140,7 +140,7 @@ const BookingForm: React.FC<BookingFormProps> = ({ venueId }) => {
       {/* Book Now Button */}
       <button
         onClick={handleBooking}
-        className="bg-blue-600 text-white font-bold py-2 px-4 rounded w-full disabled:opacity-50"
+        className="bg-blue-600 text-white font-bold  py-2 px-4 rounded w-1/2 disabled:opacity-50"
         disabled={loading}
       >
         {loading ? "Processing..." : "Book Now"}

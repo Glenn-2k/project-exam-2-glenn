@@ -128,8 +128,10 @@ const SpecificVenue = () => {
           </>
         ) : (
           <>
-            <h2 className="text-lg font-semibold mb-2">Book Venue</h2>
-            <BookingForm venueId={venue.id} />
+            <h2 className=" text-lg font-semibold mb-2">Book Venue</h2>
+            <div className="flex justify-center mt-6">
+              <BookingForm venueId={venue.id} />
+            </div>
           </>
         )}
       </section>
