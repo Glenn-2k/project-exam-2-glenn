@@ -32,9 +32,9 @@ const VenueList = () => {
       console.log("Search response:", response);
 
       if (response?.data) {
-        setSearchResults(response.data); // Oppdaterer venues med søk
+        setSearchResults(response.data);
       } else {
-        setSearchResults([]); // Ingen treff
+        setSearchResults([]);
       }
     } catch (error) {
       console.error("Search error:", error);
@@ -44,16 +44,14 @@ const VenueList = () => {
     }
   };
 
-  // Velger hvilke venues som skal vises: søkeresultatene eller alle venues
   const displayedVenues = searchResults !== null ? searchResults : venues;
 
   return (
     <div className="p-8 flex flex-col items-center">
-      <h1 className="text-4xl text-center font-bold mb-4 uppercase">Venues</h1>
+      <h1 className="text-4xl text-center font-bold mb-12 uppercase">Venues</h1>
       {error && <div className="text-red-500">Error: {error.message}</div>}
 
-      {/* 🔍 Søkefelt + Knapp */}
-      <div className="flex items-center gap-2 mb-8">
+      <div className="flex items-center gap-2 mb-10">
         <input
           type="text"
           value={searchTerm}
@@ -70,11 +68,10 @@ const VenueList = () => {
         </button>
       </div>
 
-      {/* 🎯 Viser venues basert på søk eller alle */}
       {searchError && <div className="text-red-500">{searchError}</div>}
       {searchLoading && <div>Loading search results...</div>}
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
         {displayedVenues.length > 0 ? (
           displayedVenues.map((venue, index) => (
             <VenueCard key={`${venue.id}-${index}`} {...venue} />
@@ -84,7 +81,6 @@ const VenueList = () => {
         )}
       </div>
 
-      {/* 🔄 Load More-knapp vises kun hvis vi IKKE er i søkemodus */}
       {!searchResults && hasMoreVenues && !loading && (
         <button
           onClick={loadMore}
