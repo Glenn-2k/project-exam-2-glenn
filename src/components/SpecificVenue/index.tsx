@@ -130,7 +130,14 @@ const SpecificVenue = () => {
               </div>
             ) : (
               <p className="text-center my-6 ">
-                Please log in to book this venue.
+                Please{" "}
+                <span
+                  onClick={() => navigate("/login")}
+                  className="cursor-pointer text-sky-950 underline"
+                >
+                  log in
+                </span>{" "}
+                to book this venue.
               </p>
             )}
           </>

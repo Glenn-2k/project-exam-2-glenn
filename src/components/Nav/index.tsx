@@ -25,7 +25,7 @@ const NavLinks = ({
         to="/"
         onClick={closeMenu}
       >
-        Home
+        Venues
       </NavLink>
       {isLoggedIn && (
         <NavLink
