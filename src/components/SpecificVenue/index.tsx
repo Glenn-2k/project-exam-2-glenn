@@ -88,20 +88,20 @@ const SpecificVenue = () => {
       </div>
 
       <section className="pb-6 border-b-2 border-b-gray-300">
-        <h2 className="text-lg font-semibold mb-2">Information</h2>
-        <p>{venue.description || "No description available."}</p>
-        <p className="mt-2 text-md font-semibold">
+        <h2 className="text-lg font-semibold mb-2 underline">Information</h2>
+        <p className="my-2 text-sm   font-semibold">
           Max Guests: {venue.maxGuests || "N/A"}
         </p>
+        <p>{venue.description || "No description available."}</p>
       </section>
 
       <section className="mb-4 pt-6 pb-6 border-b-2 border-b-gray-300">
-        <h2 className="text-lg font-semibold mb-2">Amenities</h2>
+        <h2 className="text-lg font-semibold mb-2 underline">Amenities</h2>
         <VenueFeatures venue={venue} />
       </section>
 
       <section className="mb-4 pb-6 border-b-2 border-b-gray-300">
-        <h2 className="text-lg font-semibold mb-2">Location</h2>
+        <h2 className="text-lg font-semibold mb-2 underline">Location</h2>
         <p>{venue.location?.address || "Address not available"}</p>
         <p>{venue.location?.city || "City not available"}</p>
         <p>{venue.location?.country || "Country not available"}</p>
@@ -110,7 +110,7 @@ const SpecificVenue = () => {
       <section className="mt-6">
         {profile?.venueManager && isOwner ? (
           <>
-            <h2 className="text-lg text-center font-semibold mb-2">
+            <h2 className="text-lg text-center font-semibold mb-2 underline">
               Manage Venue
             </h2>
             <div className="flex justify-around items-center my-6">
@@ -130,7 +130,9 @@ const SpecificVenue = () => {
           </>
         ) : (
           <>
-            <h2 className=" text-lg font-semibold mb-2">Book Venue</h2>
+            <h2 className=" text-lg font-semibold mb-2 underline">
+              Book Venue
+            </h2>
             {token ? (
               <div className="flex justify-center mt-6">
                 <BookingForm venueId={venue.id} />
