@@ -27,13 +27,15 @@ const NavLinks = ({
       >
         Home
       </NavLink>
-      <NavLink
-        className={({ isActive }) => getNavLinkClass(isActive)}
-        to="/profile"
-        onClick={closeMenu}
-      >
-        Profile
-      </NavLink>
+      {isLoggedIn && (
+        <NavLink
+          className={({ isActive }) => getNavLinkClass(isActive)}
+          to="/profile"
+          onClick={closeMenu}
+        >
+          Profile
+        </NavLink>
+      )}
       {isLoggedIn ? (
         <button
           className="text-white mb-4 md:mb-0 font-montserrat"
