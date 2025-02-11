@@ -28,7 +28,7 @@ const VenueCard: React.FC<Venue> = ({
 
   return (
     <div
-      className="max-w-sm bg-white shadow-md rounded-lg overflow-hidden flex flex-col hover:shadow-lg transition-shadow duration-300"
+      className="max-w-sm bg-white shadow-md rounded-lg overflow-hidden flex flex-col hover:shadow-lg transition-shadow duration-300 cursor-pointer"
       onClick={handleCardClick}
     >
       {/* Image */}
