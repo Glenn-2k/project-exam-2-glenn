@@ -70,7 +70,6 @@ const SpecificVenue = () => {
 
   return (
     <div className="bg-gray-200 p-4 max-w-md sm:max-w-xl md:max-w-3xl mx-auto  rounded-lg">
-      {/* Bilde */}
       <VenueCarousel images={venue.media} />
 
       <h1 className="text-2xl font-bold mb-2 text-center">{venue.name}</h1>
@@ -81,7 +80,6 @@ const SpecificVenue = () => {
         <p className="text-lg font-bold">${venue.price}/night</p>
       </div>
 
-      {/* Informasjon */}
       <section className="pb-6 border-b-2 border-b-gray-300">
         <h2 className="text-lg font-semibold mb-2">Information</h2>
         <p>{venue.description || "No description available."}</p>
@@ -90,13 +88,11 @@ const SpecificVenue = () => {
         </p>
       </section>
 
-      {/* Fasiliteter */}
       <section className="mb-4 pt-6 pb-6 border-b-2 border-b-gray-300">
         <h2 className="text-lg font-semibold mb-2">Amenities</h2>
         <VenueFeatures venue={venue} />
       </section>
 
-      {/* Lokasjon */}
       <section className="mb-4 pb-6 border-b-2 border-b-gray-300">
         <h2 className="text-lg font-semibold mb-2">Location</h2>
         <p>{venue.location?.address || "Address not available"}</p>
@@ -104,7 +100,6 @@ const SpecificVenue = () => {
         <p>{venue.location?.country || "Country not available"}</p>
       </section>
 
-      {/* Bookingseksjon */}
       <section className="mt-6">
         {profile?.venueManager && isOwner ? (
           <>
@@ -129,9 +124,15 @@ const SpecificVenue = () => {
         ) : (
           <>
             <h2 className=" text-lg font-semibold mb-2">Book Venue</h2>
-            <div className="flex justify-center mt-6">
-              <BookingForm venueId={venue.id} />
-            </div>
+            {token ? (
+              <div className="flex justify-center mt-6">
+                <BookingForm venueId={venue.id} />
+              </div>
+            ) : (
+              <p className="text-center my-6 ">
+                Please log in to book this venue.
+              </p>
+            )}
           </>
         )}
       </section>
