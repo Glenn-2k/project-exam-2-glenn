@@ -70,9 +70,10 @@ const SpecificVenue = () => {
 
   return (
     <div className="bg-gray-200 p-4 max-w-md sm:max-w-xl md:max-w-3xl mx-auto  rounded-lg">
-      <VenueCarousel images={venue.media} />
-
-      <h1 className="text-2xl font-bold mb-2 text-center">{venue.name}</h1>
+      <h1 className="text-2xl font-bold mb-4 mt-4 text-center">{venue.name}</h1>
+      <div className="mb-8">
+        <VenueCarousel images={venue.media} />
+      </div>
       <div className="flex justify-between items-center mb-4">
         <div className="flex items-center">
           <StarRating key={venue.id} rating={venue.rating} />
