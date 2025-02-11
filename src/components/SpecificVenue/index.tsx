@@ -78,9 +78,13 @@ const SpecificVenue = () => {
       </div>
       <div className="flex justify-between items-center mb-4">
         <div className="flex items-center">
+          <p className="uppercase font-semibold mr-1">Hosted by: </p>{" "}
+          {venue.owner.name}
+        </div>
+        <div className="block">
+          <p className="font-semibold mb-2">${venue.price}/night</p>
           <StarRating key={venue.id} rating={venue.rating} />
         </div>
-        <p className="text-lg font-bold">${venue.price}/night</p>
       </div>
 
       <section className="pb-6 border-b-2 border-b-gray-300">
