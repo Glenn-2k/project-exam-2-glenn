@@ -26,10 +26,7 @@ const VenueList = () => {
         searchTerm
       )}&limit=50&sort=created&sortOrder=desc&page=1&_owner=true`;
 
-      console.log("Fetching search results from:", searchUrl);
-
       const response = await fetchFn({ queryKey: [searchUrl, "search"] });
-      console.log("Search response:", response);
 
       if (response?.data) {
         setSearchResults(response.data);
