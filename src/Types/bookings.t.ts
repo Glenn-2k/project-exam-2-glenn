@@ -6,7 +6,7 @@ interface BookingResponse {
     guests: number;
     created: string;
     updated: string;
-    venue: { name: string };
+    venue: { name: string; media: Array<{ url: string; alt: string }> };
   }>;
   meta: {
     isFirstPage: boolean;

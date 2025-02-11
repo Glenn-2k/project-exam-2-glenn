@@ -244,17 +244,34 @@ const UserProfile = () => {
           {bookings.length > 0 ? (
             <ul className="divide-y divide-gray-200">
               {bookings.map((booking) => (
-                <li key={booking.id} className="py-4">
-                  <p className="font-semibold text-gray-900">
-                    {booking.venue?.name || "Unnamed Venue"}
-                  </p>
-                  <p className="text-gray-600">
-                    {new Date(booking.dateFrom).toLocaleDateString()} -{" "}
-                    {new Date(booking.dateTo).toLocaleDateString()}
-                  </p>
-                  <p className="text-sm text-gray-500">
-                    Guests: {booking.guests}
-                  </p>
+                <li key={booking.id} className="py-4 flex items-center">
+                  <div className="flex flex-col">
+                    <p className="font-semibold text-gray-900">
+                      {booking.venue?.name || "Unnamed Venue"}
+                    </p>
+                    <p className="text-gray-600">
+                      {new Date(booking.dateFrom).toLocaleDateString()} -{" "}
+                      {new Date(booking.dateTo).toLocaleDateString()}
+                    </p>
+                    <p className="text-sm text-gray-500">
+                      Guests: {booking.guests}
+                    </p>
+                  </div>
+
+                  <div className="flex justify-end flex-grow">
+                    {booking.venue.media.map((mediaItem, index) => (
+                      <img
+                        className="h-16 object-cover rounded-md "
+                        key={index}
+                        src={
+                          mediaItem.url
+                            ? mediaItem.url
+                            : "https://commons.wikimedia.org/wiki/File:No-Image-Placeholder.svg"
+                        }
+                        alt={mediaItem.alt}
+                      />
+                    ))}
+                  </div>
                 </li>
               ))}
             </ul>
