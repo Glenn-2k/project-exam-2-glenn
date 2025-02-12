@@ -1,8 +1,8 @@
 import { useState } from "react";
-import { useVenues } from "../../assets/hooks/useVenues";
 import VenueCard from "../VenueCard";
 import { fetchFn } from "../../utilities/http";
 import { baseUrl } from "../../utilities/constants";
+import useVenues from "../../assets/hooks/useVenues";
 
 const VenueList = () => {
   const { venues, loading, error, loadMore, hasMoreVenues } = useVenues(); // Henter ALLE venues

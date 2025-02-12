@@ -19,8 +19,8 @@ const useDeleteVenue = () => {
       await deleteFn({ url: `${venuesUrl}/${id}`, token });
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["venues"] }); //
-      navigate("/profile"); //
+      queryClient.invalidateQueries({ queryKey: ["venues"] });
+      navigate("/profile");
     },
     onError: (error) => {
       console.error("Failed to delete venue:", error);

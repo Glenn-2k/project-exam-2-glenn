@@ -1,5 +1,4 @@
 import { useNavigate, useParams } from "react-router-dom";
-import { useVenues } from "../../assets/hooks/useVenues";
 import { Venue } from "../../Types/venues.t";
 import VenueFeatures from "../../utilities/amenities";
 import StarRating from "../../utilities/StarRating";
@@ -10,6 +9,7 @@ import { fetchFn } from "../../utilities/http";
 import { useQuery } from "@tanstack/react-query";
 import useDeleteVenue from "../../utilities/deleteVenue";
 import VenueCarousel from "../../utilities/imageCarousel";
+import useVenues from "../../assets/hooks/useVenues";
 
 const SpecificVenue = () => {
   const { id } = useParams();
@@ -21,8 +21,8 @@ const SpecificVenue = () => {
     (venue: Venue) => venue.id === id
   );
 
-  const storedUserData = localStorage.getItem("user");
-  const token = localStorage.getItem("token");
+  const storedUserData = localStorage.getItem("user") || "";
+  const token = localStorage.getItem("token") || "";
 
   let userName = "";
   try {
@@ -42,8 +42,9 @@ const SpecificVenue = () => {
   } = useQuery<UserProfileResponse>({
     queryKey: ["profile", userName],
     queryFn: async () => {
-      if (!userName) throw new Error("No username found in stored data");
-      if (!token) throw new Error("No authentication token found");
+      if (!userName || !token) {
+        throw new Error("User name or token is missing");
+      }
 
       const profileUrl = `${baseUrl}holidaze/profiles/${userName}`;
       console.log("Fetching profile from:", profileUrl);
