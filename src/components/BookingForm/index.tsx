@@ -116,7 +116,6 @@ const BookingForm: React.FC<BookingFormProps> = ({ venueId }) => {
         />
       </div>
 
-      {/* Guests */}
       <div className="mb-4">
         <label className="block text-gray-700">Guests</label>
         <input

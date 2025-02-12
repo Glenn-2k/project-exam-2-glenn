@@ -32,9 +32,9 @@ const CreateVenue: React.FC = () => {
     name: Yup.string().required("Required"),
     description: Yup.string().required("Required"),
     price: Yup.number().required("Required"),
-    address: Yup.string().required("Please provide a valid address"),
-    city: Yup.string().required("Please provide a valid city"),
-    country: Yup.string().required("Please provide a valid country"),
+    address: Yup.string(),
+    city: Yup.string(),
+    country: Yup.string(),
     maxGuests: Yup.number().required("Required"),
     image: Yup.string().url("Must be a valid URL"),
   });
@@ -106,7 +106,6 @@ const CreateVenue: React.FC = () => {
           Create Venue
         </h1>
         <form className="space-y-4">
-          {/* Name */}
           <div>
             <label className="block text-sm font-semibold text-gray-600">
               Name
@@ -121,7 +120,6 @@ const CreateVenue: React.FC = () => {
             {errors.name && <span className="text-red-500">{errors.name}</span>}
           </div>
 
-          {/* Description */}
           <div>
             <label className="block text-sm font-semibold text-gray-600">
               Description
@@ -153,7 +151,6 @@ const CreateVenue: React.FC = () => {
             )}
           </div>
 
-          {/* City & Country */}
           <div className="grid grid-cols-2 gap-4">
             <div>
               <label className="block text-sm font-semibold text-gray-600">
@@ -188,7 +185,6 @@ const CreateVenue: React.FC = () => {
             </div>
           </div>
 
-          {/* Price & Max Guests */}
           <div className="grid grid-cols-2 gap-4">
             <div>
               <label className="block text-sm font-semibold text-gray-600">
@@ -225,7 +221,6 @@ const CreateVenue: React.FC = () => {
             </div>
           </div>
 
-          {/* Image URL */}
           <div>
             <label className="block text-sm font-semibold text-gray-600">
               Image URL
@@ -242,7 +237,6 @@ const CreateVenue: React.FC = () => {
             )}
           </div>
 
-          {/* Meta Checkboxes */}
           <div className="grid grid-cols-2 gap-4">
             <label className="flex items-center space-x-2">
               <input
@@ -289,7 +283,6 @@ const CreateVenue: React.FC = () => {
             </label>
           </div>
 
-          {/* Submit Button */}
           <button
             className="bg-sky-950 hover:bg-sky-800 text-white font-bold py-2 px-4 rounded-md transition-all duration-200 w-full mt-4"
             type="button"
