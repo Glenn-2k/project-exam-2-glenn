@@ -1,6 +1,5 @@
 import { QueryClient } from "@tanstack/react-query";
 import { loadLocal } from "./localStorage";
-
 import { API_KEY } from "./constants";
 
 export const queryClient = new QueryClient();
