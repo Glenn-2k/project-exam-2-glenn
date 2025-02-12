@@ -26,7 +26,6 @@ export const fetchBookedDates = async (
       return [];
     }
 
-    // Extract only the `bookings` array from `data`
     const bookings = response.data.bookings;
 
     const dateIntervals: DateInterval[] = bookings
@@ -34,19 +33,17 @@ export const fetchBookedDates = async (
         const start = new Date(booking.dateFrom);
         const end = new Date(booking.dateTo);
 
-        // Validate date objects
         if (isNaN(start.getTime()) || isNaN(end.getTime())) {
           console.warn("Invalid date detected:", { booking });
           return null;
         }
 
-        // Ensure full-day exclusion
         start.setHours(0, 0, 0, 0);
         end.setHours(23, 59, 59, 999);
 
         return { start, end };
       })
-      .filter(Boolean); // Remove null values
+      .filter(Boolean);
 
     return dateIntervals;
   } catch (error) {
