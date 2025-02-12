@@ -12,12 +12,11 @@ import useDeleteVenue from "../../utilities/deleteVenue";
 import VenueCarousel from "../../utilities/imageCarousel";
 
 const SpecificVenue = () => {
-  const { id } = useParams(); // Henter ID fra URL
-  const navigate = useNavigate(); // Hook for navigation
-  const { venues, loading, error } = useVenues(); // Fetcher venues fra API
+  const { id } = useParams();
+  const navigate = useNavigate();
+  const { venues, loading, error } = useVenues();
   const deleteVenueMutation = useDeleteVenue();
 
-  // Finn det spesifikke venue ved hjelp av id
   const venue: Venue | undefined = venues?.find(
     (venue: Venue) => venue.id === id
   );
@@ -36,7 +35,6 @@ const SpecificVenue = () => {
     console.error("Error parsing user data:", error);
   }
 
-  // Fetch user profile
   const {
     data: profileResponse,
     isLoading: profileLoading,
@@ -74,7 +72,7 @@ const SpecificVenue = () => {
         {venue.name}
       </h1>
       <div className="mb-8">
-        <VenueCarousel images={venue.media} />
+        <VenueCarousel images={venue.media || []} />
       </div>
       <div className="flex justify-between items-center mb-4">
         <div className="flex items-center">

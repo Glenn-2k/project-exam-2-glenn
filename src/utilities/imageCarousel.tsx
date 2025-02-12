@@ -5,29 +5,36 @@ import "swiper/swiper-bundle.css";
 const VenueCarousel: React.FC<{ images: { url: string; alt: string }[] }> = ({
   images,
 }) => {
-  if (!images || images.length === 0) {
-    return <p>No images available</p>;
-  }
+  const placeholderImage =
+    "https://upload.wikimedia.org/wikipedia/commons/6/65/No-Image-Placeholder.svg";
 
   return (
-    <Swiper
-      modules={[Navigation, Pagination]}
-      spaceBetween={10}
-      slidesPerView={1}
-      navigation
-      pagination={{ clickable: true }}
-      className="w-full max-w-md rounded-lg"
-    >
-      {images.map((image, index) => (
-        <SwiperSlide key={index}>
-          <img
-            src={image.url}
-            alt={image.alt || `Venue Image ${index + 1}`}
-            className="w-full h-64 object-cover rounded-lg"
-          />
-        </SwiperSlide>
-      ))}
-    </Swiper>
+    <div className="w-full h-64">
+      {images && images.length > 0 ? (
+        <Swiper
+          modules={[Navigation, Pagination]}
+          navigation
+          pagination={{ clickable: true }}
+          className="w-full h-full"
+        >
+          {images.map((image, index) => (
+            <SwiperSlide key={index}>
+              <img
+                src={image.url}
+                alt={image.alt}
+                className="w-full h-64 object-cover rounded-lg"
+              />
+            </SwiperSlide>
+          ))}
+        </Swiper>
+      ) : (
+        <img
+          src={placeholderImage}
+          alt="No images available"
+          className="w-full h-64 object-fill rounded-lg"
+        />
+      )}
+    </div>
   );
 };
 
