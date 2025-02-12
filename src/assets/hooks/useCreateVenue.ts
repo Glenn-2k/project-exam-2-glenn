@@ -73,8 +73,6 @@ export const useCreateVenue = () => {
         media: mediaArray,
       };
 
-      console.log("Request body being sent:", body);
-
       await postFn({ url: createVenueUrl, body, token });
 
       setTimeout(() => navigate("/profile"), 1000);
