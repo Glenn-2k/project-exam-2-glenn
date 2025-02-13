@@ -62,7 +62,7 @@ const VenueList = () => {
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
             placeholder="Search venues..."
-            className="border p-2 rounded w-64 "
+            className="border p-2 rounded lg:w-64 w-48 "
             onKeyDown={(e) => e.key === "Enter" && handleSearch()}
           />
           {searchTerm && (
