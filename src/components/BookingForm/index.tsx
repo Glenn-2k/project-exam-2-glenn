@@ -132,7 +132,14 @@ const BookingForm: React.FC<BookingFormProps> = ({ venueId, maxGuests }) => {
         <input
           type="number"
           value={guests}
-          onChange={(e) => setGuests(Number(e.target.value))}
+          onChange={(e) => {
+            const value = Number(e.target.value);
+            if (value <= maxGuests) {
+              setGuests(value);
+            } else {
+              setError("Maximum guests allowed is " + maxGuests);
+            }
+          }}
           min={1}
           max-value={maxGuests}
           className="w-full border p-2 rounded"
