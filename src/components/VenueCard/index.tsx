@@ -18,7 +18,9 @@ const VenueCard: React.FC<Venue> = ({
   };
 
   const imageUrl =
-    media && media.length > 0 ? media[0].url : "https://placehold.co/400";
+    media && media.length > 0
+      ? media[0].url
+      : "https://placehold.co/400x400?text=Missing+Image";
   const truncateText = (text: string, maxWords: number) => {
     const words = text.split(" ");
     return words.length > maxWords
