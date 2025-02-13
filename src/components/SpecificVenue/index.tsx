@@ -157,7 +157,7 @@ const SpecificVenue = () => {
             </h2>
             {token ? (
               <div className="flex justify-center mt-6">
-                <BookingForm venueId={venue.id} />
+                <BookingForm venueId={venue.id} maxGuests={venue.maxGuests} />
               </div>
             ) : (
               <p className="text-center my-6 ">

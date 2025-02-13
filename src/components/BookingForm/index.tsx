@@ -9,6 +9,7 @@ import { useQuery } from "@tanstack/react-query";
 
 interface BookingFormProps {
   venueId: string;
+  maxGuests: number;
 }
 
 interface DateInterval {
@@ -16,7 +17,7 @@ interface DateInterval {
   end: Date;
 }
 
-const BookingForm: React.FC<BookingFormProps> = ({ venueId }) => {
+const BookingForm: React.FC<BookingFormProps> = ({ venueId, maxGuests }) => {
   const [dateFrom, setDateFrom] = useState<Date | null>(null);
   const [dateTo, setDateTo] = useState<Date | null>(null);
   const [guests, setGuests] = useState<number>(1);
@@ -42,6 +43,16 @@ const BookingForm: React.FC<BookingFormProps> = ({ venueId }) => {
   const handleBooking = async () => {
     if (!dateFrom || !dateTo) {
       setError("Please select both start and end date.");
+      return;
+    }
+
+    if (dateFrom > dateTo) {
+      setError("End date must be after start date.");
+      return;
+    }
+
+    if (guests > maxGuests) {
+      setError("Maximum guests allowed is " + maxGuests);
       return;
     }
 
@@ -123,8 +134,10 @@ const BookingForm: React.FC<BookingFormProps> = ({ venueId }) => {
           value={guests}
           onChange={(e) => setGuests(Number(e.target.value))}
           min={1}
+          max-value={maxGuests}
           className="w-full border p-2 rounded"
         />
+        <p className="text-sm text-gray-500">Max guests: {maxGuests}</p>
       </div>
 
       {error && <p className="text-red-500">{error}</p>}
