@@ -30,7 +30,7 @@ const CreateVenue: React.FC = () => {
           <FormInput
             label="Address"
             name="address"
-            value={formData.address}
+            value={formData.location.address}
             onChange={handleChange}
           />
 
@@ -38,13 +38,13 @@ const CreateVenue: React.FC = () => {
             <FormInput
               label="City"
               name="city"
-              value={formData.city}
+              value={formData.location.city}
               onChange={handleChange}
             />
             <FormInput
               label="Country"
               name="country"
-              value={formData.country}
+              value={formData.location.country}
               onChange={handleChange}
             />
           </div>

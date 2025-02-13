@@ -12,12 +12,15 @@ export const useCreateVenue = () => {
   const [formData, setFormData] = useState({
     name: "",
     description: "",
-    address: "",
-    city: "",
-    country: "",
     price: "",
     maxGuests: "",
     image: "",
+    location: {
+      address: "",
+      city: "",
+      country: "",
+      zip: "",
+    },
     meta: {
       wifi: false,
       parking: false,
@@ -52,6 +55,18 @@ export const useCreateVenue = () => {
           [name]: checked,
         },
       }));
+    } else if (
+      ["address", "city", "country", "zip", "continent", "lat", "lng"].includes(
+        name
+      )
+    ) {
+      setFormData((prev) => ({
+        ...prev,
+        location: {
+          ...prev.location,
+          [name]: value,
+        },
+      }));
     } else {
       setFormData((prev) => ({ ...prev, [name]: value }));
     }
@@ -67,14 +82,16 @@ export const useCreateVenue = () => {
         : [];
 
       const body = {
-        ...formData,
+        name: formData.name,
+        description: formData.description,
         price: Number(formData.price),
         maxGuests: Number(formData.maxGuests),
         media: mediaArray,
+        meta: formData.meta,
         location: {
-          address: formData.address || null,
-          city: formData.city || null,
-          country: formData.country || null,
+          address: formData.location.address || null,
+          city: formData.location.city || null,
+          country: formData.location.country || null,
         },
       };
 
