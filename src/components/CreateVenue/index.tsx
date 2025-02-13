@@ -23,6 +23,7 @@ const CreateVenue: React.FC = () => {
           <FormInput
             label="Description"
             name="description"
+            type="textarea"
             value={formData.description}
             onChange={handleChange}
             error={errors.description}
