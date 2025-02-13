@@ -4,6 +4,7 @@ import { fetchFn } from "../../utilities/http";
 import { baseUrl } from "../../utilities/constants";
 import useVenues from "../../assets/hooks/useVenues";
 import { ThreeDot } from "react-loading-indicators";
+import { FaTimes } from "react-icons/fa";
 
 const VenueList = () => {
   const { venues, loading, error, loadMore, hasMoreVenues } = useVenues(); // Henter ALLE venues
@@ -42,6 +43,11 @@ const VenueList = () => {
     }
   };
 
+  const clearSearch = () => {
+    setSearchTerm("");
+    setSearchResults(null);
+  };
+
   const displayedVenues = searchResults !== null ? searchResults : venues;
 
   return (
@@ -49,15 +55,24 @@ const VenueList = () => {
       <h1 className="text-4xl text-center font-bold mb-12 uppercase">Venues</h1>
       {error && <div className="text-red-500">Error: {error.message}</div>}
 
-      <div className="flex items-center gap-2 mb-10">
-        <input
-          type="text"
-          value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
-          placeholder="Search venues..."
-          className="border p-2 rounded w-64"
-          onKeyDown={(e) => e.key === "Enter" && handleSearch()}
-        />
+      <div className="flex items-center gap-2 mb-10 ">
+        <div className="relative">
+          <input
+            type="text"
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            placeholder="Search venues..."
+            className="border p-2 rounded w-64 "
+            onKeyDown={(e) => e.key === "Enter" && handleSearch()}
+          />
+          {searchTerm && (
+            <FaTimes
+              className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500 cursor-pointer hover:text-gray-700"
+              onClick={clearSearch}
+              aria-label="Clear search"
+            />
+          )}
+        </div>
         <button
           onClick={handleSearch}
           className="bg-sky-950 hover:bg-sky-800 text-white font-bold py-2 px-4 rounded"
