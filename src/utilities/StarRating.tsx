@@ -14,22 +14,33 @@ const StarRating: React.FC<StarRatingProps> = ({
   const emptyStars = maxRating - filledStars - (hasHalfStar ? 1 : 0);
 
   return (
-    <div className="flex items-center">
-      {/* Hele stjerner */}
+    <div
+      className="flex items-center"
+      role="img"
+      aria-label={`Rating: ${rating} out of ${maxRating}`}
+    >
       {Array(filledStars)
         .fill(0)
         .map((_, index) => (
-          <FaStar key={`filled-${index}`} className="text-yellow-500" />
+          <FaStar
+            key={`filled-${index}`}
+            className="text-yellow-500"
+            aria-label="Full star"
+          />
         ))}
 
-      {/* Halv stjerne */}
-      {hasHalfStar && <FaStarHalfAlt className="text-yellow-500" />}
+      {hasHalfStar && (
+        <FaStarHalfAlt className="text-yellow-500" aria-label="Half star" />
+      )}
 
-      {/* Tomme stjerner */}
       {Array(emptyStars)
         .fill(0)
         .map((_, index) => (
-          <FaRegStar key={`empty-${index}`} className="text-gray-300" />
+          <FaRegStar
+            key={`empty-${index}`}
+            className="text-gray-300"
+            aria-label="Empty star"
+          />
         ))}
     </div>
   );
