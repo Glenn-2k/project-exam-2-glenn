@@ -10,6 +10,7 @@ import { useQuery } from "@tanstack/react-query";
 import useDeleteVenue from "../../utilities/deleteVenue";
 import VenueCarousel from "../../utilities/imageCarousel";
 import useVenues from "../../assets/hooks/useVenues";
+import { ThreeDot } from "react-loading-indicators";
 
 const SpecificVenue = () => {
   const { id } = useParams();
@@ -64,7 +65,18 @@ const SpecificVenue = () => {
   if (profileError)
     return <div>Error fetching profile: {profileError.message}</div>;
   if (!venue) return <div>Venue not found</div>;
-  if (loading) return <div>Loading...</div>;
+  if (loading)
+    return (
+      <div>
+        <ThreeDot
+          variant="bounce"
+          color="#32cd32"
+          size="medium"
+          text=""
+          textColor=""
+        />
+      </div>
+    );
   if (error) return <div>Error: {error.message}</div>;
 
   return (

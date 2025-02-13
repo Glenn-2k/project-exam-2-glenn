@@ -8,6 +8,7 @@ import useDeleteVenue from "../../utilities/deleteVenue";
 import { VenueResponse } from "../../Types/venues.t";
 import { BookingResponse } from "../../Types/bookings.t";
 import { UserProfileResponse } from "../../Types/profiles.t";
+import { ThreeDot } from "react-loading-indicators";
 
 // interface UserProfileResponse {
 //   data: {
@@ -155,7 +156,17 @@ const UserProfile = () => {
   const venues = VenuesResponse?.data;
 
   if (profileLoading || bookingsLoading || VenueLoading) {
-    return <div>Loading...</div>;
+    return (
+      <div className="flex justify-center items-center h-96">
+        <ThreeDot
+          variant="bounce"
+          color="#32cd32"
+          size="medium"
+          text=""
+          textColor=""
+        />
+      </div>
+    );
   }
 
   if (profileError || bookingsError || VenueError) {
@@ -167,7 +178,17 @@ const UserProfile = () => {
   }
 
   if (VenueLoading) {
-    return <div>Loading...</div>;
+    return (
+      <div className="flex justify-center items-center h-96">
+        <ThreeDot
+          variant="bounce"
+          color="#32cd32"
+          size="medium"
+          text=""
+          textColor=""
+        />
+      </div>
+    );
   }
 
   if (VenueError) {
