@@ -71,6 +71,11 @@ export const useCreateVenue = () => {
         price: Number(formData.price),
         maxGuests: Number(formData.maxGuests),
         media: mediaArray,
+        location: {
+          address: formData.address || null,
+          city: formData.city || null,
+          country: formData.country || null,
+        },
       };
 
       await postFn({ url: createVenueUrl, body, token });
