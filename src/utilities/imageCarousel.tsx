@@ -5,8 +5,7 @@ import "swiper/swiper-bundle.css";
 const VenueCarousel: React.FC<{ images: { url: string; alt: string }[] }> = ({
   images,
 }) => {
-  const placeholderImage =
-    "https://upload.wikimedia.org/wikipedia/commons/6/65/No-Image-Placeholder.svg";
+  const placeholderImage = "https://placehold.co/400x400?text=Missing+Image";
 
   return (
     <div className="w-full h-64">
@@ -31,7 +30,7 @@ const VenueCarousel: React.FC<{ images: { url: string; alt: string }[] }> = ({
         <img
           src={placeholderImage}
           alt="No images available"
-          className="w-full h-64 object-fill rounded-lg"
+          className="w-full h-64 object-cover rounded-lg"
         />
       )}
     </div>
