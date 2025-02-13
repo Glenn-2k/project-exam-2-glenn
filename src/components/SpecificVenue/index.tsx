@@ -61,13 +61,23 @@ const SpecificVenue = () => {
   const profile = profileResponse?.data;
   const isOwner = venue?.owner?.name === profile?.name;
 
-  if (profileLoading) return <div>Loading profile...</div>;
+  if (profileLoading)
+    return (
+      <div className="flex justify-center items-center h-96">
+        <ThreeDot
+          variant="bounce"
+          color="#32cd32"
+          size="medium"
+          text=""
+          textColor=""
+        />
+      </div>
+    );
   if (profileError)
     return <div>Error fetching profile: {profileError.message}</div>;
-  if (!venue) return <div>Venue not found</div>;
   if (loading)
     return (
-      <div>
+      <div className="flex justify-center items-center h-96">
         <ThreeDot
           variant="bounce"
           color="#32cd32"
@@ -78,6 +88,7 @@ const SpecificVenue = () => {
       </div>
     );
   if (error) return <div>Error: {error.message}</div>;
+  if (!venue) return <div>Venue not found</div>;
 
   return (
     <div className="bg-gray-200 p-4 max-w-md sm:max-w-xl md:max-w-3xl mx-auto  rounded-lg">
