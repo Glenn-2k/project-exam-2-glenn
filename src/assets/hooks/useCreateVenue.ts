@@ -95,9 +95,13 @@ export const useCreateVenue = () => {
         },
       };
 
-      await postFn({ url: createVenueUrl, body, token });
+      const response = await postFn({ url: createVenueUrl, body, token });
 
-      setTimeout(() => navigate("/profile"), 1000);
+      if (response?.data?.id) {
+        setTimeout(() => navigate(`/venues/${response.data.id}`), 1000);
+      } else {
+        console.error("Noe venue ID returned from server:", response);
+      }
     } catch (error) {
       if (error instanceof Yup.ValidationError) {
         error.inner.forEach((e) => {
