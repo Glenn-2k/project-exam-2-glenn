@@ -77,6 +77,7 @@ const Login: React.FC = () => {
         name="password"
         value={formData.password}
         onChange={handleChange}
+        onKeyDown={(e) => e.key === "Enter" && handleSubmit()}
         placeholder="Password"
         className="border p-2 rounded mb-4"
       />
