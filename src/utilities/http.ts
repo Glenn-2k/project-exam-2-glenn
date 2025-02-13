@@ -16,10 +16,6 @@ export async function fetchFn({ queryKey }: { queryKey: [string, string] }) {
         Authorization: token ? `Bearer ${token}` : "",
       },
     });
-    console.log("Request Headers:", {
-      "X-Noroff-API-Key": API_KEY,
-      Authorization: token ? `Bearer ${token}` : "No token",
-    });
 
     const data = await response.json();
 
