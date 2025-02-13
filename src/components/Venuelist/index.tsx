@@ -3,6 +3,7 @@ import VenueCard from "../VenueCard";
 import { fetchFn } from "../../utilities/http";
 import { baseUrl } from "../../utilities/constants";
 import useVenues from "../../assets/hooks/useVenues";
+import { ThreeDot } from "react-loading-indicators";
 
 const VenueList = () => {
   const { venues, loading, error, loadMore, hasMoreVenues } = useVenues(); // Henter ALLE venues
@@ -66,7 +67,17 @@ const VenueList = () => {
       </div>
 
       {searchError && <div className="text-red-500">{searchError}</div>}
-      {searchLoading && <div>Loading search results...</div>}
+      {searchLoading && (
+        <div className="flex justify-center items-center h-96">
+          <ThreeDot
+            variant="bounce"
+            color="#32cd32"
+            size="medium"
+            text=""
+            textColor=""
+          />
+        </div>
+      )}
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
         {displayedVenues.length > 0 ? (

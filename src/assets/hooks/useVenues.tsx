@@ -19,16 +19,13 @@ const useVenues = () => {
       setLoading(true);
 
       const url = `${venuesUrl}?limit=${limit}&sort=${sort}&sortOrder=${sortOrder}&page=${page}&_owner=true`;
-      console.log("Fetching URL:", url);
 
       const response = await fetchFn({ queryKey: [url, "venues"] });
-      console.log("API Response:", response);
 
       if (!response?.data) {
         throw new Error("Invalid API response: Data is missing");
       }
 
-      // Unngå duplikater
       setVenues((prevVenues) => {
         const newVenues = response.data.filter(
           (venue: VenueTypes.Venue) =>
