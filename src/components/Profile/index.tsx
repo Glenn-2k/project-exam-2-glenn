@@ -292,7 +292,7 @@ const UserProfile = () => {
                   <div className="flex justify-end flex-grow">
                     {booking.venue.media.map((mediaItem, index) => (
                       <img
-                        className="h-16 object-cover rounded-md "
+                        className="h-16 w-24 object-cover rounded-md "
                         key={index}
                         src={
                           mediaItem.url
@@ -340,7 +340,7 @@ const UserProfile = () => {
                   <div className="flex justify-end flex-grow">
                     {venue.media.map((mediaItem, index) => (
                       <img
-                        className="h-16 object-cover rounded-md "
+                        className="h-16 w-24 object-cover rounded-md "
                         key={index}
                         src={
                           mediaItem.url
