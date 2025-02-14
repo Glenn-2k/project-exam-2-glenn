@@ -9,6 +9,17 @@ const getNavLinkClass = (isActive: boolean) =>
     ? `${activeClassName} mb-4 md:mb-0 font-montserrat`
     : "mb-4 md:mb-0 font-montserrat";
 
+/**
+ * NavLinks Component
+ *
+ * Displays navigation links for both logged-in and logged-out users.
+ *
+ * @component
+ * @param {boolean} isLoggedIn - Indicates if the user is logged in.
+ * @param {() => void} handleLogout - Function to handle user logout.
+ * @param {() => void} closeMenu - Function to close the mobile menu.
+ * @returns {JSX.Element} The rendered NavLinks component.
+ */
 const NavLinks = ({
   isLoggedIn,
   handleLogout,
@@ -56,13 +67,28 @@ const NavLinks = ({
   );
 };
 
+/**
+ * Nav Component
+ *
+ * Navigation bar with responsive mobile menu toggle and authentication state management.
+ *
+ * @component
+ * @returns {JSX.Element} The rendered Nav component.
+ */
 const Nav = () => {
+  /** State to track mobile menu open/close state */
   const [isOpen, setIsOpen] = useState(false);
+
+  /** State to track if user is logged in */
   const [isLoggedIn, setIsLoggedIn] = useState<boolean>(
     !!localStorage.getItem("token")
   );
+
   const navigate = useNavigate();
 
+  /**
+   * Effect to listen for authentication state changes and update navigation.
+   */
   useEffect(() => {
     const updateAuthState = () => {
       setIsLoggedIn(!!localStorage.getItem("token"));
@@ -75,6 +101,9 @@ const Nav = () => {
     };
   }, []);
 
+  /**
+   * Handles user logout by removing the token and navigating to login page.
+   */
   const handleLogout = () => {
     localStorage.removeItem("token");
     setIsLoggedIn(false);
@@ -82,7 +111,10 @@ const Nav = () => {
     navigate("/login");
   };
 
+  /** Toggles the mobile menu open/close state */
   const toggleNavbar = () => setIsOpen(!isOpen);
+
+  /** Closes the mobile menu */
   const closeMenu = () => setIsOpen(false);
 
   return (
