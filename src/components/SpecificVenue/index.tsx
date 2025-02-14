@@ -4,7 +4,7 @@ import VenueFeatures from "../../utilities/amenities";
 import StarRating from "../../utilities/StarRating";
 import BookingForm from "../BookingForm";
 import { UserProfileResponse } from "../../Types/profiles.t";
-import { baseUrl } from "../../utilities/constants";
+import { userUrl } from "../../utilities/constants";
 import { fetchFn } from "../../utilities/http";
 import { useQuery } from "@tanstack/react-query";
 import useDeleteVenue from "../../utilities/deleteVenue";
@@ -47,7 +47,7 @@ const SpecificVenue = () => {
         throw new Error("User name or token is missing");
       }
 
-      const profileUrl = `${baseUrl}holidaze/profiles/${userName}`;
+      const profileUrl = `${userUrl}${userName}`;
       console.log("Fetching profile from:", profileUrl);
       const response = await fetchFn({
         queryKey: [profileUrl, token],
