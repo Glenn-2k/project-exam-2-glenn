@@ -1,70 +1,53 @@
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import * as Yup from "yup";
 import { postFn } from "../../utilities/http";
 import { registerUrl } from "../../utilities/constants";
 
+const validationSchema = Yup.object({
+  name: Yup.string().required("Name is required"),
+  email: Yup.string()
+    .email("Invalid email address")
+    .matches(
+      /^[^\s@]+@stud\.noroff\.no$/,
+      "Only @stud.noroff.no emails are allowed"
+    )
+    .required("Email is required"),
+  password: Yup.string()
+    .min(8, "Password must be at least 8 characters")
+    .required("Password is required"),
+});
+
 const Register: React.FC = () => {
   const navigate = useNavigate();
-
   const [formData, setFormData] = useState({
     name: "",
     email: "",
     password: "",
-    // bio: "",
-    // profilePicture: "",
-    // bannerPicture: "",
+
     venueManager: false,
   });
 
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [globalError, setGlobalError] = useState<string | null>(null);
 
-  const validationSchema = Yup.object({
-    name: Yup.string().required("Name is required"),
-    email: Yup.string()
-      .email("Invalid email address")
-      .matches(
-        /^[^\s@]+@stud\.noroff\.no$/,
-        "Only @stud.noroff.no emails are allowed"
-      )
-      .required("Email is required"),
-    password: Yup.string()
-      .min(8, "Password must be at least 8 characters")
-      .required("Password is required"),
-    // bio: Yup.string(),
-    // profilePicture: Yup.string().url("Must be a valid URL"),
-    // bannerPicture: Yup.string().url("Must be a valid URL"),
-  });
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value, type, checked } = e.target;
     setFormData((prev) => ({
       ...prev,
       [name]: type === "checkbox" ? checked : value,
     }));
-  };
+  }, []);
 
-  const handleSubmit = async () => {
+  const handleSubmit = useCallback(async () => {
     try {
       await validationSchema.validate(formData, { abortEarly: false });
       setErrors({});
-
-      // const avatar = {
-      //   url: formData.profilePicture,
-      //   alt: `${formData.name}'s profile picture`,
-      // };
-      // const banner = {
-      //   url: formData.bannerPicture,
-      //   alt: `${formData.name}'s banner`,
-      // };
 
       await postFn({
         url: registerUrl,
         body: {
           ...formData,
-          // avatar,
-          // banner,
         },
         token: "",
       });
@@ -81,7 +64,7 @@ const Register: React.FC = () => {
         setGlobalError("An error occurred. Please try again.");
       }
     }
-  };
+  }, [formData, navigate]);
 
   return (
     <div className="flex flex-col items-center justify-center h-screen">
@@ -116,39 +99,6 @@ const Register: React.FC = () => {
         className="border p-2 rounded mb-4"
       />
       {errors.name && <div className="text-red-500">{errors.name}</div>}
-
-      {/* <input
-        type="text"
-        name="bio"
-        value={formData.bio}
-        onChange={handleChange}
-        placeholder="Bio"
-        className="border p-2 rounded mb-4"
-      /> */}
-
-      {/* <input
-        type="url"
-        name="profilePicture"
-        value={formData.profilePicture}
-        onChange={handleChange}
-        placeholder="Profile Picture URL"
-        className="border p-2 rounded mb-4"
-      />
-      {errors.profilePicture && (
-        <div className="text-red-500">{errors.profilePicture}</div>
-      )}
-
-      <input
-        type="url"
-        name="bannerPicture"
-        value={formData.bannerPicture}
-        onChange={handleChange}
-        placeholder="Banner Picture URL"
-        className="border p-2 rounded mb-4"
-      />
-      {errors.bannerPicture && (
-        <div className="text-red-500">{errors.bannerPicture}</div>
-      )} */}
 
       <label className="mb-4">
         <input
