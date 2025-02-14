@@ -3,34 +3,33 @@ import { useNavigate } from "react-router-dom";
 import * as Yup from "yup";
 import { postFn } from "../../utilities/http";
 import { registerUrl } from "../../utilities/constants";
+import { validationSchema } from "../../validation/registerSchema";
 
-const validationSchema = Yup.object({
-  name: Yup.string().required("Name is required"),
-  email: Yup.string()
-    .email("Invalid email address")
-    .matches(
-      /^[^\s@]+@stud\.noroff\.no$/,
-      "Only @stud.noroff.no emails are allowed"
-    )
-    .required("Email is required"),
-  password: Yup.string()
-    .min(8, "Password must be at least 8 characters")
-    .required("Password is required"),
-});
-
+/**
+ * Register component for user sign-up.
+ * Allows users to register with name, email, password, and an optional venue manager role.
+ * Uses Yup for validation and React Query for API calls.
+ *
+ * @component
+ */
 const Register: React.FC = () => {
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
     name: "",
     email: "",
     password: "",
-
     venueManager: false,
   });
 
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [globalError, setGlobalError] = useState<string | null>(null);
 
+  /**
+   * Handles changes in input fields.
+   * Updates the form data state with new input values.
+   *
+   * @param {React.ChangeEvent<HTMLInputElement>} e - The input change event.
+   */
   const handleChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value, type, checked } = e.target;
     setFormData((prev) => ({
@@ -39,6 +38,10 @@ const Register: React.FC = () => {
     }));
   }, []);
 
+  /**
+   * Handles form submission.
+   * Validates form data and sends a registration request to the API.
+   */
   const handleSubmit = useCallback(async () => {
     try {
       await validationSchema.validate(formData, { abortEarly: false });
@@ -46,9 +49,7 @@ const Register: React.FC = () => {
 
       await postFn({
         url: registerUrl,
-        body: {
-          ...formData,
-        },
+        body: { ...formData },
         token: "",
       });
 
@@ -70,6 +71,7 @@ const Register: React.FC = () => {
     <div className="flex flex-col items-center justify-center h-screen">
       <h1 className="text-4xl font-bold mb-4">Register</h1>
       {globalError && <div className="text-red-500 mb-4">{globalError}</div>}
+
       <input
         type="email"
         name="email"
