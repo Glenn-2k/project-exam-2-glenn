@@ -267,7 +267,7 @@ const UserProfile = () => {
               {bookings.map((booking) => (
                 <li
                   key={booking.id}
-                  className="py-4 flex items-center"
+                  className="py-4 flex items-center cursor-pointer"
                   onClick={() => {
                     if (booking.venue?.id) {
                       navigate(`/venues/${booking.venue.id}`);
