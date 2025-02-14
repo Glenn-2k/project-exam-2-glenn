@@ -310,7 +310,11 @@ const UserProfile = () => {
           {venues && venues.length > 0 ? (
             <ul className="divide-y divide-gray-200">
               {venues.map((venue) => (
-                <li key={venue.id} className="pb-4 flex items-center">
+                <li
+                  key={venue.id}
+                  className="pb-4 flex items-center cursor-pointer"
+                  onClick={() => navigate(`/venues/${venue.id}`)}
+                >
                   <FaRegTrashAlt
                     className="mr-4 cursor-pointer"
                     onClick={() => deleteVenueMutation.mutate(venue.id)}
