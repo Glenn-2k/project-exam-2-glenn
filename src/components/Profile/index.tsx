@@ -265,7 +265,17 @@ const UserProfile = () => {
           {bookings.length > 0 ? (
             <ul className="divide-y divide-gray-200">
               {bookings.map((booking) => (
-                <li key={booking.id} className="py-4 flex items-center">
+                <li
+                  key={booking.id}
+                  className="py-4 flex items-center"
+                  onClick={() => {
+                    if (booking.venue?.id) {
+                      navigate(`/venues/${booking.venue.id}`);
+                    } else {
+                      console.log("No venue ID found");
+                    }
+                  }}
+                >
                   <div className="flex flex-col">
                     <p className="font-semibold text-gray-900">
                       {booking.venue?.name || "Unnamed Venue"}
