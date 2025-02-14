@@ -267,7 +267,7 @@ const UserProfile = () => {
               {bookings.map((booking) => (
                 <li
                   key={booking.id}
-                  className="py-4 flex items-center cursor-pointer"
+                  className="py-4 flex items-center cursor-pointer hover:bg-gray-50 hover:shadow-sm transition duration-200"
                   onClick={() => {
                     if (booking.venue?.id) {
                       navigate(`/venues/${booking.venue.id}`);
@@ -322,7 +322,7 @@ const UserProfile = () => {
               {venues.map((venue) => (
                 <li
                   key={venue.id}
-                  className="pb-4 flex items-center cursor-pointer"
+                  className="pb-4 flex items-center cursor-pointer hover:bg-gray-50 hover:shadow-sm transition duration-200"
                   onClick={() => navigate(`/venues/${venue.id}`)}
                 >
                   <FaRegTrashAlt
