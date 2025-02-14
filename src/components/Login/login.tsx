@@ -5,13 +5,28 @@ import { postFn } from "../../utilities/http";
 import { loginUrl } from "../../utilities/constants";
 import { saveLocal } from "../../utilities/localStorage";
 
+/**
+ * Login Component
+ *
+ * Provides a form for users to log in by entering their email and password.
+ * Validates input fields and handles authentication requests.
+ *
+ * @component
+ * @returns {JSX.Element} The rendered Login component.
+ */
 const Login: React.FC = () => {
   const navigate = useNavigate();
 
+  /** State to hold form data */
   const [formData, setFormData] = useState({ email: "", password: "" });
+
+  /** State to hold form field-specific errors */
   const [errors, setErrors] = useState<Record<string, string>>({});
+
+  /** State to hold global error messages */
   const [globalError, setGlobalError] = useState<string | null>(null);
 
+  /** Validation schema using Yup */
   const validationSchema = Yup.object({
     email: Yup.string()
       .email("Invalid email address")
@@ -19,12 +34,25 @@ const Login: React.FC = () => {
     password: Yup.string().required("Password is required"),
   });
 
+  /**
+   * Handles input changes and updates state accordingly.
+   *
+   * @param {React.ChangeEvent<HTMLInputElement>} e - The input change event.
+   */
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleSubmit = async () => {
+  /**
+   * Handles form submission by validating input and making an API call.
+   * If login is successful, the token is stored locally and user is redirected.
+   *
+   * @async
+   * @function handleSubmit
+   * @returns {Promise<void>}
+   */
+  const handleSubmit = async (): Promise<void> => {
     try {
       await validationSchema.validate(formData, { abortEarly: false });
       setErrors({});
@@ -39,6 +67,7 @@ const Login: React.FC = () => {
         saveLocal("token", data.data.accessToken);
         saveLocal("user", data);
         window.dispatchEvent(new Event("authChange"));
+
         setTimeout(() => {
           navigate("/");
         }, 500);
@@ -62,6 +91,8 @@ const Login: React.FC = () => {
     <div className="flex flex-col items-center justify-center h-screen">
       <h1 className="text-4xl font-bold mb-4">Login</h1>
       {globalError && <div className="text-red-500 mb-4">{globalError}</div>}
+
+      {/* Email*/}
       <input
         type="email"
         name="email"
@@ -72,6 +103,7 @@ const Login: React.FC = () => {
       />
       {errors.email && <div className="text-red-500">{errors.email}</div>}
 
+      {/* Password */}
       <input
         type="password"
         name="password"
@@ -83,12 +115,15 @@ const Login: React.FC = () => {
       />
       {errors.password && <div className="text-red-500">{errors.password}</div>}
 
+      {/* Login button */}
       <button
         onClick={handleSubmit}
         className="bg-sky-950 hover:bg-sky-800 text-white font-bold py-2 px-4 rounded"
       >
         Login
       </button>
+
+      {/* Register redirect */}
       <p className="mt-4">
         Don't have an account?{" "}
         <span
