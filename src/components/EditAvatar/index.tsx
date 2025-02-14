@@ -5,6 +5,15 @@ import { useState } from "react";
 import * as Yup from "yup";
 import { loadLocal } from "../../utilities/localStorage";
 
+/**
+ * EditAvatar Component
+ *
+ * This component allows users to update their profile avatar by providing a valid image URL.
+ * The avatar is updated via an API call using `putFn`.
+ *
+ * @component
+ * @returns {JSX.Element} The EditAvatar component.
+ */
 const EditAvatar: React.FC = () => {
   const storedUserData = localStorage.getItem("user");
   const token = loadLocal("token") || "";
@@ -27,15 +36,25 @@ const EditAvatar: React.FC = () => {
 
   const [errors, setErrors] = useState<Record<string, string>>({});
 
+  /**
+   * Validation schema for the avatar input field.
+   */
   const validationSchema = Yup.object({
     profilePicture: Yup.string().url("Must be a valid URL"),
   });
 
+  /**
+   * Handles input field changes.
+   * @param {React.ChangeEvent<HTMLInputElement>} e - The input change event.
+   */
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
+  /**
+   * Handles form submission, validating the input and sending the update request.
+   */
   const handleSubmit = async () => {
     try {
       await validationSchema.validate(formData, { abortEarly: false });
@@ -46,9 +65,7 @@ const EditAvatar: React.FC = () => {
         alt: `${userName}'s profile picture`,
       };
 
-      const body = {
-        avatar,
-      };
+      const body = { avatar };
 
       await putFn({
         url: `${baseUrl}holidaze/profiles/${userName}`,
@@ -80,7 +97,7 @@ const EditAvatar: React.FC = () => {
         </h1>
 
         <form className="space-y-4">
-          {/* Profile Picture Input */}
+          {/* Profile Picture */}
           <div className="flex flex-col">
             <label
               htmlFor="profilePicture"
