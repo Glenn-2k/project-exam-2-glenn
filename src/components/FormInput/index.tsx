@@ -1,3 +1,14 @@
+/**
+ * Interface for the FormInput component props.
+ *
+ * @interface FormInputProps
+ * @property {string} label - The text label associated with the input field.
+ * @property {string} name - The name attribute of the input field.
+ * @property {string} value - The current value of the input field.
+ * @property {(e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void} onChange - Function to handle input changes.
+ * @property {string} [error] - Optional error message displayed below the input field.
+ * @property {string} [type] - Input type (e.g., "text", "number", "email"). Defaults to "text". If "textarea" is specified, a textarea element is rendered instead.
+ */
 interface FormInputProps {
   label: string;
   name: string;
@@ -9,6 +20,15 @@ interface FormInputProps {
   type?: string;
 }
 
+/**
+ * FormInput Component
+ *
+ * A reusable input component that dynamically renders either an input field or a textarea based on the `type` prop.
+ *
+ * @component
+ * @param {FormInputProps} props - Component props.
+ * @returns {JSX.Element} The rendered input or textarea element.
+ */
 const FormInput: React.FC<FormInputProps> = ({
   label,
   name,
