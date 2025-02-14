@@ -2,6 +2,15 @@ import FormInput from "../../components/FormInput";
 import FormCheckbox from "../../components/FormCheckbox/FormCheckbox";
 import { useCreateVenue } from "../../assets/hooks/useCreateVenue";
 
+/**
+ * CreateVenue Component
+ *
+ * This component provides a form for users to create a new venue.
+ * Users can input venue details such as name, description, location, price, and amenities.
+ *
+ * @component
+ * @returns {JSX.Element} The CreateVenue form component
+ */
 const CreateVenue: React.FC = () => {
   const { formData, errors, handleChange, handleSubmit, navigate } =
     useCreateVenue();
@@ -13,6 +22,7 @@ const CreateVenue: React.FC = () => {
           Create Venue
         </h1>
         <form className="space-y-4">
+          {/* Name  */}
           <FormInput
             label="Name"
             name="name"
@@ -20,6 +30,8 @@ const CreateVenue: React.FC = () => {
             onChange={handleChange}
             error={errors.name}
           />
+
+          {/* Description */}
           <FormInput
             label="Description"
             name="description"
@@ -28,6 +40,8 @@ const CreateVenue: React.FC = () => {
             onChange={handleChange}
             error={errors.description}
           />
+
+          {/* Address */}
           <FormInput
             label="Address"
             name="address"
@@ -36,12 +50,15 @@ const CreateVenue: React.FC = () => {
           />
 
           <div className="grid grid-cols-2 gap-4">
+            {/* City  */}
             <FormInput
               label="City"
               name="city"
               value={formData.location.city}
               onChange={handleChange}
             />
+
+            {/* Country */}
             <FormInput
               label="Country"
               name="country"
@@ -51,6 +68,7 @@ const CreateVenue: React.FC = () => {
           </div>
 
           <div className="grid grid-cols-2 gap-4">
+            {/* Price */}
             <FormInput
               label="Price"
               name="price"
@@ -59,6 +77,8 @@ const CreateVenue: React.FC = () => {
               onChange={handleChange}
               error={errors.price}
             />
+
+            {/* Max Guests */}
             <FormInput
               label="Max Guests"
               name="maxGuests"
@@ -69,6 +89,7 @@ const CreateVenue: React.FC = () => {
             />
           </div>
 
+          {/* Image URL Input */}
           <FormInput
             label="Image URL"
             name="image"
@@ -78,6 +99,7 @@ const CreateVenue: React.FC = () => {
           />
 
           <div className="grid grid-cols-2 gap-4">
+            {/* Amenities Checkboxes */}
             <FormCheckbox
               label="Wifi"
               name="wifi"
@@ -104,6 +126,7 @@ const CreateVenue: React.FC = () => {
             />
           </div>
 
+          {/* Submit Button */}
           <button
             className="bg-sky-950 hover:bg-sky-800 text-white font-bold py-2 px-4 rounded-md w-full mt-4"
             type="button"
@@ -111,6 +134,8 @@ const CreateVenue: React.FC = () => {
           >
             Create Venue
           </button>
+
+          {/* Cancel Button */}
           <button
             className="bg-red-800 hover:bg-red-950 text-white font-bold py-2 px-4 rounded-md w-full mt-4"
             type="button"
