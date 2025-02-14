@@ -12,12 +12,23 @@ import VenueCarousel from "../../utilities/imageCarousel";
 import useVenues from "../../assets/hooks/useVenues";
 import { ThreeDot } from "react-loading-indicators";
 
+/**
+ * Component for displaying details about a specific venue.
+ * It fetches venue data and user profile, and allows booking or management.
+ *
+ * @component
+ * @returns {JSX.Element} The rendered SpecificVenue component.
+ */
 const SpecificVenue = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const { venues, loading, error } = useVenues();
   const deleteVenueMutation = useDeleteVenue();
 
+  /**
+   * Finds the specific venue from the list of venues.
+   * @type {Venue | undefined}
+   */
   const venue: Venue | undefined = venues?.find(
     (venue: Venue) => venue.id === id
   );
@@ -36,6 +47,9 @@ const SpecificVenue = () => {
     console.error("Error parsing user data:", error);
   }
 
+  /**
+   * Fetches the user profile data.
+   */
   const {
     data: profileResponse,
     isLoading: profileLoading,
@@ -61,7 +75,7 @@ const SpecificVenue = () => {
   const profile = profileResponse?.data;
   const isOwner = venue?.owner?.name === profile?.name;
 
-  if (profileLoading)
+  if (profileLoading || loading) {
     return (
       <div className="flex justify-center items-center h-96">
         <ThreeDot
@@ -73,25 +87,15 @@ const SpecificVenue = () => {
         />
       </div>
     );
+  }
+
   if (profileError)
     return <div>Error fetching profile: {profileError.message}</div>;
-  if (loading)
-    return (
-      <div className="flex justify-center items-center h-96">
-        <ThreeDot
-          variant="bounce"
-          color="#32cd32"
-          size="medium"
-          text=""
-          textColor=""
-        />
-      </div>
-    );
   if (error) return <div>Error: {error.message}</div>;
   if (!venue) return <div>Venue not found</div>;
 
   return (
-    <div className="bg-gray-200 p-4 max-w-md sm:max-w-xl md:max-w-3xl mx-auto  rounded-lg">
+    <div className="bg-gray-200 p-4 max-w-md sm:max-w-xl md:max-w-3xl mx-auto rounded-lg">
       <h1 className="text-2xl tracking-widest font-bold mb-4 mt-4 text-center">
         {venue.name}
       </h1>
@@ -100,7 +104,7 @@ const SpecificVenue = () => {
       </div>
       <div className="flex justify-between items-center mb-4">
         <div className="flex items-center">
-          <p className="uppercase font-semibold mr-1">Hosted by: </p>{" "}
+          <p className="uppercase font-semibold mr-1">Hosted by: </p>
           {venue.owner.name}
         </div>
         <div className="block">
@@ -111,7 +115,7 @@ const SpecificVenue = () => {
 
       <section className="pb-6 border-b-2 border-b-gray-300">
         <h2 className="text-lg font-semibold mb-2 underline">Information</h2>
-        <p className="my-2 text-sm   font-semibold">
+        <p className="my-2 text-sm font-semibold">
           Max Guests: {venue.maxGuests || "N/A"}
         </p>
         <p>{venue.description || "No description available."}</p>
@@ -152,15 +156,13 @@ const SpecificVenue = () => {
           </>
         ) : (
           <>
-            <h2 className=" text-lg font-semibold mb-2 underline">
-              Book Venue
-            </h2>
+            <h2 className="text-lg font-semibold mb-2 underline">Book Venue</h2>
             {token ? (
               <div className="flex justify-center mt-6">
                 <BookingForm venueId={venue.id} maxGuests={venue.maxGuests} />
               </div>
             ) : (
-              <p className="text-center my-6 ">
+              <p className="text-center my-6">
                 Please{" "}
                 <span
                   onClick={() => navigate("/login")}
