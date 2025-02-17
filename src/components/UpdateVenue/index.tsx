@@ -52,10 +52,9 @@ const UpdateVenue: React.FC = () => {
 
       setFormData((prev) => ({
         ...prev,
-        [type === "checkbox" ? "meta" : ""]: {
-          ...prev.meta,
-          [name]: type === "checkbox" ? checked : value,
-        },
+        ...(type === "checkbox"
+          ? { meta: { ...prev.meta, [name]: checked } }
+          : { [name]: value }),
       }));
     },
     []
