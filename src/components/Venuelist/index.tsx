@@ -6,6 +6,12 @@ import useVenues from "../../assets/hooks/useVenues";
 import { ThreeDot } from "react-loading-indicators";
 import { FaTimes } from "react-icons/fa";
 
+/**
+ * VenueList Component
+ * Displays a list of venues, allows searching, and supports infinite scrolling.
+ *
+ * @returns {JSX.Element} The VenueList component.
+ */
 const VenueList = () => {
   const { venues, loading, error, loadMore, hasMoreVenues } = useVenues(); // Henter ALLE venues
   const [searchTerm, setSearchTerm] = useState<string>("");
@@ -15,6 +21,14 @@ const VenueList = () => {
   const [searchLoading, setSearchLoading] = useState(false);
   const [searchError, setSearchError] = useState<string | null>(null);
 
+  /**
+   * Handles venue search based on user input.
+   * Fetches venues that match the search term from the API.
+   *
+   * @async
+   * @function
+   * @returns {Promise<void>}
+   */
   const handleSearch = async () => {
     setSearchResults(null);
     if (!searchTerm.trim()) {
@@ -43,11 +57,23 @@ const VenueList = () => {
     }
   };
 
+  /**
+   * Clears the search input and resets search results.
+   *
+   * @function
+   */
   const clearSearch = () => {
     setSearchTerm("");
     setSearchResults(null);
   };
 
+  /**
+   * Determines which venues to display.
+   * If search results exist, they are shown; otherwise, all venues are displayed.
+   *
+   * @constant
+   * @type {Array}
+   */
   const displayedVenues = searchResults !== null ? searchResults : venues;
 
   return (
@@ -55,6 +81,7 @@ const VenueList = () => {
       <h1 className="text-4xl text-center font-bold mb-12 uppercase">Venues</h1>
       {error && <div className="text-red-500">Error: {error.message}</div>}
 
+      {/* Search Input */}
       <div className="flex items-center gap-2 mb-10 ">
         <div className="relative">
           <input
@@ -81,6 +108,7 @@ const VenueList = () => {
         </button>
       </div>
 
+      {/* Error and Loading States */}
       {searchError && <div className="text-red-500">{searchError}</div>}
       {searchLoading && (
         <div className="flex justify-center items-center h-96">
@@ -108,6 +136,7 @@ const VenueList = () => {
         <p className="text-gray-500 text-center">No venues found.</p>
       )}
 
+      {/* Load More Button */}
       {!searchResults && hasMoreVenues && !loading && (
         <button
           onClick={loadMore}
