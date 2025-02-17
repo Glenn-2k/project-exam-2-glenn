@@ -1,7 +1,7 @@
 import { useState } from "react";
 import VenueCard from "../VenueCard";
 import { fetchFn } from "../../utilities/http";
-import { baseUrl } from "../../utilities/constants";
+import { searchUrl } from "../../utilities/constants";
 import useVenues from "../../assets/hooks/useVenues";
 import { ThreeDot } from "react-loading-indicators";
 import { FaTimes } from "react-icons/fa";
@@ -24,11 +24,11 @@ const VenueList = () => {
     try {
       setSearchLoading(true);
       setSearchError(null);
-      const searchUrl = `${baseUrl}holidaze/venues/search?q=${encodeURIComponent(
+      const searchString = `${searchUrl}${encodeURIComponent(
         searchTerm
       )}&limit=50&sort=created&sortOrder=desc&page=1&_owner=true`;
 
-      const response = await fetchFn({ queryKey: [searchUrl, "search"] });
+      const response = await fetchFn({ queryKey: [searchString, "search"] });
 
       if (response?.data) {
         setSearchResults(response.data);
