@@ -1,64 +1,54 @@
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import { postFn } from "../../utilities/http";
 import { createVenueUrl } from "../../utilities/constants";
 import { useNavigate } from "react-router-dom";
-import * as Yup from "yup";
 import { loadLocal } from "../../utilities/localStorage";
+import { validationSchema } from "../../validation/validationSchema";
+import * as Yup from "yup";
+
+const initialFormState = {
+  name: "",
+  description: "",
+  address: "",
+  city: "",
+  country: "",
+  price: "",
+  maxGuests: "",
+  image: "",
+  meta: {
+    wifi: false,
+    parking: false,
+    breakfast: false,
+    pets: false,
+  },
+};
 
 const UpdateVenue: React.FC = () => {
   const token = loadLocal("token") || "";
   const navigate = useNavigate();
 
-  const [formData, setFormData] = useState({
-    name: "",
-    description: "",
-    address: "",
-    city: "",
-    country: "",
-    price: "",
-    maxGuests: "",
-    image: "",
-    meta: {
-      wifi: false,
-      parking: false,
-      breakfast: false,
-      pets: false,
-    },
-  });
-
+  const [formData, setFormData] = useState(initialFormState);
   const [errors, setErrors] = useState<Record<string, string>>({});
+  const [loading, setLoading] = useState(false);
 
-  const validationSchema = Yup.object({
-    name: Yup.string().required("Required"),
-    description: Yup.string().required("Required"),
-    price: Yup.number().required("Required"),
-    address: Yup.string().required("Please provide a valid address"),
-    city: Yup.string().required("Please provide a valid city"),
-    country: Yup.string().required("Please provide a valid country"),
-    maxGuests: Yup.number().required("Required"),
-    image: Yup.string().url("Must be a valid URL"),
-  });
+  const handleChange = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+      const { name, value, type, checked } = e.target as HTMLInputElement;
 
-  const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-  ) => {
-    const { name, value, type, checked } = e.target as HTMLInputElement;
-
-    if (type === "checkbox") {
       setFormData((prev) => ({
         ...prev,
-        meta: {
+        [type === "checkbox" ? "meta" : ""]: {
           ...prev.meta,
-          [name]: checked,
+          [name]: type === "checkbox" ? checked : value,
         },
       }));
-    } else {
-      setFormData((prev) => ({ ...prev, [name]: value }));
-    }
-  };
+    },
+    []
+  );
 
-  const handleSubmit = async () => {
+  const handleSubmit = useCallback(async () => {
     try {
+      setLoading(true);
       await validationSchema.validate(formData, { abortEarly: false });
       setErrors({});
 
@@ -96,8 +86,10 @@ const UpdateVenue: React.FC = () => {
       } else {
         console.error("Error creating venue:", error);
       }
+    } finally {
+      setLoading(false);
     }
-  };
+  }, [formData, navigate, token]);
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen p-6">
@@ -294,8 +286,9 @@ const UpdateVenue: React.FC = () => {
             className="bg-sky-950 hover:bg-sky-800 text-white font-bold py-2 px-4 rounded-md transition-all duration-200 w-full mt-4"
             type="button"
             onClick={handleSubmit}
+            disabled={loading}
           >
-            Update Venue
+            {loading ? "Updating..." : "Update Venue"}
           </button>
           <button
             className="bg-red-800 hover:bg-red-950 text-white font-bold py-2 px-4 rounded-md transition-all duration-200 w-full mt-4"
