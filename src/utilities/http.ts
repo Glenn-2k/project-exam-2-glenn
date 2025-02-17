@@ -4,6 +4,14 @@ import { API_KEY } from "./constants";
 
 export const queryClient = new QueryClient();
 
+/**
+ * Fetches data from the provided URL.
+ *
+ * @param {Object} params - Parameters for the fetch function.
+ * @param {[string, string]} params.queryKey - The query key containing the URL and method.
+ * @returns {Promise<any>} A promise that resolves to the fetched data.
+ * @throws {Error} Throws an error if the fetch operation fails.
+ */
 export async function fetchFn({ queryKey }: { queryKey: [string, string] }) {
   const [url] = queryKey;
   const token = loadLocal("token");
@@ -33,6 +41,16 @@ export async function fetchFn({ queryKey }: { queryKey: [string, string] }) {
   }
 }
 
+/**
+ * Sends a POST request to the specified URL.
+ *
+ * @param {Object} params - Parameters for the POST request.
+ * @param {string} params.url - The API endpoint URL.
+ * @param {Record<string, unknown>} params.body - The request payload.
+ * @param {string} params.token - The authentication token.
+ * @returns {Promise<any>} A promise that resolves to the response data.
+ * @throws {Error} Throws an error if the request fails.
+ */
 export async function postFn({
   url,
   body,
@@ -60,6 +78,16 @@ export async function postFn({
   }
 }
 
+/**
+ * Sends a PUT request to update data at the specified URL.
+ *
+ * @param {Object} params - Parameters for the PUT request.
+ * @param {string} params.url - The API endpoint URL.
+ * @param {Record<string, unknown>} params.body - The request payload.
+ * @param {string} params.token - The authentication token.
+ * @returns {Promise<any>} A promise that resolves to the response data.
+ * @throws {Error} Throws an error if the request fails.
+ */
 export async function putFn({
   url,
   body,
@@ -96,6 +124,15 @@ export async function putFn({
   }
 }
 
+/**
+ * Sends a DELETE request to the specified URL.
+ *
+ * @param {Object} params - Parameters for the DELETE request.
+ * @param {string} params.url - The API endpoint URL.
+ * @param {string} params.token - The authentication token.
+ * @returns {Promise<any | null>} A promise that resolves to the response data or null if successful.
+ * @throws {Error} Throws an error if the request fails.
+ */
 export async function deleteFn({ url, token }: { url: string; token: string }) {
   try {
     const response = await fetch(`${url}`, {
