@@ -1,16 +1,28 @@
 import { venuesUrl } from "./constants";
 import { fetchFn } from "./http";
 
+/**
+ * Represents a booking with start and end dates.
+ */
 interface Booking {
   dateFrom: string;
   dateTo: string;
 }
 
+/**
+ * Represents a date interval with start and end dates.
+ */
 interface DateInterval {
   start: Date;
   end: Date;
 }
 
+/**
+ * Fetches the booked dates for a specific venue.
+ *
+ * @param {string} venueId - The unique identifier of the venue.
+ * @returns {Promise<DateInterval[]>} A promise that resolves to an array of booked date intervals.
+ */
 export const fetchBookedDates = async (
   venueId: string
 ): Promise<DateInterval[]> => {
@@ -43,7 +55,7 @@ export const fetchBookedDates = async (
 
         return { start, end };
       })
-      .filter(Boolean);
+      .filter(Boolean) as DateInterval[];
 
     return dateIntervals;
   } catch (error) {
