@@ -6,6 +6,9 @@ import { loadLocal } from "../../utilities/localStorage";
 import { validationSchema } from "../../validation/validationSchema";
 import * as Yup from "yup";
 
+/**
+ * Initial state for the venue update form.
+ */
 const initialFormState = {
   name: "",
   description: "",
@@ -23,6 +26,12 @@ const initialFormState = {
   },
 };
 
+/**
+ * Component for updating a venue.
+ * Users can modify venue details including name, description, address, pricing, and amenities.
+ *
+ * @returns {JSX.Element} The UpdateVenue form.
+ */
 const UpdateVenue: React.FC = () => {
   const token = loadLocal("token") || "";
   const navigate = useNavigate();
@@ -31,6 +40,12 @@ const UpdateVenue: React.FC = () => {
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [loading, setLoading] = useState(false);
 
+  /**
+   * Handles input changes for the form fields.
+   * Updates the `formData` state based on user input.
+   *
+   * @param {React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>} e - The event object containing input data.
+   */
   const handleChange = useCallback(
     (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
       const { name, value, type, checked } = e.target as HTMLInputElement;
@@ -46,6 +61,10 @@ const UpdateVenue: React.FC = () => {
     []
   );
 
+  /**
+   * Handles form submission.
+   * Validates input fields and sends a request to update the venue.
+   */
   const handleSubmit = useCallback(async () => {
     try {
       setLoading(true);
@@ -215,70 +234,6 @@ const UpdateVenue: React.FC = () => {
                 </span>
               )}
             </div>
-          </div>
-
-          {/* Image URL */}
-          <div>
-            <label className="block text-sm font-semibold text-gray-600">
-              Image URL
-            </label>
-            <input
-              type="text"
-              name="image"
-              value={formData.image}
-              onChange={handleChange}
-              className="w-full p-2 border rounded-md"
-            />
-            {errors.image && (
-              <span className="text-red-500">{errors.image}</span>
-            )}
-          </div>
-
-          {/* Meta Checkboxes */}
-          <div className="grid grid-cols-2 gap-4">
-            <label className="flex items-center space-x-2">
-              <input
-                type="checkbox"
-                name="wifi"
-                checked={formData.meta.wifi}
-                onChange={handleChange}
-                className="w-4 h-4"
-              />
-              <span className="text-sm text-gray-600">Wifi</span>
-            </label>
-
-            <label className="flex items-center space-x-2">
-              <input
-                type="checkbox"
-                name="parking"
-                checked={formData.meta.parking}
-                onChange={handleChange}
-                className="w-4 h-4"
-              />
-              <span className="text-sm text-gray-600">Parking</span>
-            </label>
-
-            <label className="flex items-center space-x-2">
-              <input
-                type="checkbox"
-                name="breakfast"
-                checked={formData.meta.breakfast}
-                onChange={handleChange}
-                className="w-4 h-4"
-              />
-              <span className="text-sm text-gray-600">Breakfast</span>
-            </label>
-
-            <label className="flex items-center space-x-2">
-              <input
-                type="checkbox"
-                name="pets"
-                checked={formData.meta.pets}
-                onChange={handleChange}
-                className="w-4 h-4"
-              />
-              <span className="text-sm text-gray-600">Pets</span>
-            </label>
           </div>
 
           {/* Submit Button */}
