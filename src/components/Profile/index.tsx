@@ -225,18 +225,19 @@ const UserProfile = () => {
                   </div>
 
                   <div className="flex justify-end flex-grow">
-                    {booking.venue.media.map((mediaItem, index) => (
+                    {booking.venue.media.length > 0 ? (
                       <img
                         className="h-16 w-24 object-cover rounded-md "
-                        key={index}
-                        src={
-                          mediaItem.url
-                            ? mediaItem.url
-                            : "https://commons.wikimedia.org/wiki/File:No-Image-Placeholder.svg"
-                        }
-                        alt={mediaItem.alt}
+                        src={booking.venue.media[0].url}
+                        alt={booking.venue.media[0].alt}
                       />
-                    ))}
+                    ) : (
+                      <img
+                        className="h-16 w-24 object-cover rounded-md "
+                        src="https://commons.wikimedia.org/wiki/File:No-Image-Placeholder.svg"
+                        alt="No image available"
+                      />
+                    )}
                   </div>
                 </li>
               ))}
