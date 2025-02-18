@@ -93,7 +93,11 @@ const Login: React.FC = () => {
       {globalError && <div className="text-red-500 mb-4">{globalError}</div>}
 
       {/* Email*/}
+      <label htmlFor="email" className="sr-only">
+        email
+      </label>
       <input
+        id="email"
         type="email"
         name="email"
         value={formData.email}
@@ -104,7 +108,11 @@ const Login: React.FC = () => {
       {errors.email && <div className="text-red-500">{errors.email}</div>}
 
       {/* Password */}
+      <label htmlFor="password" className="sr-only">
+        password{" "}
+      </label>
       <input
+        id="password"
         type="password"
         name="password"
         value={formData.password}
