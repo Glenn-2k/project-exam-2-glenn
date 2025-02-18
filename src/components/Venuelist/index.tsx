@@ -84,7 +84,11 @@ const VenueList = () => {
       {/* Search Input */}
       <div className="flex items-center gap-2 mb-10 ">
         <div className="relative">
+          <label htmlFor="search" className="sr-only">
+            Search venues by name
+          </label>
           <input
+            id="search"
             type="text"
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
