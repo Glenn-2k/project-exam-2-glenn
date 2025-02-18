@@ -133,18 +133,13 @@ const UserProfile = () => {
 
   return (
     <>
-      {/* Profile Section */}
       <div className="w-full max-w-2xl mx-auto mt-8 bg-white rounded-lg shadow-md overflow-hidden">
         <h1 className="text-2xl font-bold text-gray-900 p-6 tracking-wider text-center uppercase">
           Profile
         </h1>
         <div className="p-4 text-center">
           <h1 className="text-xl font-bold text-gray-900">{profile.name}</h1>
-          {profile.venueManager && (
-            <p className=" text-sm text-sky-600">Venue Manager</p>
-          )}
 
-          {/* Avatar + Edit Button */}
           <div className="flex flex-col items-center">
             {profile.avatar?.url ? (
               <img
@@ -163,13 +158,6 @@ const UserProfile = () => {
             >
               Edit Avatar
             </button>
-            <div className="mt-2 text-sm text-gray-600">
-              <VenueManagerToggle
-                userName={profile?.name}
-                venueManager={profile.venueManager || false}
-              />
-            </div>
-
             {profile.venueManager && (
               <button
                 className="bg-sky-950 hover:bg-sky-800 text-white text-xs font-bold py-1.5 px-3 rounded m-4"
@@ -180,7 +168,6 @@ const UserProfile = () => {
             )}
           </div>
 
-          {/* Added Counts */}
           <div className="mt-4 flex justify-center gap-4 text-sm text-gray-900">
             <p className="text-xl font-semibold">
               Venues: {profile._count.venues}
@@ -188,6 +175,18 @@ const UserProfile = () => {
             <p className="text-xl font-semibold">
               Bookings: {profile._count.bookings}
             </p>
+          </div>
+          <div className="mt-2">
+            <p className="font-semibold text-sm text-gray-600">
+              Toggle venue manager status
+            </p>
+            <div className=" flex items-center justify-center  mt-2">
+              <VenueManagerToggle
+                userName={profile?.name}
+                venueManager={profile.venueManager || false}
+                aria-label="Toggle venue manager status"
+              />
+            </div>
           </div>
         </div>
       </div>

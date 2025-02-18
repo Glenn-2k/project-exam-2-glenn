@@ -14,7 +14,7 @@ const VenueManagerToggle: React.FC<VenueManagerToggleProps> = ({
   venueManager,
 }) => {
   const [isVenueManager, setIsVenueManager] = useState(venueManager);
-  const queryClient = useQueryClient(); // ✅ Access React Query cache
+  const queryClient = useQueryClient();
 
   const toggleVenueManager = async () => {
     const token = loadLocal("token");
@@ -31,9 +31,8 @@ const VenueManagerToggle: React.FC<VenueManagerToggleProps> = ({
         token,
       });
 
-      setIsVenueManager((prev) => !prev); // ✅ Update local state
+      setIsVenueManager((prev) => !prev);
 
-      // ✅ Update React Query cache immediately
       queryClient.setQueryData(
         ["profile", userName],
         (oldData: { data: { venueManager: boolean } } | undefined) => {
@@ -53,14 +52,18 @@ const VenueManagerToggle: React.FC<VenueManagerToggleProps> = ({
   };
 
   return (
-    <div>
-      <input
-        type="checkbox"
-        checked={isVenueManager}
-        onChange={toggleVenueManager}
+    <button
+      onClick={toggleVenueManager}
+      className={`w-14 h-6 flex items-center px-1 rounded-full transition-all ${
+        isVenueManager ? "bg-green-800" : "bg-red-800"
+      }`}
+    >
+      <div
+        className={`w-4 h-4 bg-white rounded-full shadow-md transform transition-all ${
+          isVenueManager ? "translate-x-8" : "translate-x-0"
+        }`}
       />
-      <label className="ml-2 font-semibold">Become a venue manager</label>
-    </div>
+    </button>
   );
 };
 
