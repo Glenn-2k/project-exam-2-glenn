@@ -29,8 +29,9 @@ const FormCheckbox: React.FC<FormCheckboxProps> = ({
   checked,
   onChange,
 }) => (
-  <label className="flex items-center space-x-2">
+  <label htmlFor={name} className="flex items-center space-x-2">
     <input
+      id={name}
       type="checkbox"
       name={name}
       checked={checked}
