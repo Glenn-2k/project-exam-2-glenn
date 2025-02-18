@@ -35,6 +35,7 @@ const NavLinks = ({
         className={({ isActive }) => getNavLinkClass(isActive)}
         to="/"
         onClick={closeMenu}
+        aria-label="Home"
       >
         Venues
       </NavLink>
@@ -43,12 +44,14 @@ const NavLinks = ({
           className={({ isActive }) => getNavLinkClass(isActive)}
           to="/profile"
           onClick={closeMenu}
+          aria-label="Profile"
         >
           Profile
         </NavLink>
       )}
       {isLoggedIn ? (
         <button
+          aria-label="Log out"
           className="text-white mb-4 md:mb-0 font-montserrat"
           onClick={handleLogout}
         >
@@ -56,6 +59,7 @@ const NavLinks = ({
         </button>
       ) : (
         <NavLink
+          aria-label="Log in/Register"
           className={({ isActive }) => getNavLinkClass(isActive)}
           to="/login"
           onClick={closeMenu}
@@ -128,6 +132,7 @@ const Nav = () => {
               isLoggedIn={isLoggedIn}
               handleLogout={handleLogout}
               closeMenu={() => {}}
+              aria-label="Navigation links"
             />
           </div>
         </div>
@@ -135,6 +140,7 @@ const Nav = () => {
         {/* Mobile Menu Toggle */}
         <div className="md:hidden flex items-center">
           <button
+            aria-label="Toggle mobile menu"
             onClick={toggleNavbar}
             className="text-xl relative flex justify-center items-center w-8 h-8"
           >
@@ -157,6 +163,7 @@ const Nav = () => {
         <div className="absolute top-full left-0 w-full bg-teal-950 shadow-md py-4 md:hidden z-50">
           <div className="flex flex-col items-center">
             <NavLinks
+              aria-label="Mobile navigation links"
               isLoggedIn={isLoggedIn}
               handleLogout={handleLogout}
               closeMenu={closeMenu}
