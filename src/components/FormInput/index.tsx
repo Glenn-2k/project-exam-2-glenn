@@ -39,9 +39,12 @@ const FormInput: React.FC<FormInputProps> = ({
 }) => {
   return (
     <div>
-      <label className="block text-gray-700">{label}</label>
+      <label htmlFor={name} className="block text-gray-700">
+        {label}
+      </label>
       {type === "textarea" ? (
         <textarea
+          id={name}
           name={name}
           value={value}
           onChange={onChange}
@@ -49,6 +52,7 @@ const FormInput: React.FC<FormInputProps> = ({
         />
       ) : (
         <input
+          id={name}
           type={type}
           name={name}
           value={value}
