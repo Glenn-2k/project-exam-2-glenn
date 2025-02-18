@@ -98,8 +98,11 @@ const BookingForm: React.FC<BookingFormProps> = ({ venueId, maxGuests }) => {
       )}
 
       <div className="mb-4 ">
-        <label className="block text-gray-700">Start Date</label>
+        <label htmlFor="fromDate" className="block text-gray-700">
+          Start Date
+        </label>
         <DatePicker
+          id="fromDate"
           selected={dateFrom}
           onChange={(date) => setDateFrom(date)}
           selectsStart
@@ -113,8 +116,11 @@ const BookingForm: React.FC<BookingFormProps> = ({ venueId, maxGuests }) => {
       </div>
 
       <div className="mb-4">
-        <label className="block text-gray-700">End Date</label>
+        <label htmlFor="endDate" className="block text-gray-700">
+          End Date
+        </label>
         <DatePicker
+          id="endDate"
           selected={dateTo}
           onChange={(date) => setDateTo(date)}
           selectsEnd
@@ -128,8 +134,11 @@ const BookingForm: React.FC<BookingFormProps> = ({ venueId, maxGuests }) => {
       </div>
 
       <div className="mb-4">
-        <label className="block text-gray-700">Guests</label>
+        <label htmlFor="guestNumber" className="block text-gray-700">
+          Guests
+        </label>
         <input
+          id="guestNumber"
           type="number"
           value={guests}
           onChange={(e) => {
