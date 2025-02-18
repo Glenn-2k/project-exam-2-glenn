@@ -54,6 +54,11 @@ const VenueManagerToggle: React.FC<VenueManagerToggleProps> = ({
   return (
     <button
       onClick={toggleVenueManager}
+      aria-label={
+        isVenueManager
+          ? "Disable venue manager mode"
+          : "Enable venue manager mode"
+      }
       className={`w-14 h-6 flex items-center px-1 rounded-full transition-all ${
         isVenueManager ? "bg-green-800" : "bg-red-800"
       }`}
