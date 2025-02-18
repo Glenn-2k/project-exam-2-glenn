@@ -28,7 +28,7 @@ const NavLinks = ({
   isLoggedIn: boolean;
   handleLogout: () => void;
   closeMenu: () => void;
-}) => {
+}): JSX.Element => {
   return (
     <>
       <NavLink
@@ -109,6 +109,7 @@ const Nav = () => {
     setIsLoggedIn(false);
     window.dispatchEvent(new Event("authChange")); // Notify other components
     navigate("/login");
+    closeMenu();
   };
 
   /** Toggles the mobile menu open/close state */
