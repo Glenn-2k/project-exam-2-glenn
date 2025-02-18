@@ -24,7 +24,6 @@ const EditAvatar: React.FC = () => {
     if (storedUserData) {
       const parsedData = JSON.parse(storedUserData);
       userName = parsedData.data?.name;
-      console.log("Found user name:", userName);
     }
   } catch (error) {
     console.error("Error parsing user data:", error);

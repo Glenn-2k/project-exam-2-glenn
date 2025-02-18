@@ -21,7 +21,6 @@ const UserProfile = () => {
     if (storedUserData) {
       const parsedData = JSON.parse(storedUserData);
       userName = parsedData.data?.name;
-      console.log("Found user name:", userName);
     }
   } catch (error) {
     console.error("Error parsing user data:", error);
@@ -39,11 +38,9 @@ const UserProfile = () => {
       if (!token) throw new Error("No authentication token found");
 
       const profileUrl = `${baseUrl}holidaze/profiles/${userName}`;
-      console.log("Fetching profile from:", profileUrl);
       const response = await fetchFn({
         queryKey: [profileUrl, token],
       });
-      console.log("Profile response:", response);
       return response as UserProfileResponse;
     },
     enabled: Boolean(userName && token),
@@ -61,9 +58,7 @@ const UserProfile = () => {
       if (!token) throw new Error("No authentication token found");
 
       const bookingsUrl = `${baseUrl}holidaze/profiles/${userName}/bookings?_venue=true`;
-      console.log("Fetching bookings from:", bookingsUrl);
       const response = await fetchFn({ queryKey: [bookingsUrl, token] });
-      console.log("Bookings response:", response);
       return response as BookingResponse;
     },
     enabled: Boolean(userName && token),
@@ -80,10 +75,8 @@ const UserProfile = () => {
     queryKey: ["venues"],
     queryFn: async () => {
       const venuesUrl = `${userUrl}${userName}/venues`;
-      console.log("Fetching venues from:", venuesUrl);
       if (!token) throw new Error("No authentication token found");
       const response = await fetchFn({ queryKey: [venuesUrl, token] });
-      console.log("Venues response:", response);
       return response as VenueResponse;
     },
     enabled: Boolean(userName && token),
@@ -207,7 +200,7 @@ const UserProfile = () => {
                     if (booking.venue?.id) {
                       navigate(`/venues/${booking.venue.id}`);
                     } else {
-                      console.log("No venue ID found");
+                      console.error("No venue ID found for booking:", booking);
                     }
                   }}
                 >

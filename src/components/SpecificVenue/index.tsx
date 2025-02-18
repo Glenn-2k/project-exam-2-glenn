@@ -41,7 +41,6 @@ const SpecificVenue = () => {
     if (storedUserData) {
       const parsedData = JSON.parse(storedUserData);
       userName = parsedData.data?.name;
-      console.log("Found user name:", userName);
     }
   } catch (error) {
     console.error("Error parsing user data:", error);
@@ -62,11 +61,9 @@ const SpecificVenue = () => {
       }
 
       const profileUrl = `${userUrl}${userName}`;
-      console.log("Fetching profile from:", profileUrl);
       const response = await fetchFn({
         queryKey: [profileUrl, token],
       });
-      console.log("Profile response:", response);
       return response as UserProfileResponse;
     },
     enabled: Boolean(userName && token),
