@@ -125,6 +125,7 @@ const Login: React.FC = () => {
 
       {/* Login button */}
       <button
+        data-testid="login-button"
         onClick={handleSubmit}
         className="bg-sky-950 hover:bg-sky-800 text-white font-bold py-2 px-4 rounded"
       >
