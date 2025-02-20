@@ -184,7 +184,7 @@ const UserProfile = () => {
         </div>
       </div>
 
-      {/* My Bookings Section */}
+      {/* My Bookings  */}
       <section className="w-full max-w-2xl mx-auto mt-8 bg-white rounded-lg shadow-md p-6 mb-6">
         <h2 className="text-2xl font-bold text-gray-900 text-center border-b-2 border-gray-200 pb-2">
           My bookings
@@ -217,7 +217,7 @@ const UserProfile = () => {
                     </p>
                   </div>
 
-                  <div className="flex justify-end flex-grow">
+                  <div className="hidden sm:flex justify-end flex-grow">
                     {booking.venue.media.length > 0 ? (
                       <img
                         className="h-16 w-24 object-cover rounded-md "
@@ -241,6 +241,7 @@ const UserProfile = () => {
         </div>
       </section>
 
+      {/* My Venues */}
       <section className="w-full max-w-2xl mx-auto mt-8 bg-white rounded-lg shadow-md p-6 mb-6">
         <h2 className="text-2xl font-bold text-gray-900 text-center border-b-2 border-gray-200 pb-2">
           My Venues
@@ -266,10 +267,10 @@ const UserProfile = () => {
                       Bookings: {venue._count.bookings}
                     </p>
                   </div>
-                  <div className="flex justify-end flex-grow">
+                  <div className="hidden sm:flex justify-end flex-grow">
                     {venue.media.map((mediaItem, index) => (
                       <img
-                        className="h-16 w-24 object-cover rounded-md "
+                        className="h-16 w-24 object-cover rounded-md"
                         key={index}
                         src={
                           mediaItem.url
