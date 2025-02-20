@@ -1,5 +1,5 @@
 import { putFn } from "../../utilities/http";
-import { baseUrl } from "../../utilities/constants";
+import { userUrl } from "../../utilities/constants";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import * as Yup from "yup";
@@ -67,7 +67,7 @@ const EditAvatar: React.FC = () => {
       const body = { avatar };
 
       await putFn({
-        url: `${baseUrl}holidaze/profiles/${userName}`,
+        url: `${userUrl}${userName}`,
         body,
         token: token || "",
       });
