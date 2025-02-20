@@ -112,10 +112,10 @@ const SpecificVenue = () => {
 
       <section className="pb-6 border-b-2 border-b-gray-300">
         <h2 className="text-lg font-semibold mb-2 underline">Information</h2>
-        <p className="my-2 text-sm font-semibold">
+        <p>{venue.description || "No description available."}</p>
+        <p className="mt-3 mb-1 text-sm underline font-semibold">
           Max Guests: {venue.maxGuests || "N/A"}
         </p>
-        <p>{venue.description || "No description available."}</p>
       </section>
 
       <section className="mb-4 pt-6 pb-6 border-b-2 border-b-gray-300">
