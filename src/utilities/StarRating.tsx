@@ -38,7 +38,7 @@ const StarRating: React.FC<StarRatingProps> = ({
         .map((_, index) => (
           <FaRegStar
             key={`empty-${index}`}
-            className="text-gray-300"
+            className="text-gray-500"
             aria-label="Empty star"
           />
         ))}
