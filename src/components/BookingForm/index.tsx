@@ -162,7 +162,7 @@ const BookingForm: React.FC<BookingFormProps> = ({ venueId, maxGuests }) => {
 
       <button
         onClick={handleBooking}
-        className="bg-blue-600 text-white font-bold  py-2 px-4 rounded w-1/2 disabled:opacity-50"
+        className="bg-sky-950 hover:bg-sky-800 text-white font-bold  py-2 px-4 rounded w-1/2 disabled:opacity-50"
         disabled={loading}
       >
         {loading ? "Processing..." : "Book Now"}
