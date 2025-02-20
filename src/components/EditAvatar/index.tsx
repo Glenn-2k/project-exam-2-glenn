@@ -39,7 +39,12 @@ const EditAvatar: React.FC = () => {
    * Validation schema for the avatar input field.
    */
   const validationSchema = Yup.object({
-    profilePicture: Yup.string().url("Must be a valid URL"),
+    profilePicture: Yup.string()
+      .url("Must be a valid URL")
+      .matches(
+        /\.(jpeg|jpg|png|gif|webp)$/,
+        "Must be an image URL (.jpg, .png, .gif, .webp)"
+      ),
   });
 
   /**
